@@ -1,0 +1,39 @@
+﻿<rxui:ReactiveUserControl 
+            xmlns:rxui="clr-namespace:ReactiveUI;assembly=ReactiveUI.WPF"      
+            x:TypeArguments="core:UsersManagerViewModel"
+            x:Class="NEU.IPGateway.UI.Controls.UsersManager"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+            xmlns:local="clr-namespace:NEU.IPGateway.UI.Controls" xmlns:core="clr-namespace:NEU.IPGateWay.Core;assembly=NEU.IPGateWay.Core" xmlns:fa="http://schemas.fontawesome.io/icons/"
+    mc:Ignorable="d" 
+            d:DesignHeight="240" d:DesignWidth="420">
+    <DockPanel>
+        <StackPanel Margin="5,10" Orientation="Horizontal" HorizontalAlignment="Right" DockPanel.Dock="Top">
+            <Button Name="refreshButton" Margin="0,0,20,0">
+                <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
+                    <fa:ImageAwesome Icon="Refresh" Foreground="#888" Height="16"></fa:ImageAwesome>
+                    <TextBlock  FontSize="16" Margin="5,0,5,0">刷新</TextBlock>
+                </StackPanel>
+
+            </Button>
+            <Button Name="newUserButton" Click="newUserButton_Click">
+                <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
+                    <fa:ImageAwesome Icon="Plus" Foreground="#888" Height="16"></fa:ImageAwesome>
+                    <TextBlock  FontSize="16" Margin="5,0,5,0">添加新用户</TextBlock>
+                </StackPanel>
+                
+            </Button>
+        </StackPanel>
+        
+        <ListView Margin="5" x:Name="listView">
+            <ListView.ItemTemplate>
+                <DataTemplate DataType="{x:Type core:UserViewModel}">
+                    
+                    <local:UserView ViewModel="{Binding}"></local:UserView>
+                </DataTemplate>
+            </ListView.ItemTemplate>            
+        </ListView>
+    </DockPanel>
+</rxui:ReactiveUserControl>

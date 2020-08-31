@@ -1,0 +1,148 @@
+﻿<views:BaseWindow xmlns:views="clr-namespace:NEU.IPGateway.UI.Views"
+        x:TypeArguments="core:MainPageViewModel"
+        x:Class="NEU.IPGateway.UI.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NEU.IPGateway.UI"
+        xmlns:controls="clr-namespace:NEU.IPGateway.UI.Controls" xmlns:fa="http://schemas.fontawesome.io/icons/" xmlns:core="clr-namespace:NEU.IPGateWay.Core;assembly=NEU.IPGateWay.Core"
+        mc:Ignorable="d"                   
+        Background="White"
+        MinHeight="450" MinWidth="750"
+        Title="{DynamicResource application_name}" Height="500" Width="800">
+    
+    <Grid x:Name="rootGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="140"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        
+        
+        <Grid x:Name="grid" Margin="100,30">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="0*"/>
+            </Grid.ColumnDefinitions>
+            
+
+            <StackPanel VerticalAlignment="Center" >
+
+                <controls:ConnectButton x:Name="connectButton" Status="Disconnected"  Height="160" Width="160"></controls:ConnectButton>
+                <StackPanel Margin="10" HorizontalAlignment="Center" Orientation="Horizontal">
+
+                    <Label x:Name="selectedUserLabel">20180001</Label>
+                    <Label x:Name="selectUserButton" Foreground="DarkBlue" Margin="10,0,0,0">更换账号></Label>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Margin="50" VerticalAlignment="Center">
+                <StackPanel.Resources>
+                    <Style TargetType="Label">
+                        <Setter Property="FontSize" Value="18"></Setter>
+                    </Style>
+                </StackPanel.Resources>
+                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                    <Label>已用流量</Label>
+                    <Label Foreground="DarkBlue" Margin="10,0,0,0">198.89 MB</Label>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                    <Label>剩余流量</Label>
+                    <Label Foreground="DarkBlue" Margin="10,0,0,0">801.11 MB</Label>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                    <Label>账户余额</Label>
+                    <Label Foreground="DarkBlue" Margin="10,0,0,0">23.50 CNY</Label>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                    <Label>联网时间</Label>
+                    <Label Foreground="DarkBlue" Margin="10,0,0,0">29:32:12</Label>
+                </StackPanel>
+
+            </StackPanel>
+
+
+
+        </Grid>
+        
+        
+        
+        <Grid Grid.Row="1" Background="{DynamicResource ThemeColor}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            
+            <UniformGrid Margin="25" Rows="2" Columns="3" Grid.Column="1">
+                <UniformGrid.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="{DynamicResource ThemeColor2}"></Setter>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                    <StackPanel Orientation="Horizontal" Background="{TemplateBinding Background}">
+                                        <ContentPresenter Margin="10"></ContentPresenter>
+                                    </StackPanel>
+                                    
+                                </ControlTemplate>
+                            
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Background" Value="Transparent"></Setter>
+                        
+                        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                        <Setter Property="Foreground" Value="White"></Setter>
+                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                    </Style>
+                </UniformGrid.Resources>
+
+                <Button x:Name="manageUserBtn" Click="manageUserBtn_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:FontAwesome Icon="User" Margin="0,2,0,0"></fa:FontAwesome>
+                        <TextBlock Margin="5,0,0,0">账户管理</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button>
+                    <StackPanel Orientation="Horizontal">
+                        <fa:FontAwesome Icon="Unlink"  Margin="0,2,0,0"></fa:FontAwesome>
+                        <TextBlock Margin="5,0,0,0">强制下线</TextBlock>
+                    </StackPanel></Button>
+                <Button x:Name="officialServiceBtn">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:FontAwesome Icon="Server"  Margin="0,2,0,0"></fa:FontAwesome>
+                        <TextBlock Margin="5,0,0,0">官方服务</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button>
+                    <StackPanel Orientation="Horizontal">
+                        <fa:FontAwesome Icon="Check"  Margin="0,2,0,0"></fa:FontAwesome>
+                        <TextBlock Margin="5,0,0,0">连接诊断</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="settingNavigationBtn" Click="settingNavigationBtn_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:FontAwesome Icon="Cogs"  Margin="0,2,0,0"></fa:FontAwesome>
+                        <TextBlock Margin="5,0,0,0">系统设置</TextBlock>
+                    </StackPanel>
+                </Button>
+            </UniformGrid>
+        </Grid>
+        <Grid x:Name="pinInputGrid" Visibility="Collapsed">
+            
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock TextAlignment="Center" FontSize="22" FontWeight="Bold">本次连接需要输入PIN值</TextBlock>
+                <controls:PinInput></controls:PinInput>
+                <Button Style="{StaticResource PlainButtonStyle}">取消</Button>
+            </StackPanel>
+            
+        </Grid>
+        
+    </Grid>
+
+
+</views:BaseWindow>

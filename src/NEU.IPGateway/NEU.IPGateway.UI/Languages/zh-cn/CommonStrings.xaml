@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:s="clr-namespace:System;assembly=mscorlib">
+    <s:String x:Key="connect">连接</s:String>
+    <s:String x:Key="disconnect">断开</s:String>
+    <s:String x:Key="login">登录</s:String>
+    <s:String x:Key="logout">登出</s:String>
+    <s:String x:Key="application_name">东大网关助手</s:String>
+    <s:String x:Key="close">关闭</s:String>
+    <s:String x:Key="studentno">学号</s:String>
+    <s:String x:Key="password">密码</s:String>
+    <s:String x:Key="help">帮助</s:String>
+    <s:String x:Key="settings">设置</s:String>
+    <s:String x:Key="enterpin">请输入PIN值</s:String>
+    <s:String x:Key="manage_user">用户管理</s:String>
+</ResourceDictionary>

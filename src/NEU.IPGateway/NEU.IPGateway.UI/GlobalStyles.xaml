@@ -1,0 +1,86 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:NEU.IPGateway.UI" 
+                    xmlns:views="clr-namespace:NEU.IPGateway.UI.Views" xmlns:fa="http://schemas.fontawesome.io/icons/">
+
+
+    <SolidColorBrush Color="#2b458c" x:Key="ThemeColor"></SolidColorBrush>
+    <SolidColorBrush Color="#2E3446" x:Key="ThemeColor2"></SolidColorBrush>
+    <SolidColorBrush Color="#000B2A" x:Key="ThemeColor3"></SolidColorBrush>
+    <SolidColorBrush Color="#A2BAFC" x:Key="ThemeColor4"></SolidColorBrush>
+    <SolidColorBrush Color="#E6ECFC" x:Key="ThemeColor5"></SolidColorBrush>
+    <SolidColorBrush Color="White" x:Key="ThemeForeground"></SolidColorBrush>
+    <views:BaseWindowMarginConverter x:Key="BaseWindowMarginConverter"></views:BaseWindowMarginConverter>
+
+    <Style x:Key="BaseWindowStyle" TargetType="Window">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Window">
+                    <Border Margin="10">
+                        <Canvas>
+                            <Border x:Name="BaseWindowBorder" Background="{TemplateBinding Background}" Width="{TemplateBinding ActualWidth,Converter={StaticResource BaseWindowMarginConverter}}" Height="{TemplateBinding ActualHeight,Converter={StaticResource BaseWindowMarginConverter}}">
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="3" Color="#AAA" ShadowDepth="0"/>
+                                </Border.Effect>
+
+                            </Border>
+
+                            <ContentPresenter Width="{TemplateBinding ActualWidth,Converter={StaticResource BaseWindowMarginConverter}}" Height="{TemplateBinding ActualHeight,Converter={StaticResource BaseWindowMarginConverter}}"/>
+
+                            <Button WindowChrome.IsHitTestVisibleInChrome="True" Width="35" Height="35" Canvas.Right="0.5" Background="Transparent" BorderThickness="0" x:Name="BaseWindowCloseButton">
+                                <Button.Content>
+
+                                    <fa:FontAwesome Icon="Close" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"></fa:FontAwesome>
+                                </Button.Content>
+
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="globalCloseBtn" Background="{TemplateBinding Background}">
+                                            <ContentPresenter></ContentPresenter>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="globalCloseBtn" Property="Background" Value="#FFFF4343"></Setter>
+                                            </Trigger>
+
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+
+                            </Button>
+
+                        </Canvas>
+                    </Border>
+
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="WindowStyle" Value="None"></Setter>
+        <Setter Property="AllowsTransparency" Value="True"></Setter>
+        <Setter Property="MinHeight" Value="55"></Setter>
+        <Setter Property="MinWidth" Value="200"></Setter>
+    </Style>
+
+    <Style x:Key="PlainButtonStyle" TargetType="Button">
+        <Setter Property="FontSize" Value="16"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate  TargetType="Button">
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource ThemeColor}"></Setter>
+
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                    <TextBlock x:Name="plainButtonText" HorizontalAlignment="Center" Foreground="{TemplateBinding Foreground}" Padding="10,5">
+                                <ContentPresenter/>
+                    </TextBlock>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
+</ResourceDictionary>
