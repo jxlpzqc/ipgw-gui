@@ -5,12 +5,13 @@ using ReactiveUI.Fody.Helpers;
 using Splat;
 using System;
 using System.Reactive;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 
 namespace NEU.IPGateWay.Core
 {
-    public class MainPageViewModel : ReactiveObject
+    public class MainPageViewModel : ReactiveObject, IDisposable
     {
         readonly ObservableAsPropertyHelper<User> _selectedUser;
 
@@ -26,20 +27,27 @@ namespace NEU.IPGateWay.Core
         [Reactive]
         public bool PinRequired { get; set; } = false;
 
+        private CompositeDisposable disposables = new CompositeDisposable();
+
         public MainPageViewModel()
         {
 
             _selectedUser = GlobalStatusStore.Current
                 .WhenAnyValue(x => x.CurrentUser)
-                .ToProperty(this, x => x.SelectedUser);
+                .ToProperty(this, x => x.SelectedUser)
+                .DisposeWith(disposables);
 
             _connectStatus = GlobalStatusStore.Current
                 .WhenAnyValue(x => x.ConnectStatus)
-                .ToProperty(this, x => x.ConnectStatus);
-
+                .ToProperty(this, x => x.ConnectStatus)
+                .DisposeWith(disposables);
 
 
         }
 
+        public void Dispose()
+        {
+            disposables.Dispose();
+        }
     }
 }

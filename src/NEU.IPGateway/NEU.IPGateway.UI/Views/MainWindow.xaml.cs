@@ -65,6 +65,7 @@ namespace NEU.IPGateway.UI.Views
                     v => v.connectButton)
                     .DisposeWith(d);
 
+                ViewModel.DisposeWith(d);
 
             });
 
