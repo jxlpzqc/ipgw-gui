@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NEU.IPGateway.UI.Views" xmlns:controls="clr-namespace:NEU.IPGateway.UI.Controls"
         mc:Ignorable="d"
-        Title="{DynamicResource manage_user}" Height="300" Width="450">
+        Title="{DynamicResource manage_user}" Height="320" Width="450">
     <Grid>
         <controls:UsersManager></controls:UsersManager>
 

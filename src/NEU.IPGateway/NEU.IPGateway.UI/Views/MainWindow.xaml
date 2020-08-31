@@ -136,8 +136,8 @@
             
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                 <TextBlock TextAlignment="Center" FontSize="22" FontWeight="Bold">本次连接需要输入PIN值</TextBlock>
-                <controls:PinInput></controls:PinInput>
-                <Button Style="{StaticResource PlainButtonStyle}">取消</Button>
+                <controls:PinInput x:Name="pinInput" FinishedInput="PinInput_FinishedInput"></controls:PinInput>
+                <Button x:Name="cancelBtn" Style="{StaticResource PlainButtonStyle}">取消</Button>
             </StackPanel>
             
         </Grid>

@@ -67,6 +67,16 @@ namespace NEU.IPGateway.UI.Controls
             }
         }
 
+        public void Reset()
+        {
+            for (int i = 0; i < pin.Length; i++)
+            {
+                pin[i] = '\0';
+                inputs[i].Text = "";
+            }
+            inputs[0].Focus();
+
+        }
 
         public PinInput()
         {

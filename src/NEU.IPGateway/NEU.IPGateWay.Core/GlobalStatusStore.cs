@@ -79,9 +79,10 @@ namespace NEU.IPGateWay.Core
                 }
                 else
                 {
-                    DoConnect.Execute().Subscribe();
+                    await DoConnect.Execute("");
                 }
             }, canOperate);
+
 
             DoConnect = ReactiveCommand.CreateFromTask<string, bool>(async (pin) =>
             {
@@ -120,11 +121,11 @@ namespace NEU.IPGateWay.Core
 
             Toggle = ReactiveCommand.CreateFromTask(async () =>
             {
+                Connect.ThrownExceptions.Subscribe(ex => { });
                 if (ConnectStatus == ConnectStatus.Disconnected) await Connect.Execute();
                 else if (ConnectStatus == ConnectStatus.Connected) await Disconnect.Execute();
+
             }, canOperate);
-
-
 
             InitializeStatus();
         }

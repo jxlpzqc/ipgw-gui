@@ -1,13 +1,10 @@
 ﻿using NEU.IPGateWay.Core.Models;
-using NEU.IPGateWay.Core.Services;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-using Splat;
 using System;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using System.Reactive.Threading.Tasks;
 
 namespace NEU.IPGateWay.Core
 {
@@ -23,9 +20,18 @@ namespace NEU.IPGateWay.Core
 
         public ReactiveCommand<Unit, Unit> Toggle => GlobalStatusStore.Current.Toggle;
 
+        public ReactiveCommand<string, Unit> ContinueConnect;
+
+
+        public ReactiveCommand<Unit, Unit> CancelConnect;
 
         [Reactive]
         public bool PinRequired { get; set; } = false;
+
+        [Reactive]
+        public bool PasswordRequired { get; set; } = false;
+
+
 
         private CompositeDisposable disposables = new CompositeDisposable();
 
@@ -42,6 +48,48 @@ namespace NEU.IPGateWay.Core
                 .ToProperty(this, x => x.ConnectStatus)
                 .DisposeWith(disposables);
 
+            Action<Exception> handleExceptionAction = x =>
+            {
+                if (x is ConnectionException ex)
+                {
+                    if (ex.ErrorType == ConnectionError.LostPin
+                        || ex.ErrorType == ConnectionError.InvalidPin)
+                    {
+                        PinRequired = true;
+                    }
+                    else if (ex.ErrorType == ConnectionError.InvalidCredient)
+                    {
+                        PasswordRequired = true;
+                    }
+                }
+                
+            };
+
+            CancelConnect = ReactiveCommand.Create(() =>
+            {
+                PinRequired = false;
+                GlobalStatusStore.Current.ConnectStatus = ConnectStatus.Disconnected;
+            });
+
+
+
+            ContinueConnect = ReactiveCommand.CreateFromTask<string>(async (pin) =>
+            {
+                PinRequired = false;
+                await GlobalStatusStore.Current.DoConnect.Execute(pin);
+            });
+
+            Observable.Merge(
+                ContinueConnect.ThrownExceptions,
+                Toggle.ThrownExceptions,
+                GlobalStatusStore.Current.DoConnect.ThrownExceptions
+                )
+                .Throttle(TimeSpan.FromMilliseconds(100))
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .Subscribe(handleExceptionAction)
+                .DisposeWith(disposables);
+
+            
 
         }
 

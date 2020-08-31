@@ -1,9 +1,11 @@
-﻿using NEU.IPGateWay.Core;
+﻿using NEU.IPGateway.UI.Controls;
+using NEU.IPGateWay.Core;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -44,6 +46,13 @@ namespace NEU.IPGateway.UI.Views
                     v => v.connectButton.Status)
                     .DisposeWith(d);
 
+
+                this.OneWayBind(ViewModel,
+                    u => u.ConnectStatus,
+                    v => v.selectUserButton.Visibility,
+                    u => u == IPGateWay.Core.Models.ConnectStatus.Disconnected ? Visibility.Visible : Visibility.Collapsed)
+                    .DisposeWith(d);
+
                 this.WhenAnyValue(u => u.ViewModel.ConnectStatus)
                     .Subscribe(async p =>
                     {
@@ -54,15 +63,31 @@ namespace NEU.IPGateway.UI.Views
                         else
                         {
                             await HideInformationAnimate();
-                        }
+                        }                     
+
                     })
                     .DisposeWith(d);
 
+                this.WhenAnyValue(u => u.ViewModel.PinRequired)
+                    .Skip(1)
+                    .ObserveOn(RxApp.MainThreadScheduler)
+                    .Subscribe(async u =>
+                    {
+                        if (u) await ShowPinInputAnimate();
+                        else await HidePinInputAnimate();
+                    })
+                    .DisposeWith(d);
 
 
                 this.BindCommand(ViewModel, 
                     x => x.Toggle, 
                     v => v.connectButton)
+                    .DisposeWith(d);
+
+
+                this.BindCommand(ViewModel,
+                    x => x.CancelConnect,
+                    v => v.cancelBtn)
                     .DisposeWith(d);
 
                 ViewModel.DisposeWith(d);
@@ -72,10 +97,22 @@ namespace NEU.IPGateway.UI.Views
                 
         }
 
+        private bool _inputShowLock = false;
+
+        private async Task EnsurePinInputAnimationSecurity()
+        {
+            while (true)
+            {
+                if (_inputShowLock == false) return;
+                else await Task.Delay(300);
+            }
+        }
+
         private async Task ShowPinInputAnimate()
         {
+            await EnsurePinInputAnimationSecurity();
+            _inputShowLock = true;
 
-            //await Task.Delay(2000);
             var time = 1200;
             var timeSpan = TimeSpan.FromMilliseconds(time);
             var effect = new BlurEffect()
@@ -92,16 +129,23 @@ namespace NEU.IPGateway.UI.Views
             grid.IsHitTestVisible = false;
             pinInputGrid.Visibility = Visibility.Visible;
             pinInputGrid.BeginAnimation(OpacityProperty, opacityAnimation);
-
+            pinInputGrid.Focus();
 
             await Task.Delay(timeSpan);
 
-
+            grid.IsHitTestVisible = false;
+            pinInputGrid.Visibility = Visibility.Visible;
+            pinInput.Focus();
+            _inputShowLock = false;
         }
 
 
         private async Task HidePinInputAnimate()
         {
+
+            await EnsurePinInputAnimationSecurity();
+            _inputShowLock = true;
+
             var timeSpan = TimeSpan.FromMilliseconds(1200);            
 
             var animation = new DoubleAnimation(0, new Duration(timeSpan));
@@ -115,6 +159,8 @@ namespace NEU.IPGateway.UI.Views
             pinInputGrid.Visibility = Visibility.Collapsed;
             grid.IsHitTestVisible = true;
             grid.Effect = null;
+
+            _inputShowLock = false;
         }
 
         private async Task ShowInformationAnimate()
@@ -164,6 +210,30 @@ namespace NEU.IPGateway.UI.Views
         private void manageUserBtn_Click(object sender, RoutedEventArgs e)
         {
             new UsersManagerWindow().ShowDialog();
+        }
+
+        private async void PinInput_FinishedInput(object sender, EventArgs e)
+        {
+            if (sender is PinInput input)
+            {
+                var pin = input.Pin;
+                input.Reset();
+
+                try
+                {
+                    await ViewModel.ContinueConnect.Execute(pin);
+
+                }
+                catch (Exception ex)
+                {
+
+
+                }
+
+            }
+
+
+
         }
     }
 }
