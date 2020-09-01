@@ -136,66 +136,68 @@ namespace NEU.IPGateway.UI.Views
                     var screenY = (lParam.ToInt32() >> 16);
 
                     //测试鼠标位置
+                    if (ResizeMode != ResizeMode.NoResize && ResizeMode != ResizeMode.CanMinimize)
+                    {
+                        var point = this.PointFromScreen(new Point(screenX, screenY));
 
-                    var point = this.PointFromScreen(new Point(screenX, screenY));
-
-                    // 窗口左上角
-                    if (point.X <= this.agWidth
-                       && point.Y <= this.agWidth)
-                    {
-                        handled = true;
-                        return new IntPtr((int)HitTest.HTTOPLEFT);
+                        // 窗口左上角
+                        if (point.X <= this.agWidth
+                           && point.Y <= this.agWidth)
+                        {
+                            handled = true;
+                            return new IntPtr((int)HitTest.HTTOPLEFT);
+                        }
+                        // 窗口左下角    
+                        else if (this.ActualHeight - point.Y <= this.agWidth
+                           && point.X <= this.agWidth)
+                        {
+                            handled = true;
+                            return new IntPtr((int)HitTest.HTBOTTOMLEFT);
+                        }
+                        // 窗口右上角
+                        else if (point.Y <= this.agWidth
+                           && this.ActualWidth - point.X <= this.agWidth)
+                        {
+                            handled = true;
+                            return new IntPtr((int)HitTest.HTTOPRIGHT);
+                        }
+                        // 窗口右下角
+                        else if (this.ActualWidth - point.X <= this.agWidth
+                           && this.ActualHeight - point.Y <= this.agWidth)
+                        {
+                            handled = true;
+                            return new IntPtr((int)HitTest.HTBOTTOMRIGHT);
+                        }
+                        // 窗口左侧
+                        else if (point.X <= this.bThickness)
+                        {
+                            handled = true;
+                            return new IntPtr((int)HitTest.HTLEFT);
+                        }
+                        // 窗口右侧
+                        else if (this.ActualWidth - point.X <= this.bThickness)
+                        {
+                            handled = true;
+                            return new IntPtr((int)HitTest.HTRIGHT);
+                        }
+                        // 窗口上方
+                        else if (point.Y <= this.bThickness)
+                        {
+                            handled = true;
+                            return new IntPtr((int)HitTest.HTTOP);
+                        }
+                        // 窗口下方
+                        else if (this.ActualHeight - point.Y <= this.bThickness)
+                        {
+                            handled = true;
+                            return new IntPtr((int)HitTest.HTBOTTOM);
+                        }
+                        else
+                        {
+                            return IntPtr.Zero;
+                        }
                     }
-                    // 窗口左下角    
-                    else if (this.ActualHeight - point.Y <= this.agWidth
-                       && point.X <= this.agWidth)
-                    {
-                        handled = true;
-                        return new IntPtr((int)HitTest.HTBOTTOMLEFT);
-                    }
-                    // 窗口右上角
-                    else if (point.Y <= this.agWidth
-                       && this.ActualWidth - point.X <= this.agWidth)
-                    {
-                        handled = true;
-                        return new IntPtr((int)HitTest.HTTOPRIGHT);
-                    }
-                    // 窗口右下角
-                    else if (this.ActualWidth - point.X <= this.agWidth
-                       && this.ActualHeight - point.Y <= this.agWidth)
-                    {
-                        handled = true;
-                        return new IntPtr((int)HitTest.HTBOTTOMRIGHT);
-                    }
-                    // 窗口左侧
-                    else if (point.X <= this.bThickness)
-                    {
-                        handled = true;
-                        return new IntPtr((int)HitTest.HTLEFT);
-                    }
-                    // 窗口右侧
-                    else if (this.ActualWidth - point.X <= this.bThickness)
-                    {
-                        handled = true;
-                        return new IntPtr((int)HitTest.HTRIGHT);
-                    }
-                    // 窗口上方
-                    else if (point.Y <= this.bThickness)
-                    {
-                        handled = true;
-                        return new IntPtr((int)HitTest.HTTOP);
-                    }
-                    // 窗口下方
-                    else if (this.ActualHeight - point.Y <= this.bThickness)
-                    {
-                        handled = true;
-                        return new IntPtr((int)HitTest.HTBOTTOM);
-                    }
-                    else
-                    {
-                        return IntPtr.Zero;
-                    }
-
+                    break;
 
             }
             return IntPtr.Zero;

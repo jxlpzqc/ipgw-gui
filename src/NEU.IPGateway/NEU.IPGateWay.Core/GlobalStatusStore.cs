@@ -132,6 +132,8 @@ namespace NEU.IPGateWay.Core
 
         public static GlobalStatusStore Current { get; } = new GlobalStatusStore();
 
+
+
         #endregion
 
     }

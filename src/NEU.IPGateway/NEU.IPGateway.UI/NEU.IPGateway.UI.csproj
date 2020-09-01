@@ -27,7 +27,7 @@
     <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
-    <Reference Include="System.Security"/>
+    <Reference Include="System.Security" />
     <Reference Include="PresentationFramework" />  
     <Compile Remove="Migration-Backup\**" />
     <EmbeddedResource Remove="Migration-Backup\**" />
@@ -35,7 +35,9 @@
     <Page Remove="Migration-Backup\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Assets\Connected.png" />
     <None Remove="Assets\LoginBar.jpg" />
+    <None Remove="Assets\PopupBackground.jpg" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NEU.IPGateWay.Core\NEU.IPGateWay.Core.csproj" />
@@ -45,7 +47,9 @@
     <PackageReference Include="ReactiveUI.WPF" Version="11.5.26" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Assets\Connected.png" />
     <Resource Include="Assets\LoginBar.jpg" />
+    <Resource Include="Assets\PopupBackground.jpg" />
   </ItemGroup>
   
 </Project>
