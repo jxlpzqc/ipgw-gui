@@ -84,6 +84,9 @@ namespace NEU.IPGateWay.Core
             }, canOperate);
 
 
+            Connect.ThrownExceptions.Subscribe(ex => { });
+
+
             DoConnect = ReactiveCommand.CreateFromTask<string, bool>(async (pin) =>
             {
                 string password;
@@ -101,6 +104,7 @@ namespace NEU.IPGateWay.Core
 
             }, canOperate);
 
+            DoConnect.ThrownExceptions.Subscribe(ex => { });
 
             DoConnect.Where(u => u).Subscribe(p =>
             {
@@ -121,7 +125,6 @@ namespace NEU.IPGateWay.Core
 
             Toggle = ReactiveCommand.CreateFromTask(async () =>
             {
-                Connect.ThrownExceptions.Subscribe(ex => { });
                 if (ConnectStatus == ConnectStatus.Disconnected) await Connect.Execute();
                 else if (ConnectStatus == ConnectStatus.Connected) await Disconnect.Execute();
 

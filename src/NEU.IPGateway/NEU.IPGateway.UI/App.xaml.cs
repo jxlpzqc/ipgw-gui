@@ -36,7 +36,7 @@ namespace NEU.IPGateway.UI
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-
+            new RemindConnectPopupWindow().Show();
 
         }
     }
