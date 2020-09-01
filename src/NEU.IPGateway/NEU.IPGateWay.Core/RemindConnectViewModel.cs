@@ -132,6 +132,7 @@ namespace NEU.IPGateWay.Core
                 }).ToPropertyEx(this, x => x.RequirePassword, false);
 
             mayCausedError.Select(u => u.Message)
+                .Merge(this.CancelConnect.Select(_ => "您已取消连接"))
                 .ToPropertyEx(this, x => x.FailMessage);
 
             mayCausedError.Where(u => (u is ConnectionException))
@@ -147,6 +148,7 @@ namespace NEU.IPGateWay.Core
                         return false;
                     }
                 })
+                .Merge(this.CancelConnect.Select(_ => true))
                 .ToPropertyEx(this, x => x.IsFail, false);
 
             this.WhenAnyValue(u => u.Global.ConnectStatus)

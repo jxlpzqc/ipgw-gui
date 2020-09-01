@@ -36,6 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\Connected.png" />
+    <None Remove="Assets\ConnectFail.png" />
     <None Remove="Assets\LoginBar.jpg" />
     <None Remove="Assets\PopupBackground.jpg" />
   </ItemGroup>
@@ -48,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Connected.png" />
+    <Resource Include="Assets\ConnectFail.png" />
     <Resource Include="Assets\LoginBar.jpg" />
     <Resource Include="Assets\PopupBackground.jpg" />
   </ItemGroup>

@@ -47,7 +47,7 @@
 
         </Grid>
 
-        <Grid x:Name="overlay" Background="#FFA6DCA6" RenderTransformOrigin="0.5,0.5">
+        <Grid x:Name="overlay" Background="#FFF0AEAE" RenderTransformOrigin="0.5,0.5">
             <Grid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -57,15 +57,27 @@
                 </TransformGroup>
             </Grid.RenderTransform>
             <StackPanel Margin="20" VerticalAlignment="Center">
-                <Image Width="200" Source="\Assets\Connected.png"></Image>
-                <TextBlock Margin="0,30" TextAlignment="Center" FontSize="20">您已成功连接</TextBlock>
+                <StackPanel x:Name="successP">
+                    <Image Width="200" Source="\Assets\Connected.png"></Image>
+                    <TextBlock Margin="0,30" TextAlignment="Center" FontSize="20">您已成功连接</TextBlock>
+                </StackPanel>
+
+                <StackPanel x:Name="failP" Visibility="Collapsed">
+                    <Image Width="200" Source="\Assets\ConnectFail.png"></Image>
+                    <TextBlock Margin="0,30" x:Name="errorText" TextAlignment="Center" FontSize="20"></TextBlock>
+                </StackPanel>
+
 
                 <TextBlock TextAlignment="Center" FontSize="10">
                     <Run x:Name="secondText">-</Run>
                     秒后自动关闭弹框
                 </TextBlock>
             </StackPanel>
+            
+            
         </Grid>
 
+        
+        
     </Grid>
 </local:BaseWindow>

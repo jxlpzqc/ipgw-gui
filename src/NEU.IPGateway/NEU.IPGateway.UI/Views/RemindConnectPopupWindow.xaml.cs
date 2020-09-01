@@ -39,6 +39,10 @@ namespace NEU.IPGateway.UI.Views
             InitializeViewModel();
         }
 
+        private SolidColorBrush successBrush = new SolidColorBrush(Color.FromRgb(0xA6, 0xDC, 0xA6));
+        private SolidColorBrush errorBrush = new SolidColorBrush(Color.FromRgb(0xF0, 0xAE, 0xAE));
+
+
         private void InitializeViewModel()
         {
             ViewModel = new RemindConnectViewModel();
@@ -53,10 +57,19 @@ namespace NEU.IPGateway.UI.Views
                     .DisposeWith(d);
 
                 this.WhenAnyValue(x => x.ViewModel.IsSuccess)
+                    .Merge(this.WhenAnyValue(x=>x.ViewModel.IsFail))
                     .Where(u => u)
                     .Subscribe(_ =>
                     {
                         ShowConnectAnimate();
+                    })
+                    .DisposeWith(d);
+
+                this.WhenAnyValue(x => x.ViewModel.Status)
+                    .Where(u => u != IPGateWay.Core.Models.ConnectStatus.Disconnected)
+                    .Subscribe(_ =>
+                    {
+                        remindCb.Visibility = Visibility.Hidden;
                     })
                     .DisposeWith(d);
 
@@ -75,6 +88,29 @@ namespace NEU.IPGateway.UI.Views
                     x => x.secondText.Text)
                     .DisposeWith(d);
 
+
+                this.OneWayBind(ViewModel,
+                    vm => vm.IsFail,
+                    x => x.failP.Visibility)
+                    .DisposeWith(d);
+
+
+                this.OneWayBind(ViewModel,
+                    vm => vm.IsFail,
+                    x => x.overlay.Background,
+                    isFail => isFail ? errorBrush: successBrush)
+                    .DisposeWith(d);
+
+                this.OneWayBind(ViewModel,
+                    vm => vm.IsSuccess,
+                    x => x.successP.Visibility)
+                    .DisposeWith(d);
+
+
+                this.OneWayBind(ViewModel,
+                    vm => vm.FailMessage,
+                    x => x.errorText.Text)
+                    .DisposeWith(d);
 
                 this.Bind(ViewModel,
                     vm => vm.IsNotRemindMeLater,
