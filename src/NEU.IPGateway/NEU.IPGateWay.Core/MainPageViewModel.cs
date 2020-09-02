@@ -2,100 +2,124 @@
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using System;
+using System.IO;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 
 namespace NEU.IPGateWay.Core
 {
-    public class MainPageViewModel : ReactiveObject, IDisposable
+    public class MainPageViewModel : ReactiveObject, IActivatableViewModel
     {
-        readonly ObservableAsPropertyHelper<User> _selectedUser;
 
-        public User SelectedUser => _selectedUser.Value;
-
-        readonly ObservableAsPropertyHelper<ConnectStatus> _connectStatus;
-
-        public ConnectStatus ConnectStatus => _connectStatus.Value;
-
-        public ReactiveCommand<Unit, Unit> Toggle => GlobalStatusStore.Current.Toggle;
-
-        public ReactiveCommand<string, Unit> ContinueConnect;
-
-
-        public ReactiveCommand<Unit, Unit> CancelConnect;
+        private GlobalStatusStore Global { get; set; } = GlobalStatusStore.Current;
 
         [Reactive]
-        public bool PinRequired { get; set; } = false;
+        public User User { get; set; }
 
         [Reactive]
-        public bool PasswordRequired { get; set; } = false;
+        public ConnectStatus ConnectionStatus { get; set; }
 
+        [ObservableAsProperty]
+        public User SelectedUser { get; }
 
+        [ObservableAsProperty]
+        public ConnectStatus ConnectStatus { get; }
 
-        private CompositeDisposable disposables = new CompositeDisposable();
+        [ObservableAsProperty]
+        public bool PinRequired { get; }
+
+        [ObservableAsProperty]
+        public bool PasswordRequired { get; }
+
+        [ObservableAsProperty]
+        public double UsedData { get; }
+
+        [ObservableAsProperty]
+        public double UnusedData { get; }
+
+        [ObservableAsProperty]
+        public TimeSpan TotalTime { get; }
+
+        [ObservableAsProperty]
+        public TimeSpan CurrentTime { get; }
+
+        [ObservableAsProperty]
+        public bool RemainMoney { get; }
+
+        public ViewModelActivator Activator { get; }
+
+        public ReactiveCommand<Unit, Unit> Toggle { get; }
+
+        public ReactiveCommand<string, Unit> ContinueConnect { get; }
+
+        public ReactiveCommand<Unit, Unit> CancelConnect { get; }
+
 
         public MainPageViewModel()
         {
+            Activator = new ViewModelActivator();
 
-            _selectedUser = GlobalStatusStore.Current
-                .WhenAnyValue(x => x.CurrentUser)
-                .ToProperty(this, x => x.SelectedUser)
-                .DisposeWith(disposables);
-
-            _connectStatus = GlobalStatusStore.Current
-                .WhenAnyValue(x => x.ConnectStatus)
-                .ToProperty(this, x => x.ConnectStatus)
-                .DisposeWith(disposables);
-
-            Action<Exception> handleExceptionAction = x =>
+            this.CancelConnect = ReactiveCommand.Create(() =>
             {
-                if (x is ConnectionException ex)
-                {
-                    if (ex.ErrorType == ConnectionError.LostPin
-                        || ex.ErrorType == ConnectionError.InvalidPin)
-                    {
-                        PinRequired = true;
-                    }
-                    else if (ex.ErrorType == ConnectionError.InvalidCredient)
-                    {
-                        PasswordRequired = true;
-                    }
-                }
-                
-            };
-
-            CancelConnect = ReactiveCommand.Create(() =>
-            {
-                PinRequired = false;
-                GlobalStatusStore.Current.ConnectStatus = ConnectStatus.Disconnected;
+                Global.ConnectStatus = ConnectStatus.Disconnected;
             });
 
-
-
-            ContinueConnect = ReactiveCommand.CreateFromTask<string>(async (pin) =>
+            this.ContinueConnect = ReactiveCommand.CreateFromTask<string>(async (pin) =>
             {
-                PinRequired = false;
-                await GlobalStatusStore.Current.DoConnect.Execute(pin);
+                await Global.DoConnect.Execute(pin);
             });
 
-            Observable.Merge(
-                ContinueConnect.ThrownExceptions,
-                Toggle.ThrownExceptions,
-                GlobalStatusStore.Current.DoConnect.ThrownExceptions
-                )
-                .Throttle(TimeSpan.FromMilliseconds(100))
-                .ObserveOn(RxApp.MainThreadScheduler)
-                .Subscribe(handleExceptionAction)
-                .DisposeWith(disposables);
+            this.Toggle = ReactiveCommand.CreateFromTask(async () =>
+            {
+                await Global.Toggle.Execute();
+            });
 
-            
+            this.WhenActivated(d =>
+            {
+
+                this.WhenAnyValue(x => x.Global.CurrentUser)
+                    .ToPropertyEx(this, x => x.SelectedUser)
+                    .DisposeWith(d);
+
+                this.WhenAnyValue(x => x.Global.ConnectStatus)
+                    .ToPropertyEx(this, x => x.ConnectStatus)
+                    .DisposeWith(d);               
+
+                var errorStream = Observable.Merge(
+                    this.ContinueConnect.ThrownExceptions,
+                    this.Toggle.ThrownExceptions
+                    )
+                    .Where(u => u is ConnectionException);
+
+                errorStream
+                    .Select(u => ((ConnectionException)u).ErrorType)
+                    .Where(u => u == ConnectionError.LostPin || u == ConnectionError.InvalidPin)
+                    .Select(u => true)
+                    .Delay(TimeSpan.FromMilliseconds(100), RxApp.MainThreadScheduler)
+                    .Merge(this.CancelConnect.Select(_ => false))
+                    .Merge(this.ContinueConnect.IsExecuting.Select(_ => false))
+                    .ObserveOn(RxApp.MainThreadScheduler)
+                    .ToPropertyEx(this, x => x.PinRequired)
+                    .DisposeWith(d);
+
+
+                errorStream
+                    .Select(u => ((ConnectionException)u).ErrorType)
+                    .Where(u => u == ConnectionError.InvalidCredient)
+                    .Select(u => true)
+                    .Delay(TimeSpan.FromMilliseconds(100), RxApp.MainThreadScheduler)
+                    .Merge(this.CancelConnect.Select(_ => false))
+                    .Merge(this.ContinueConnect.IsExecuting.Select(_ => false))
+                    .ObserveOn(RxApp.MainThreadScheduler)
+                    .ToPropertyEx(this, x => x.PasswordRequired)
+                    .DisposeWith(d);
+
+
+            });
 
         }
 
-        public void Dispose()
-        {
-            disposables.Dispose();
-        }
+
     }
 }

@@ -130,6 +130,8 @@ namespace NEU.IPGateWay.Core
 
             }, canOperate);
 
+            Toggle.ThrownExceptions.Subscribe(_ => { });
+
             InitializeStatus();
         }
 

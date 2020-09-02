@@ -1,5 +1,6 @@
 ﻿using NEU.IPGateway.UI.Services;
 using NEU.IPGateway.UI.Views;
+using NEU.IPGateWay.Core;
 using NEU.IPGateWay.Core.Services;
 using ReactiveUI;
 using Splat;
@@ -36,7 +37,6 @@ namespace NEU.IPGateway.UI
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            new RemindConnectPopupWindow().Show();
 
         }
     }

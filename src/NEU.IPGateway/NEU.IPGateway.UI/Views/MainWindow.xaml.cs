@@ -63,7 +63,7 @@ namespace NEU.IPGateway.UI.Views
                         else
                         {
                             await HideInformationAnimate();
-                        }                     
+                        }
 
                     })
                     .DisposeWith(d);
@@ -79,8 +79,8 @@ namespace NEU.IPGateway.UI.Views
                     .DisposeWith(d);
 
 
-                this.BindCommand(ViewModel, 
-                    x => x.Toggle, 
+                this.BindCommand(ViewModel,
+                    x => x.Toggle,
                     v => v.connectButton)
                     .DisposeWith(d);
 
@@ -90,12 +90,11 @@ namespace NEU.IPGateway.UI.Views
                     v => v.cancelBtn)
                     .DisposeWith(d);
 
-                ViewModel.DisposeWith(d);
-
             });
 
-                
         }
+
+
 
         private bool _inputShowLock = false;
 
