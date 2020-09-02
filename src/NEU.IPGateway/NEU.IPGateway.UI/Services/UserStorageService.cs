@@ -15,6 +15,9 @@ namespace NEU.IPGateway.UI.Services
 {
     public class UserStorageService : IUserStorageService
     {
+        #region Private Methods
+
+        private const string PRIVATE_KEY = "EIJJnmkenfkeijfieWLKjifewjfkewjfkewjfwekjkefwjke";
 
         private string GetUserDBPath()
         {
@@ -60,9 +63,6 @@ namespace NEU.IPGateway.UI.Services
             return Encoding.UTF8.GetString(ProtectedData.Unprotect(data, Encoding.UTF8.GetBytes(pin), DataProtectionScope.CurrentUser));
 
         }
-
-        private const string PRIVATE_KEY = "EIJJnmkenfkeijfieWLKjifewjfkewjfkewjfwekjkefwjke";
-
 
         private void WriteToFile(User user, string pin)
         {
@@ -129,6 +129,19 @@ namespace NEU.IPGateway.UI.Services
             return ReadFromFile(GetUserDBFilename(username));
         }
 
+        private async Task<User> SetFirstUserAsDefault()
+        {
+            var first = (await GetUsers()).First();
+            if (first != null)
+            {
+                await SetDefaultUser(first.Username);
+            }
+            return first;
+
+        }
+
+        #endregion
+
         public async Task<bool> CheckUserPinExist(string username)
         {
             return !await CheckUserPinValid(username, "");
@@ -149,43 +162,40 @@ namespace NEU.IPGateway.UI.Services
 
         public async Task<string> DecryptedUserPassword(string username, string pin)
         {
-            var user = ReadFromUsername(username);
-            var enPassword = user.EncryptedPassword;
-
-            var enPasswordBytes = new byte[enPassword.Length / 2];
-            for (int i = 0; i < enPassword.Length/2; i++)
+            return await Task.Run(() =>
             {
-                var bStr = enPassword.Substring(i*2, 2);
-                enPasswordBytes[i] = Convert.ToByte(bStr, 16);
-            }
 
-            var password = Decrypt(enPasswordBytes, pin);
+                var user = ReadFromUsername(username);
+                var enPassword = user.EncryptedPassword;
 
-            return password;
+                var enPasswordBytes = new byte[enPassword.Length / 2];
+                for (int i = 0; i < enPassword.Length / 2; i++)
+                {
+                    var bStr = enPassword.Substring(i * 2, 2);
+                    enPasswordBytes[i] = Convert.ToByte(bStr, 16);
+                }
+
+                var password = Decrypt(enPasswordBytes, pin);
+
+                return password;
+
+            });
         }
 
         public async Task<bool> DeleteUser(string username)
         {
-            try
+            return await Task.Run(() =>
             {
-                File.Delete(GetUserDBFilename(username));
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        private async Task<User> SetFirstUserAsDefault()
-        {
-            var first = (await GetUsers()).First();
-            if (first != null)
-            {
-                await SetDefaultUser(first.Username);
-            }
-            return first;
-
+                try
+                {
+                    File.Delete(GetUserDBFilename(username));
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            });
         }
 
         public async Task<User> GetDefaultUser()
@@ -196,18 +206,18 @@ namespace NEU.IPGateway.UI.Services
             var filename = File.ReadAllText(defaultFile);
             if (!File.Exists(filename)) return await SetFirstUserAsDefault();
 
-            return ReadFromFile(filename);
+            return await Task.Run(() => ReadFromFile(filename));
 
         }
 
         public async Task<User> GetUser(string username)
         {
-            return ReadFromUsername(username);
+            return await Task.Run(() => ReadFromUsername(username));
         }
 
-        public async Task<IEnumerable<User>> GetUsers()
+        public Task<IEnumerable<User>> GetUsers()
         {
-            return Directory.GetFiles(GetUserDBPath(), "*.IPGWUSERDAT").Select((u) => ReadFromFile(u));   
+            return Task.Run(() => Directory.GetFiles(GetUserDBPath(), "*.IPGWUSERDAT").Select((u) => ReadFromFile(u)));   
         }
 
         public async Task<bool> ResetUserPassword(string username, string newpassword,string pin)
@@ -217,7 +227,7 @@ namespace NEU.IPGateway.UI.Services
 
         public async Task<bool> ResetUserPin(string username, string oldPin, string newPin)
         {
-            var user = ReadFromUsername(username);
+            var user = await Task.Run(() => ReadFromUsername(username));
             var password = await DecryptedUserPassword(username, oldPin);
             return await SaveUser(username, password, newPin);
         }
@@ -226,12 +236,14 @@ namespace NEU.IPGateway.UI.Services
         {
             try
             {
-                WriteToFile(new User
+                await Task.Run(() =>
                 {
-                    Username = username,
-                    Password = password,
-                }, pin);
-
+                    WriteToFile(new User
+                    {
+                        Username = username,
+                        Password = password,
+                    }, pin);
+                });
                 return true;
             }
             catch
@@ -245,8 +257,11 @@ namespace NEU.IPGateway.UI.Services
             var defaultFile = Path.Combine(GetUserDBPath(), "default.txt");
 
             try 
-            { 
-                File.WriteAllText(defaultFile, GetUserDBFilename(username));
+            {
+                await Task.Run(() =>
+                {
+                    File.WriteAllText(defaultFile, GetUserDBFilename(username));
+                });
                 return true;
             }
             catch
