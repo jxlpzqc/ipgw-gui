@@ -197,7 +197,8 @@ namespace NEU.IPGateWay.Core
         {
             return Observable.StartAsync(async () =>
             {
-                await this.Global.DoConnect.Execute(pin);
+                var c = this.Global.DoConnect;
+                await c.Execute(pin);
             });
         }
 

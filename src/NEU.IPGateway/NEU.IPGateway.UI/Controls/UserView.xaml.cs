@@ -1,18 +1,9 @@
 ﻿using NEU.IPGateWay.Core;
 using ReactiveUI;
 using System;
-using System.Collections.Generic;
 using System.Reactive.Disposables;
-using System.Text;
+using System.Reactive.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace NEU.IPGateway.UI.Controls
 {
@@ -67,19 +58,18 @@ namespace NEU.IPGateway.UI.Controls
                     v => v.setDefaultBtn)
                     .DisposeWith(d);
 
-
-                this.BindCommand(ViewModel,
-                    x => x.Delete,
-                    v => v.deleteUserMenu)
-                    .DisposeWith(d);
-
-                ViewModel.SetCurrent.ThrownExceptions.Subscribe((e) =>
+                ViewModel.ChangePin.ThrownExceptions.Merge(
+                    ViewModel.SetCurrent.ThrownExceptions)
+                .Subscribe((e) =>
                 {
                     // handle the raised exception.
                     MessageBox.Show(e.Message);
-                });
+                }).DisposeWith(d);
+
 
                 ViewModel.DisposeWith(d);
+
+                
 
 
             });
@@ -90,13 +80,13 @@ namespace NEU.IPGateway.UI.Controls
             menuPop.IsOpen = true;
         }
 
-        private void showPasswordBtn_Click(object sender, RoutedEventArgs e)
+        private async void showPasswordBtn_Click(object sender, RoutedEventArgs e)
         {
             string pin = "";
             // TODO i18n
             if (!ViewModel.IsPasswordShown && ViewModel.HasPin)
             {
-                var dialog = new PinSimpleDialog("输入密码以显示PIN值");
+                var dialog = new PinSimpleDialog("输入PIN以显示密码");
 
                 if (dialog.ShowDialog() == true)
                 {
@@ -108,7 +98,55 @@ namespace NEU.IPGateway.UI.Controls
                 }
             }
 
-            ViewModel.TogglePasswordShown.Execute(pin).Subscribe();
+            await ViewModel.TogglePasswordShown.Execute(pin);
+
+        }
+
+        private async void deleteUserMenu_Click(object sender, RoutedEventArgs e)
+        {
+            var res = MessageBox.Show("您确认要删除该用户吗？",
+                "警告", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (res == MessageBoxResult.Yes)
+            {
+                await ViewModel.Delete.Execute();
+            }
+
+        }
+
+        private async void editPasswordMenu_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new LoginWindow(ViewModel.User.Username, false);
+            dialog.Message = "请输入以修改保存的密码";
+            if (dialog.ShowDialog() == true)
+            {
+                var res = MessageBox.Show("是否使用PIN保护您设置的新密码？",
+                    "警告", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                var pin = "";
+                if(res == MessageBoxResult.Yes)
+                {
+                    var pinD = new PinSimpleDialog("设置新的PIN值");
+                    if (pinD.ShowDialog() == true)
+                    {
+                        pin = pinD.Result;
+                    }
+                }
+
+                await ViewModel.ChangePassword.Execute((dialog.Result.Password,pin));
+            }
+        }
+
+        private async void editPinMenu_Click(object sender, RoutedEventArgs e)
+        {
+            var oldPinDialog = new PinSimpleDialog("输入旧的PIN");
+            var newPinDialog = new PinSimpleDialog("输入新的PIN");
+            if (oldPinDialog.ShowDialog() == true && newPinDialog.ShowDialog() == true)
+            {
+                await ViewModel.ChangePin.Execute((oldPinDialog.Result, newPinDialog.Result));
+            }
+        }
+
+        private void verifyPinMenu_Click(object sender, RoutedEventArgs e)
+        {
 
         }
     }

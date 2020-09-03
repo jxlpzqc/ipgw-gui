@@ -11,38 +11,26 @@ using System.Reactive.Linq;
 
 namespace NEU.IPGateWay.Core
 {
-    public class UserViewModel : ReactiveObject,IDisposable
+    public class UserViewModel : ReactiveObject,IDisposable //TODO Change it to IActivable
     {
 
-        public extern bool IsPasswordShown
-        {
-            [ObservableAsProperty]
-            get;
-        }
+        [ObservableAsProperty]
+        public bool IsPasswordShown { get; }
 
-        public extern bool HasPin
-        {
-            [ObservableAsProperty]
-            get;
-        }
+        [ObservableAsProperty]
+        public bool HasPin { get; }
 
-        public extern bool IsCurrent
-        {
-            [ObservableAsProperty]
-            get;
-        }
-
-
+        [ObservableAsProperty]
+        public bool IsCurrent { get; }
 
         [Reactive]
         public User User { get; set; }
 
-        /// <summary>
-        /// 删除命令，如果属于一个列表，删除成功后应该由列表所有订阅并从列表移除
-        /// </summary>
         public ReactiveCommand<Unit, bool> Delete { get; }
 
-        public ReactiveCommand<string, bool> ChangePassword { get; }
+        public ReactiveCommand<Unit,Unit> Refresh { get; }
+
+        public ReactiveCommand<(string password,string pin), bool> ChangePassword { get; }
 
         public ReactiveCommand<(string oldPin, string newPin), bool> ChangePin { get; }
 
@@ -73,20 +61,27 @@ namespace NEU.IPGateWay.Core
                 .ToPropertyEx(this, x => x.IsCurrent)
                 .DisposeWith(disposables);
 
+            Refresh = ReactiveCommand.CreateFromObservable(() => Observable.Return(Unit.Default));
 
             Delete = ReactiveCommand.CreateFromTask(async () =>
             {
-                return await service.DeleteUser(User.Username);
+                var ret =  await service.DeleteUser(User.Username);
+                await Refresh.Execute();
+                return ret;
             });
 
-            ChangePassword = ReactiveCommand.CreateFromTask<string, bool>(async (str) =>
+            ChangePassword = ReactiveCommand.CreateFromTask<(string password, string pin), bool>(async (input) =>
             {
-                return await service.ResetUserPassword(User.Username, str);
+                var ret = await service.ResetUserPassword(User.Username, input.password, input.pin);
+                await Refresh.Execute();
+                return ret;
             });
 
             ChangePin = ReactiveCommand.CreateFromTask<(string oldPin, string newPin), bool>(async (input) =>
             {
-                return await service.ResetUserPin(User.Username, input.oldPin, input.newPin);
+                var ret = await service.ResetUserPin(User.Username, input.oldPin, input.newPin);
+                await Refresh.Execute();
+                return ret;
             });
 
             VerifyPin = ReactiveCommand.CreateFromTask<string, bool>(async (pin) =>
@@ -119,12 +114,13 @@ namespace NEU.IPGateWay.Core
 
             TogglePasswordShown.ToPropertyEx(this, x => x.IsPasswordShown, false);
 
-            SetCurrent = ReactiveCommand.Create(() =>
+            SetCurrent = ReactiveCommand.CreateFromTask(async () =>
             {
                 var status = GlobalStatusStore.Current.ConnectStatus;
                 if (status != ConnectStatus.Disconnected) throw new Exception("请先断开连接再切换账户");
 
                 GlobalStatusStore.Current.CurrentUser = User;
+                await service.SetDefaultUser(User.Username);
             });
 
 

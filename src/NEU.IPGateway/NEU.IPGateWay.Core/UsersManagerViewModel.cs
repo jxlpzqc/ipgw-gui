@@ -21,7 +21,6 @@ namespace NEU.IPGateWay.Core
         //public IEnumerable<UserViewModel> UserViewModels { get; set; }
         public extern IEnumerable<UserViewModel> UserViewModels { [ObservableAsProperty] get; }
 
-
         public ReactiveCommand<(User user, string pin), bool> AddUser { get; }
 
         public ReactiveCommand<Unit, Unit> Refresh { get; } = ReactiveCommand.Create(() => { });
@@ -36,21 +35,22 @@ namespace NEU.IPGateWay.Core
                     var v = (await service.GetUsers()).Select(u => new UserViewModel
                     {
                         User = u
-                    }).ToList();
+                    });
 
                     return v;
-                    //UserViewModels = v;
                 })
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .ToPropertyEx(this, x => x.UserViewModels);
 
+
+            // TODO solve the problem
             this.WhenAnyValue(x => x.UserViewModels)
                 .Where(u => u != null)
                 .Subscribe(x =>
                 {
                     foreach (var item in x)
                     {
-                        item.Delete.Subscribe(_ =>
+                        item.Refresh.Subscribe(_ =>
                         {
                             Refresh.Execute().Subscribe();
                         });

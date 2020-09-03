@@ -27,10 +27,10 @@ namespace NEU.IPGateway.UI.Controls
 
         public LoginWindow(string username,bool canEditUsername = true)
         {
+            InitializeComponent();
 
             usernameBox.Text = username;
             if (!canEditUsername) usernameBox.IsReadOnly = true;
-            InitializeComponent();
         }
 
         private string _message;

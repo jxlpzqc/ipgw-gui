@@ -215,9 +215,9 @@ namespace NEU.IPGateway.UI.Services
             return await Task.Run(() => ReadFromUsername(username));
         }
 
-        public Task<IEnumerable<User>> GetUsers()
+        public async Task<IEnumerable<User>> GetUsers()
         {
-            return Task.Run(() => Directory.GetFiles(GetUserDBPath(), "*.IPGWUSERDAT").Select((u) => ReadFromFile(u)));   
+            return await Task.Run(() => Directory.GetFiles(GetUserDBPath(), "*.IPGWUSERDAT").Select((u) => ReadFromFile(u)));   
         }
 
         public async Task<bool> ResetUserPassword(string username, string newpassword,string pin)
@@ -228,7 +228,15 @@ namespace NEU.IPGateway.UI.Services
         public async Task<bool> ResetUserPin(string username, string oldPin, string newPin)
         {
             var user = await Task.Run(() => ReadFromUsername(username));
-            var password = await DecryptedUserPassword(username, oldPin);
+            string password = "";
+            try
+            {
+                password = await DecryptedUserPassword(username, oldPin);
+            }
+            catch
+            {
+                throw new Exception("输入的PIN无效");
+            }
             return await SaveUser(username, password, newPin);
         }
 

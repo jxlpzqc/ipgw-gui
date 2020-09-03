@@ -60,10 +60,10 @@
                                 <DropShadowEffect ShadowDepth="0" Color="#FFB6B6B6"/>
                             </Border.Effect>
                             <StackPanel Margin="0">
-                                <MenuItem x:Name="deleteUserMenu" Header="删除用户" />
-                                <MenuItem x:Name="editPasswordMenu" Header="修改密码" ToolTip="修改系统保存的账户密码，不修改一网通账户密码"></MenuItem>
-                                <MenuItem x:Name="editPinMenu" Header="修改PIN" />
-                                <MenuItem x:Name="verifyPinMenu" Header="验证PIN" />
+                                <MenuItem x:Name="deleteUserMenu" Click="deleteUserMenu_Click" Header="删除用户" />
+                                <MenuItem x:Name="editPasswordMenu" Click="editPasswordMenu_Click" Header="修改密码" ToolTip="修改系统保存的账户密码，不修改一网通账户密码"></MenuItem>
+                                <MenuItem x:Name="editPinMenu" Click="editPinMenu_Click" Header="修改PIN" />
+                                <MenuItem x:Name="verifyPinMenu" Click="verifyPinMenu_Click" Header="验证PIN" />
 
 
                             </StackPanel>
