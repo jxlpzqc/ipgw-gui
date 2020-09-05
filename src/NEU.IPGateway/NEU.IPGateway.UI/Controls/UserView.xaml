@@ -5,7 +5,7 @@
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-            xmlns:local="clr-namespace:NEU.IPGateway.UI.Controls" xmlns:core="clr-namespace:NEU.IPGateWay.Core;assembly=NEU.IPGateWay.Core" xmlns:fa="http://schemas.fontawesome.io/icons/"
+            xmlns:local="clr-namespace:NEU.IPGateway.UI.Controls" xmlns:core="clr-namespace:NEU.IPGateway.Core;assembly=NEU.IPGateWay.Core" xmlns:fa="http://schemas.fontawesome.io/icons/"
             mc:Ignorable="d" 
             Height="100"
             d:DesignHeight="100" d:DesignWidth="300">

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NEU.IPGateWay.Core
+namespace NEU.IPGateway.Core
 {
     public enum ConnectionError
     {

@@ -1,8 +1,8 @@
 ﻿using Hardcodet.Wpf.TaskbarNotification;
 using NEU.IPGateway.UI.Services;
 using NEU.IPGateway.UI.Views;
-using NEU.IPGateWay.Core;
-using NEU.IPGateWay.Core.Services;
+using NEU.IPGateway.Core;
+using NEU.IPGateway.Core.Services;
 using ReactiveUI;
 using Splat;
 using System;

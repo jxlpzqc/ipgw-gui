@@ -1,4 +1,4 @@
-﻿using NEU.IPGateWay.Core;
+﻿using NEU.IPGateway.Core;
 using ReactiveUI;
 using System;
 using System.Reactive.Disposables;

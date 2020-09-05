@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NEU.IPGateway.UI", "src\NEU.IPGateway\NEU.IPGateway.UI\NEU.IPGateway.UI.csproj", "{2693AECE-F27B-48D1-B186-856CA6650446}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NEU.IPGateWay.Core", "src\NEU.IPGateway\NEU.IPGateWay.Core\NEU.IPGateWay.Core.csproj", "{7FA42F3D-DE20-43B1-AADC-9F3D723DF296}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NEU.IPGateway.Core", "src\NEU.IPGateway\NEU.IPGateWay.Core\NEU.IPGateway.Core.csproj", "{7FA42F3D-DE20-43B1-AADC-9F3D723DF296}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NEU.IPGateWay.Driver", "src\NEU.IPGateway\NEU.IPGateWay.Driver\NEU.IPGateWay.Driver.csproj", "{7ECEFFDE-56EB-4FB7-B1EC-4727A1EA44A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NEU.IPGateway.Tests", "src\NEU.IPGateway\NEU.IPGateway.Tests\NEU.IPGateway.Tests.csproj", "{80DD75ED-B6B6-44E4-BEDD-47F4F3F12E62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NEU.IPGateway.Tests", "src\NEU.IPGateway\NEU.IPGateway.Tests\NEU.IPGateway.Tests.csproj", "{80DD75ED-B6B6-44E4-BEDD-47F4F3F12E62}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NEU.IPGateway.Driver", "src\NEU.IPGateway\NEU.IPGateway.Driver\NEU.IPGateway.Driver.csproj", "{C86D8EDB-0028-461C-8D26-82BBE3915C1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,14 +25,14 @@ Global
 		{7FA42F3D-DE20-43B1-AADC-9F3D723DF296}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FA42F3D-DE20-43B1-AADC-9F3D723DF296}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7FA42F3D-DE20-43B1-AADC-9F3D723DF296}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7ECEFFDE-56EB-4FB7-B1EC-4727A1EA44A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7ECEFFDE-56EB-4FB7-B1EC-4727A1EA44A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7ECEFFDE-56EB-4FB7-B1EC-4727A1EA44A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7ECEFFDE-56EB-4FB7-B1EC-4727A1EA44A7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{80DD75ED-B6B6-44E4-BEDD-47F4F3F12E62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{80DD75ED-B6B6-44E4-BEDD-47F4F3F12E62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80DD75ED-B6B6-44E4-BEDD-47F4F3F12E62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80DD75ED-B6B6-44E4-BEDD-47F4F3F12E62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C86D8EDB-0028-461C-8D26-82BBE3915C1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C86D8EDB-0028-461C-8D26-82BBE3915C1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C86D8EDB-0028-461C-8D26-82BBE3915C1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C86D8EDB-0028-461C-8D26-82BBE3915C1A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

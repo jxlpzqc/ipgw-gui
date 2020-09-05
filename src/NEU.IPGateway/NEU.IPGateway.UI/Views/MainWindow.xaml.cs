@@ -1,5 +1,5 @@
 ﻿using NEU.IPGateway.UI.Controls;
-using NEU.IPGateWay.Core;
+using NEU.IPGateway.Core;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -50,13 +50,13 @@ namespace NEU.IPGateway.UI.Views
                 this.OneWayBind(ViewModel,
                     u => u.ConnectStatus,
                     v => v.selectUserButton.Visibility,
-                    u => u == IPGateWay.Core.Models.ConnectStatus.Disconnected ? Visibility.Visible : Visibility.Collapsed)
+                    u => u == IPGateway.Core.Models.ConnectStatus.Disconnected ? Visibility.Visible : Visibility.Collapsed)
                     .DisposeWith(d);
 
                 this.WhenAnyValue(u => u.ViewModel.ConnectStatus)
                     .Subscribe(async p =>
                     {
-                        if (p == IPGateWay.Core.Models.ConnectStatus.Connected)
+                        if (p == IPGateway.Core.Models.ConnectStatus.Connected)
                         {
                             await ShowInformationAnimate();
                         }

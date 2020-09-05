@@ -6,7 +6,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NEU.IPGateway.UI"
-        xmlns:controls="clr-namespace:NEU.IPGateway.UI.Controls" xmlns:fa="http://schemas.fontawesome.io/icons/" xmlns:core="clr-namespace:NEU.IPGateWay.Core;assembly=NEU.IPGateWay.Core"
+        xmlns:controls="clr-namespace:NEU.IPGateway.UI.Controls" xmlns:fa="http://schemas.fontawesome.io/icons/" xmlns:core="clr-namespace:NEU.IPGateway.Core;assembly=NEU.IPGateWay.Core"
         mc:Ignorable="d"                   
         Background="White"
         MinHeight="450" MinWidth="750"

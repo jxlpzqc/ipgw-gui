@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NEU.IPGateWay.Core.Models
+namespace NEU.IPGateway.Core.Models
 {
     /// <summary>
     /// 一个表示和网关连接状态的枚举

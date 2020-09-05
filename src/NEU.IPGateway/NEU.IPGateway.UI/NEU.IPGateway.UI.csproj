@@ -2,7 +2,7 @@
   <PropertyGroup>
     <ProjectGuid>{2693AECE-F27B-48D1-B186-856CA6650446}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <TargetFrameworks>netcoreapp3.1;net472</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;net461</TargetFrameworks>
     <AssemblyTitle>东大网关助手</AssemblyTitle>
     <Product>东大网关助手</Product>
     <Company>程子丘</Company>
@@ -19,21 +19,7 @@
     <DebugType>pdbonly</DebugType>
     <PublishTrimmed>true</PublishTrimmed>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System.Windows" />    
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="System.Security" />
-    <Reference Include="PresentationFramework" />  
-    <Compile Remove="Migration-Backup\**" />
-    <EmbeddedResource Remove="Migration-Backup\**" />
-    <None Remove="Migration-Backup\**" />
-    <Page Remove="Migration-Backup\**" />
-  </ItemGroup>
+  
   <ItemGroup>
     <None Remove="ApplicationIcon.ico" />
     <None Remove="Assets\Connected.png" />
@@ -42,13 +28,22 @@
     <None Remove="Assets\PopupBackground.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NEU.IPGateWay.Core\NEU.IPGateWay.Core.csproj" />
+    <ProjectReference Include="..\NEU.IPGateWay.Core\NEU.IPGateway.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
-    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.0.8" />
-    <PackageReference Include="ReactiveUI.WPF" Version="11.5.26" />
+    <PackageReference Include="ReactiveUI.WPF" Version="11.3.8" />
+    
   </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.0.8" />
+    <Reference Include="System.Security" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1' ">
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf.NetCore" Version="1.0.13" />
+
+  </ItemGroup>
+  
   <ItemGroup>
     <Resource Include="ApplicationIcon.ico" />
     <Resource Include="Assets\Connected.png" />

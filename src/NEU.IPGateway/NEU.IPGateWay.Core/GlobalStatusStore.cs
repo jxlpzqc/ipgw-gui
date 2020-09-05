@@ -1,5 +1,5 @@
-﻿using NEU.IPGateWay.Core.Models;
-using NEU.IPGateWay.Core.Services;
+﻿using NEU.IPGateway.Core.Models;
+using NEU.IPGateway.Core.Services;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Splat;
@@ -10,7 +10,7 @@ using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NEU.IPGateWay.Core
+namespace NEU.IPGateway.Core
 {
     public class GlobalStatusStore : ReactiveObject
     {

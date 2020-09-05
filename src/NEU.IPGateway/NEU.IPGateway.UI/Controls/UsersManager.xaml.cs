@@ -1,4 +1,4 @@
-﻿using NEU.IPGateWay.Core;
+﻿using NEU.IPGateway.Core;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -29,11 +29,11 @@ namespace NEU.IPGateway.UI.Controls
             this.WhenActivated(d =>
             {
 
-                this.OneWayBind(ViewModel, vm => vm.UserViewModels, v => v.listView.ItemsSource)
-                    .DisposeWith(d);
+                //this.OneWayBind(ViewModel, vm => vm.UserViewModels, v => v.listView.ItemsSource)
+                //    .DisposeWith(d);
 
-                this.BindCommand(ViewModel, vm => vm.Refresh, v => v.refreshButton)
-                    .DisposeWith(d);
+                //this.BindCommand(ViewModel, vm => vm.Refresh, v => v.refreshButton)
+                //    .DisposeWith(d);
 
             });
 

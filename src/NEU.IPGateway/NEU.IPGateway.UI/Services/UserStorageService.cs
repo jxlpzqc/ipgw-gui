@@ -1,5 +1,5 @@
-﻿using NEU.IPGateWay.Core.Models;
-using NEU.IPGateWay.Core.Services;
+﻿using NEU.IPGateway.Core.Models;
+using NEU.IPGateway.Core.Services;
 using System;
 using System.Collections;
 using System.Collections.Generic;

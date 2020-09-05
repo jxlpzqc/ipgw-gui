@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NEU.IPGateWay.Core.Services
+namespace NEU.IPGateway.Core.Services
 {
     public interface IInternetGateWayService
     {

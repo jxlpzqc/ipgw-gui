@@ -1,10 +1,10 @@
-﻿using NEU.IPGateWay.Core.Models;
+﻿using NEU.IPGateway.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NEU.IPGateWay.Core.Services
+namespace NEU.IPGateway.Core.Services
 {
     public interface IUserStorageService
     {

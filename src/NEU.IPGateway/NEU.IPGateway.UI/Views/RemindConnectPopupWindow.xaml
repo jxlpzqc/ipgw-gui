@@ -1,5 +1,5 @@
 ﻿<local:BaseWindow     
-        xmlns:vm="clr-namespace:NEU.IPGateWay.Core;assembly=NEU.IPGateWay.Core"
+        xmlns:vm="clr-namespace:NEU.IPGateway.Core;assembly=NEU.IPGateWay.Core"
         x:Class="NEU.IPGateway.UI.Views.RemindConnectPopupWindow"
         x:TypeArguments="vm:RemindConnectViewModel"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"

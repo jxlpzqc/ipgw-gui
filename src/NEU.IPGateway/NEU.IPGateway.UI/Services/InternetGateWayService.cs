@@ -1,4 +1,4 @@
-﻿using NEU.IPGateWay.Core.Services;
+﻿using NEU.IPGateway.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;

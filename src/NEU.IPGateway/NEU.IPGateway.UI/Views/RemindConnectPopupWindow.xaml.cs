@@ -1,5 +1,5 @@
 ﻿using NEU.IPGateway.UI.Controls;
-using NEU.IPGateWay.Core;
+using NEU.IPGateway.Core;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -66,7 +66,7 @@ namespace NEU.IPGateway.UI.Views
                     .DisposeWith(d);
 
                 this.WhenAnyValue(x => x.ViewModel.Status)
-                    .Where(u => u != IPGateWay.Core.Models.ConnectStatus.Disconnected)
+                    .Where(u => u != IPGateway.Core.Models.ConnectStatus.Disconnected)
                     .Subscribe(_ =>
                     {
                         remindCb.Visibility = Visibility.Hidden;

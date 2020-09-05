@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace NEU.IPGateWay.Core.Models
+namespace NEU.IPGateway.Core.Models
 {
     public class User: ReactiveObject
     {

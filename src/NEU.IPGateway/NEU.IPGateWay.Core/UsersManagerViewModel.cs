@@ -1,6 +1,6 @@
 ﻿using DynamicData;
-using NEU.IPGateWay.Core.Models;
-using NEU.IPGateWay.Core.Services;
+using NEU.IPGateway.Core.Models;
+using NEU.IPGateway.Core.Services;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Splat;
@@ -12,7 +12,7 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Text;
 
-namespace NEU.IPGateWay.Core
+namespace NEU.IPGateway.Core
 {
     public class UsersManagerViewModel : ReactiveObject
     {

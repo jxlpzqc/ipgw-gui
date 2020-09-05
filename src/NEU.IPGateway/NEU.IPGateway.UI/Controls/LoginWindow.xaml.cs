@@ -1,4 +1,4 @@
-﻿using NEU.IPGateWay.Core.Models;
+﻿using NEU.IPGateway.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

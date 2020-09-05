@@ -1,4 +1,4 @@
-﻿using NEU.IPGateWay.Core.Models;
+﻿using NEU.IPGateway.Core.Models;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using System;
@@ -7,7 +7,7 @@ using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 
-namespace NEU.IPGateWay.Core
+namespace NEU.IPGateway.Core
 {
     public class MainPageViewModel : ReactiveObject, IActivatableViewModel
     {
