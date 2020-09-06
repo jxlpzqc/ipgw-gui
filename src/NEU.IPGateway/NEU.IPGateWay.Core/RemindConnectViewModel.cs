@@ -35,15 +35,10 @@ namespace NEU.IPGateway.Core
         [ObservableAsProperty]
         public bool IsFail { get; }
         
-        [ObservableAsProperty]
-        public bool RequirePassword { get; }
-
         [Reactive]
         public bool IsNotRemindMeLater { get; set; }
 
         public ReactiveCommand<string, Unit> ContinueConnectWithPin { get; }
-
-        public ReactiveCommand<(string password, string newpin), Unit> ContinueConnectWithPassword { get; }
 
         public ReactiveCommand<Unit, Unit> CancelConnect { get; }
 
@@ -62,9 +57,6 @@ namespace NEU.IPGateway.Core
 
             this.ContinueConnectWithPin =
                 ReactiveCommand.CreateFromObservable<string, Unit>(ContinueConnectWithPinImpl);
-
-            this.ContinueConnectWithPassword =
-                ReactiveCommand.CreateFromObservable<(string password, string newpin), Unit>(ContinueConnectWithPasswordImpl);
 
             this.CancelConnect =
                 ReactiveCommand.CreateFromObservable(CancelConectImpl);
@@ -98,8 +90,7 @@ namespace NEU.IPGateway.Core
 
                 var mayCausedError = Observable.Merge(
                     this.Connect.ThrownExceptions,
-                    this.ContinueConnectWithPin.ThrownExceptions,
-                    this.ContinueConnectWithPassword.ThrownExceptions
+                    this.ContinueConnectWithPin.ThrownExceptions
                 );
 
                 mayCausedError.Where(u => (u is ConnectionException))
@@ -123,7 +114,7 @@ namespace NEU.IPGateway.Core
                     .DisposeWith(d);
 
 
-                mayCausedError.Where(u => (u is ConnectionException))
+                var passErrStream = mayCausedError.Where(u => (u is ConnectionException))
                     .Select(u =>
                     {
                         var t = ((ConnectionException)u).ErrorType;
@@ -135,9 +126,7 @@ namespace NEU.IPGateway.Core
                         {
                             return false;
                         }
-                    })
-                    .ToPropertyEx(this, x => x.RequirePassword, false)
-                    .DisposeWith(d);
+                    });
 
                 mayCausedError.Select(u => u.Message)
                     .Merge(this.CancelConnect.Select(_ => "您已取消连接"))
@@ -157,6 +146,7 @@ namespace NEU.IPGateway.Core
                             return false;
                         }
                     })
+                    .Merge(passErrStream)
                     .Merge(this.CancelConnect.Select(_ => true))
                     .ToPropertyEx(this, x => x.IsFail, false)
                     .DisposeWith(d);

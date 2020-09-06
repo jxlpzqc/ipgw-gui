@@ -18,10 +18,21 @@ namespace NEU.IPGateway.Core
     public class ConnectionException : Exception
     {
         public ConnectionError ErrorType { get; set; }
-        
+
+        private string _message;
+
+        public override string Message
+        {
+            get => _message;
+        }
+
         public ConnectionException(ConnectionError type)
         {
             ErrorType = type;
+            if(type == ConnectionError.InvalidCredient)
+            {
+                _message = "用户名或密码错误";
+            }
         }
         public ConnectionException(ConnectionError type, string message) : base(message)
         {
