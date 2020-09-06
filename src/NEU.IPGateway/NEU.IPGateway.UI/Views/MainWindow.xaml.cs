@@ -20,6 +20,7 @@ using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Splat;
 
 namespace NEU.IPGateway.UI.Views
 {
@@ -78,6 +79,16 @@ namespace NEU.IPGateway.UI.Views
                     })
                     .DisposeWith(d);
 
+                this.WhenAnyValue(u => u.ViewModel.PasswordRequired)
+                    .Skip(1)
+                    .Where(u => u)
+                    .ObserveOn(RxApp.MainThreadScheduler)
+                    .Subscribe(async _ =>
+                    {
+                        await ReinputPassword();
+                    })
+                    .DisposeWith(d);
+
 
                 this.BindCommand(ViewModel,
                     x => x.Toggle,
@@ -104,7 +115,6 @@ namespace NEU.IPGateway.UI.Views
         }
 
 
-
         private bool _inputShowLock = false;
 
         private async Task EnsurePinInputAnimationSecurity()
@@ -114,6 +124,23 @@ namespace NEU.IPGateway.UI.Views
                 if (_inputShowLock == false) return;
                 else await Task.Delay(300);
             }
+        }
+
+
+        private async Task ReinputPassword()
+        {
+            var dialog = new LoginWindow(ViewModel.SelectedUser.Username, false)
+            {
+                Message = "用户名或密码错误，本次键入的密码将会自动保存，但不会使用PIN保护，如果需要密码保护，请前往【用户管理】"
+            };
+            try
+            {
+                if (dialog.ShowDialog() == true)
+                    await ViewModel.ContinueConnectWithPassword.Execute(dialog.Result.Password);
+                else
+                    await ViewModel.CancelConnect.Execute();
+            }
+            catch { }
         }
 
         private async Task ShowPinInputAnimate()
@@ -229,7 +256,7 @@ namespace NEU.IPGateway.UI.Views
 
                 try
                 {
-                    await ViewModel.ContinueConnect.Execute(pin);
+                    await ViewModel.ContinueConnectWithPin.Execute(pin);
 
                 }
                 catch (Exception ex)

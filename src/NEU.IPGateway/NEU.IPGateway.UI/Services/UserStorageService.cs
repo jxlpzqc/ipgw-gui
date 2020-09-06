@@ -254,7 +254,7 @@ namespace NEU.IPGateway.UI.Services
                 });
                 return true;
             }
-            catch
+            catch(Exception  ex)
             {
                 return false;
             }

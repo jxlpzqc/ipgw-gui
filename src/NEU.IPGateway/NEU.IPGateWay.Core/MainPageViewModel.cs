@@ -1,6 +1,8 @@
 ﻿using NEU.IPGateway.Core.Models;
+using NEU.IPGateway.Core.Services;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using Splat;
 using System;
 using System.IO;
 using System.Reactive;
@@ -13,12 +15,6 @@ namespace NEU.IPGateway.Core
     {
 
         private GlobalStatusStore Global { get; set; } = GlobalStatusStore.Current;
-
-        [Reactive]
-        public User User { get; set; }
-
-        [Reactive]
-        public ConnectStatus ConnectionStatus { get; set; }
 
         [ObservableAsProperty]
         public User SelectedUser { get; }
@@ -57,7 +53,9 @@ namespace NEU.IPGateway.Core
 
         public ReactiveCommand<Unit, Unit> Toggle { get; }
 
-        public ReactiveCommand<string, Unit> ContinueConnect { get; }
+        public ReactiveCommand<string, Unit> ContinueConnectWithPin { get; }
+
+        public ReactiveCommand<string, Unit> ContinueConnectWithPassword { get; }
 
         public ReactiveCommand<Unit, Unit> CancelConnect { get; }
 
@@ -71,9 +69,23 @@ namespace NEU.IPGateway.Core
                 Global.ConnectStatus = ConnectStatus.Disconnected;
             });
 
-            this.ContinueConnect = ReactiveCommand.CreateFromTask<string>(async (pin) =>
+            this.ContinueConnectWithPin = ReactiveCommand.CreateFromTask<string>(async (pin) =>
             {
                 await Global.DoConnect.Execute(pin);
+            });
+
+            this.ContinueConnectWithPassword = ReactiveCommand.CreateFromTask<string>(async (password) =>
+            {
+                IUserStorageService service = Locator.Current.GetService<IUserStorageService>();
+                try
+                {
+                    await service.ResetUserPassword(Global.CurrentUser.Username, password, "");
+                }
+                catch
+                {
+                    throw new Exception("新密码保存错误");
+                }
+                await Global.DoConnect.Execute("");
             });
 
             this.Toggle = ReactiveCommand.CreateFromTask(async () =>
@@ -92,10 +104,13 @@ namespace NEU.IPGateway.Core
                     .ToPropertyEx(this, x => x.ConnectStatus)
                     .DisposeWith(d);
 
-                var errorStream = Observable.Merge(
-                    this.ContinueConnect.ThrownExceptions,
-                    this.Toggle.ThrownExceptions
-                    )
+                var errorSource = Observable.Merge(
+                    this.ContinueConnectWithPin.ThrownExceptions,
+                    this.Toggle.ThrownExceptions,
+                    this.ContinueConnectWithPassword.ThrownExceptions
+                    );
+
+                var errorStream = errorSource
                     .Where(u => u is ConnectionException);
 
                 errorStream
@@ -104,7 +119,7 @@ namespace NEU.IPGateway.Core
                     .Select(u => true)
                     .Delay(TimeSpan.FromMilliseconds(100), RxApp.MainThreadScheduler)
                     .Merge(this.CancelConnect.Select(_ => false))
-                    .Merge(this.ContinueConnect.IsExecuting.Select(_ => false))
+                    .Merge(this.ContinueConnectWithPin.IsExecuting.Select(_ => false))
                     .ObserveOn(RxApp.MainThreadScheduler)
                     .ToPropertyEx(this, x => x.PinRequired)
                     .DisposeWith(d);
@@ -116,16 +131,13 @@ namespace NEU.IPGateway.Core
                     .Select(u => true)
                     .Delay(TimeSpan.FromMilliseconds(100), RxApp.MainThreadScheduler)
                     .Merge(this.CancelConnect.Select(_ => false))
-                    .Merge(this.ContinueConnect.IsExecuting.Select(_ => false))
+                    .Merge(this.ContinueConnectWithPassword.IsExecuting.Select(_ => false))
                     .ObserveOn(RxApp.MainThreadScheduler)
                     .ToPropertyEx(this, x => x.PasswordRequired)
                     .DisposeWith(d);
 
 
-                var errorFromDriver = Observable.Merge(
-                    this.ContinueConnect.ThrownExceptions,
-                    this.Toggle.ThrownExceptions
-                    ).Where(u => 
+                var errorFromDriver = errorSource.Where(u => 
                         ((u is ConnectionException ce) && ce.ErrorType == ConnectionError.Unclear) ||
                         (!(u is ConnectionException)))
                     .Select(u => u.Message);
