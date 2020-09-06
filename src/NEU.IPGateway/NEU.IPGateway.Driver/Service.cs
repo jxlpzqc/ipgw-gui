@@ -133,7 +133,7 @@ namespace NEU.IPGateway.Driver
 
         private string GetLabelInfo(string str)
         {
-            return str.Split('\t',' ').Where(u => !string.IsNullOrEmpty(u)).Last();
+            return str.Split('\t').Where(u => !string.IsNullOrEmpty(u)).Last();
         }
 
         public async Task<AccountInfo> GetAccountInfo()

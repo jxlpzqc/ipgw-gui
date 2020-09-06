@@ -44,7 +44,7 @@
                         <Setter Property="FontSize" Value="18"></Setter>
                     </Style>
                 </StackPanel.Resources>
-                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                <StackPanel ToolTip="联网时长为已结算的已用流量，本次数据流量不计入"  HorizontalAlignment="Left" Orientation="Horizontal">
                     <Label>已用流量</Label>
                     <Label x:Name="usedDataText" Foreground="DarkBlue" Margin="10,0,0,0">198.89 MB</Label>
                 </StackPanel>
@@ -56,9 +56,10 @@
                     <Label>账户余额</Label>
                     <Label x:Name="remainMoneyText" Foreground="DarkBlue" Margin="10,0,0,0">23.50 CNY</Label>
                 </StackPanel>
-                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                <StackPanel ToolTip="联网时长为已结算的联网时长，本次时长不计入" HorizontalAlignment="Left" Orientation="Horizontal">
                     <Label>联网时长</Label>
                     <Label x:Name="durationText" Foreground="DarkBlue" Margin="10,0,0,0">29:32:12</Label>
+                    
                 </StackPanel>
                 
 
