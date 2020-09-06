@@ -55,8 +55,7 @@ namespace NEU.IPGateway.UI
         private void InitializeService()
         {
             Locator.CurrentMutable.Register<IUserStorageService>(() => new UserStorageService());
-            Locator.CurrentMutable.Register<IInternetGateWayService>(() => new InternetGateWayService());
-            
+            Driver.Register.Regist();
         }
 
         private void Application_Startup(object sender, StartupEventArgs e)

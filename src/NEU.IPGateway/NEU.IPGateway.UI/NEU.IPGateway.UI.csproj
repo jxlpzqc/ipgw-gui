@@ -29,6 +29,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NEU.IPGateWay.Core\NEU.IPGateway.Core.csproj" />
+    <ProjectReference Include="..\NEU.IPGateway.Driver\NEU.IPGateway.Driver.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
