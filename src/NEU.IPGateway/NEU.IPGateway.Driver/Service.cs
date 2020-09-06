@@ -143,7 +143,7 @@ namespace NEU.IPGateway.Driver
             var usedDataStr = GetLabelInfo(lines[7]);
             var usedData = double.Parse(usedDataStr.Substring(0, usedDataStr.Length - 1));
             var moneyStr = GetLabelInfo(lines[10]);
-            var money = double.Parse(moneyStr.Substring(0, usedDataStr.Length - 2));
+            var money = double.Parse(moneyStr.Substring(0, moneyStr.Length - 1));
             var timeStr = lines[8];
             var timelist = timeStr.Split(' ', '\t', '时', '分', '秒').Where(u => !string.IsNullOrEmpty(u)).ToList();
             var timelistLen = timelist.Count;
