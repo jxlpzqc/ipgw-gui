@@ -17,35 +17,40 @@ namespace NEU.IPGateway.Driver
 
         public Service(string ipgwFullname)
         {
+            if (!File.Exists(ipgwFullname))
+            {
+                throw new Exception("驱动加载错误：IPGW程序不存在");
+            }
+
             IPGWFullName = ipgwFullname;
 
         }
 
         public Service()
-            : this(Path.Combine(System.Reflection.Assembly.GetExecutingAssembly().Location, "ipgw.exe"))
+            : this(Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "ipgw.exe"))
         {
         }
 
 
-        private async Task<string> GetResult(string args)
+        private async Task<(string stdout,string stderr)> GetResult(string args)
         {
             var p = Process.Start(new ProcessStartInfo
             {
                 FileName = IPGWFullName,
                 Arguments = args,
-                CreateNoWindow = false
+                CreateNoWindow = true,
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                StandardOutputEncoding = Encoding.Default,
+                StandardErrorEncoding = Encoding.Default
             });
             var isExit = await Task.Run(() => p.WaitForExit(timeout));
             if (isExit)
             {
-                if(p.ExitCode == 0)
-                {
-                    return await p.StandardOutput.ReadToEndAsync();
-                }
-                else
-                {
-                    throw new IPGWException("驱动程序异常退出！");
-                }
+
+                return (await p.StandardOutput.ReadToEndAsync(), await p.StandardError.ReadToEndAsync());
+                
             }
             else
             {
@@ -58,55 +63,55 @@ namespace NEU.IPGateway.Driver
         public async Task<bool> Connect(string username, string password)
         {
             var result = await GetResult($"login -u {username} -p {password}");
-            if (result.Contains("登陆成功"))
+            if (result.stdout.Contains("登陆成功"))
             {
                 return true;
             }
             else
             {
-                if (result.Contains("学号或密码错误 请重试"))
+                if (result.stderr.Contains("学号或密码错误 请重试"))
                     throw new IPGWException(Core.ConnectionError.InvalidCredient);
                 else
-                    throw new IPGWException(result.Split('\n')[1]);
+                    throw new IPGWException(result.stderr);
             }
         }
 
         public async Task<bool> Disconnect(string username, string password)
         {
             var result = await GetResult($"logout -u {username} -p {password}");
-            if (result.Contains("登出成功"))
+            if (result.stdout.Contains("登出成功"))
             {
                 return true;
             }
             else
             {
-                if (result.Contains("学号或密码错误 请重试"))
+                if (result.stderr.Contains("学号或密码错误 请重试"))
                     throw new IPGWException(Core.ConnectionError.InvalidCredient);
                 else
-                    throw new IPGWException(result.Split('\n')[1]);
+                    throw new IPGWException(result.stderr);
             }
         }
 
         public async Task<bool> Disconnect()
         {
             var result = await GetResult($"logout");
-            if (result.Contains("登出成功"))
+            if (result.stdout.Contains("登出成功"))
             {
                 return true;
             }
             else
             {
-                throw new IPGWException(result.Split('\n')[1]);
+                throw new IPGWException(result.stderr);
             }
         }
 
         public async Task<bool> ForceDisconnect(string username, string password)
         {
-            var results = (await GetResult("list -d")).Split('\n').Skip(6);
+            var results = (await GetResult("list -d")).stdout.Split('\n').Skip(6);
             foreach (var result in results)
             {
                 var sid = result.Split(' ').Where(u => !string.IsNullOrEmpty(u)).Last();
-                var pstr = await GetResult($"kick {sid}");
+                var pstr = (await GetResult($"kick {sid}")).stdout;
                 if (!pstr.Contains("强制下线成功"))
                     throw new IPGWException("强制下线出现异常，请重试");
             }
@@ -119,15 +124,8 @@ namespace NEU.IPGateway.Driver
             var results = await GetResult("test");
             bool c, l;
 
-            if (results.Contains("已连接校园网"))
-                c = true;
-            else
-                c = false;
-
-            if (results.Contains("已登陆校园网"))
-                l = true;
-            else
-                l = false;
+            c = results.stdout.Contains("已连接校园网");            
+            l = results.stdout.Contains("已登陆校园网");
 
             return (c, l);
         }

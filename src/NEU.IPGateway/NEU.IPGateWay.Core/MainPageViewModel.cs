@@ -47,6 +47,12 @@ namespace NEU.IPGateway.Core
         [ObservableAsProperty]
         public bool RemainMoney { get; }
 
+        [ObservableAsProperty]
+        public string AlertMessage { get; }
+
+        [ObservableAsProperty]
+        public bool AlertRequired { get; }
+
         public ViewModelActivator Activator { get; }
 
         public ReactiveCommand<Unit, Unit> Toggle { get; }
@@ -84,7 +90,7 @@ namespace NEU.IPGateway.Core
 
                 this.WhenAnyValue(x => x.Global.ConnectStatus)
                     .ToPropertyEx(this, x => x.ConnectStatus)
-                    .DisposeWith(d);               
+                    .DisposeWith(d);
 
                 var errorStream = Observable.Merge(
                     this.ContinueConnect.ThrownExceptions,
@@ -113,6 +119,41 @@ namespace NEU.IPGateway.Core
                     .Merge(this.ContinueConnect.IsExecuting.Select(_ => false))
                     .ObserveOn(RxApp.MainThreadScheduler)
                     .ToPropertyEx(this, x => x.PasswordRequired)
+                    .DisposeWith(d);
+
+
+                var errorFromDriver = Observable.Merge(
+                    this.ContinueConnect.ThrownExceptions,
+                    this.Toggle.ThrownExceptions
+                    ).Where(u => 
+                        ((u is ConnectionException ce) && ce.ErrorType == ConnectionError.Unclear) ||
+                        (!(u is ConnectionException)))
+                    .Select(u => u.Message);
+
+
+                errorFromDriver
+                    .ObserveOn(RxApp.MainThreadScheduler)
+                    .ToPropertyEx(this, x => x.AlertMessage)
+                    .DisposeWith(d);
+
+
+                errorFromDriver
+                    .Select(u => true)
+                    .Merge(
+                            errorFromDriver
+                                .Delay(TimeSpan.FromMilliseconds(100))
+                                .Select(u => false)
+                    )
+                    .ObserveOn(RxApp.MainThreadScheduler)
+                    .ToPropertyEx(this, x => x.AlertRequired, false)
+                    .DisposeWith(d);
+
+
+                errorFromDriver
+                    .Subscribe(x =>
+                    {
+                        this.Global.ConnectStatus = ConnectStatus.Disconnected;
+                    })
                     .DisposeWith(d);
 
 

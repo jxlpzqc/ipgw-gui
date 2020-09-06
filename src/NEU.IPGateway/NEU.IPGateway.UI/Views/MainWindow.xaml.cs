@@ -50,13 +50,13 @@ namespace NEU.IPGateway.UI.Views
                 this.OneWayBind(ViewModel,
                     u => u.ConnectStatus,
                     v => v.selectUserButton.Visibility,
-                    u => u == IPGateway.Core.Models.ConnectStatus.Disconnected ? Visibility.Visible : Visibility.Collapsed)
+                    u => u == Core.Models.ConnectStatus.Disconnected ? Visibility.Visible : Visibility.Collapsed)
                     .DisposeWith(d);
 
                 this.WhenAnyValue(u => u.ViewModel.ConnectStatus)
                     .Subscribe(async p =>
                     {
-                        if (p == IPGateway.Core.Models.ConnectStatus.Connected)
+                        if (p == Core.Models.ConnectStatus.Connected)
                         {
                             await ShowInformationAnimate();
                         }
@@ -88,6 +88,15 @@ namespace NEU.IPGateway.UI.Views
                 this.BindCommand(ViewModel,
                     x => x.CancelConnect,
                     v => v.cancelBtn)
+                    .DisposeWith(d);
+
+                this.WhenAnyValue(u => u.ViewModel.AlertRequired)
+                    .Where(u=>u)
+                    .ObserveOn(RxApp.MainThreadScheduler)
+                    .Subscribe(u =>
+                    {
+                        MessageBox.Show(ViewModel.AlertMessage, "发生错误");
+                    })
                     .DisposeWith(d);
 
             });
