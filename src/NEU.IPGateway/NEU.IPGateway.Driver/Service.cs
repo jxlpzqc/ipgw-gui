@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NEU.IPGateway.Driver
 {
-    public class Service : IInternetGateWayService
+    public class Service : IInternetGatewayService
     {
         public string IPGWFullName { get; set; }
 

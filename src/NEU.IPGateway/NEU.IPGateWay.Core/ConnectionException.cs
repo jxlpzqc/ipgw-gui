@@ -38,10 +38,12 @@ namespace NEU.IPGateway.Core
         {
 
             ErrorType = type;
+            _message = message;
         }
         public ConnectionException(ConnectionError type, string message, Exception inner) : base(message, inner)
         {
             ErrorType = type;
+            _message = message;
         }
 
         protected ConnectionException(

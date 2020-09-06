@@ -10,12 +10,12 @@ namespace NEU.IPGateway.Driver
     {
         public static void Regist(string ipgwFullname)
         {
-            Locator.CurrentMutable.Register<IInternetGateWayService>(() => new Service(ipgwFullname));
+            Locator.CurrentMutable.Register<IInternetGatewayService>(() => new Service(ipgwFullname));
         }
 
         public static void Regist()
         {
-            Locator.CurrentMutable.Register<IInternetGateWayService>(() => new Service());
+            Locator.CurrentMutable.Register<IInternetGatewayService>(() => new Service());
         }
     }
 }

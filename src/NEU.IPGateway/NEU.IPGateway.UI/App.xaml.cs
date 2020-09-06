@@ -66,6 +66,56 @@ namespace NEU.IPGateway.UI
             }
 
             notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
+            
+            UpdateStateAndRemind();
+            System.Net.NetworkInformation.NetworkChange.NetworkAddressChanged += NetworkChange_NetworkAddressChanged;
+        }
+
+        private void UpdateStateAndRemind()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        GlobalStatusStore.Current.ConnectStatus = Core.Models.ConnectStatus.Checking;
+                    });
+                    var (connected, logedin) = await Locator.Current.GetService<IInternetGatewayService>().GetInfo();
+                    if (connected && !logedin)
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            var flag = true;
+                            foreach (var win in Windows)
+                            {
+                                if (win is RemindConnectPopupWindow rwin)
+                                {
+                                    rwin.Show();
+                                    rwin.Focus();
+                                    flag = false;
+                                    break;
+                                }
+                            }
+                            if(flag) new RemindConnectPopupWindow().Show();
+                        });
+                    }
+                    Dispatcher.Invoke(() =>
+                    {
+                        if (!connected) GlobalStatusStore.Current.ConnectStatus = Core.Models.ConnectStatus.DisconnectedFromNetwork;
+                        else if (logedin) GlobalStatusStore.Current.ConnectStatus = Core.Models.ConnectStatus.Connected;
+                        else GlobalStatusStore.Current.ConnectStatus = Core.Models.ConnectStatus.Disconnected;
+                    });
+                    
+                }
+                catch (Exception ex)
+                { }
+            });
+        }
+
+        private void NetworkChange_NetworkAddressChanged(object sender, EventArgs e)
+        {
+            UpdateStateAndRemind();  
         }
 
         private void ShowItemMenuItem_Click(object sender, RoutedEventArgs e)

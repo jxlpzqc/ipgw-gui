@@ -28,6 +28,10 @@ namespace NEU.IPGateway.Core.Models
         /// <summary>
         /// 未知状态或正在检测连接状态
         /// </summary>
-        Checking
+        Checking,
+        /// <summary>
+        /// 未连接到网络
+        /// </summary>
+        DisconnectedFromNetwork
     }
 }

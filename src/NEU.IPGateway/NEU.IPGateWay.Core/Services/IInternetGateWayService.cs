@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NEU.IPGateway.Core.Services
 {
-    public interface IInternetGateWayService
+    public interface IInternetGatewayService
     {
         Task<bool> Connect(string username,string password);
         Task<bool> Disconnect(string username,string password);

@@ -99,7 +99,7 @@ namespace NEU.IPGateway.Core
                     throw new ConnectionException(ConnectionError.InvalidPin);
                 }
 
-                return await Locator.Current.GetService<IInternetGateWayService>().Connect(CurrentUser.Username, password);
+                return await Locator.Current.GetService<IInternetGatewayService>().Connect(CurrentUser.Username, password);
                 
 
             }, canOperate);
@@ -115,7 +115,7 @@ namespace NEU.IPGateway.Core
             Disconnect = ReactiveCommand.CreateFromTask(async () =>
             {
                 ConnectStatus = ConnectStatus.Disconnecting;
-                return await Locator.Current.GetService<IInternetGateWayService>().Disconnect();
+                return await Locator.Current.GetService<IInternetGatewayService>().Disconnect();
             }, canOperate);
 
             Disconnect.Where(u => u).Subscribe(p =>

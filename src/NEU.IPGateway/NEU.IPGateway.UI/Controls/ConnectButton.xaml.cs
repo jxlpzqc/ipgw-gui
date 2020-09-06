@@ -35,6 +35,7 @@ namespace NEU.IPGateway.UI.Controls
             var self = (ConnectButton)d;
             var value = (ConnectStatus)e.NewValue;
 
+            
 
             var connectLogoAnimation = ((Storyboard)self.Resources["ConnectingLogoAnimation"]);
             var runningAnimation = ((Storyboard)self.Resources["RunningAnimation"]);
@@ -42,10 +43,16 @@ namespace NEU.IPGateway.UI.Controls
             connectLogoAnimation.Stop();
             runningAnimation.Stop();
 
+            self.disconnect.Visibility = Visibility.Collapsed;
+
+            self.connect.Visibility = Visibility.Collapsed;
+
+            self.disconnectedFromNetwork.Visibility = Visibility.Collapsed;
+
+            self.ellipse.Visibility = Visibility.Visible;
 
             Action showConnectButton = () =>
             {
-                self.disconnect.Visibility = Visibility.Hidden;
                 self.connect.Visibility = Visibility.Visible;
             };
 
@@ -53,7 +60,6 @@ namespace NEU.IPGateway.UI.Controls
             {
 
                 self.disconnect.Visibility = Visibility.Visible;
-                self.connect.Visibility = Visibility.Hidden;
             };
 
 
@@ -75,6 +81,15 @@ namespace NEU.IPGateway.UI.Controls
             else if(value == ConnectStatus.Connected)
             {
                 showDisconnectButton();
+            }
+            else if(value == ConnectStatus.Checking)
+            {
+                runningAnimation.Begin();
+            }
+            else if(value == ConnectStatus.DisconnectedFromNetwork)
+            {
+                self.disconnectedFromNetwork.Visibility = Visibility.Visible;
+                self.ellipse.Visibility = Visibility.Collapsed;
             }
 
         }
