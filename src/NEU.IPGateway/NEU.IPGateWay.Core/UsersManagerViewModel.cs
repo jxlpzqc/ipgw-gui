@@ -35,7 +35,7 @@ namespace NEU.IPGateway.Core
                     var v = (await service.GetUsers()).Select(u => new UserViewModel
                     {
                         User = u
-                    });
+                    }).ToList();
 
                     return v;
                 })
