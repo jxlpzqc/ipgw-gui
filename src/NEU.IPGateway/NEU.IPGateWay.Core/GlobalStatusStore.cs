@@ -118,10 +118,12 @@ namespace NEU.IPGateway.Core
                 return await Locator.Current.GetService<IInternetGatewayService>().Disconnect();
             }, canOperate);
 
-            Disconnect.Where(u => u).Subscribe(p =>
+            Disconnect.Where(u => u).Subscribe(_ =>
             {
                 ConnectStatus = ConnectStatus.Disconnected;
             });
+
+            Disconnect.ThrownExceptions.Subscribe(ex => { });
 
             Toggle = ReactiveCommand.CreateFromTask(async () =>
             {

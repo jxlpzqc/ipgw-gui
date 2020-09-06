@@ -34,6 +34,7 @@
 
                     <Label x:Name="selectedUserLabel">20180001</Label>
                     <Label x:Name="selectUserButton" Foreground="DarkBlue" Margin="10,0,0,0">更换账号></Label>
+                    <Label x:Name="nameText" FontWeight="Bold" Margin="10,0,0,0">N/A</Label>
                 </StackPanel>
             </StackPanel>
 
@@ -45,20 +46,21 @@
                 </StackPanel.Resources>
                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                     <Label>已用流量</Label>
-                    <Label Foreground="DarkBlue" Margin="10,0,0,0">198.89 MB</Label>
+                    <Label x:Name="usedDataText" Foreground="DarkBlue" Margin="10,0,0,0">198.89 MB</Label>
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                    <Label>剩余流量</Label>
-                    <Label Foreground="DarkBlue" Margin="10,0,0,0">801.11 MB</Label>
+                    <Label>套餐类型</Label>
+                    <Label x:Name="planTypeText" Foreground="DarkBlue" Margin="10,0,0,0">1000G / 120R</Label>
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                     <Label>账户余额</Label>
-                    <Label Foreground="DarkBlue" Margin="10,0,0,0">23.50 CNY</Label>
+                    <Label x:Name="remainMoneyText" Foreground="DarkBlue" Margin="10,0,0,0">23.50 CNY</Label>
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                    <Label>联网时间</Label>
-                    <Label Foreground="DarkBlue" Margin="10,0,0,0">29:32:12</Label>
+                    <Label>联网时长</Label>
+                    <Label x:Name="durationText" Foreground="DarkBlue" Margin="10,0,0,0">29:32:12</Label>
                 </StackPanel>
+                
 
             </StackPanel>
 

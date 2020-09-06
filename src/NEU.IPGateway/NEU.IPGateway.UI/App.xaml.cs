@@ -30,26 +30,54 @@ namespace NEU.IPGateway.UI
             InitializeService();
 
         }
-
-        private MainWindow _mainWindow;
-
+                
         public void ShowMainWindow()
         {
-            if (_mainWindow == null) _mainWindow = new MainWindow();
-            _mainWindow.Closing += (s, e) =>
+            bool flag = true;
+            foreach (var item in Windows)
             {
-                ((Window)s).Hide();
-                e.Cancel = true;
-            };
-            _mainWindow.Show();
+                if (item is MainWindow win)
+                {
+                    win.Show();
+                    win.Focus();                    
+                    flag = false;
+                }
+            }
+            if (flag)
+                new MainWindow().Show();
         }
 
 
         public void HideMainWindow()
         {
-            
-            _mainWindow?.Hide();
+            foreach (var item in Windows)
+            {
+                if (item is MainWindow win)
+                {
+                    win.Close();
+                }
+            }
+        }
 
+        private bool IsMainWindowTopmost()
+        {
+            bool res = false;
+
+            Dispatcher.Invoke(() =>
+            {
+                foreach (var item in Windows)
+                {
+                    if (item is MainWindow win)
+                    {
+                        if (win.IsActive) res = true;
+                        else res = false;
+                        return;
+                    }
+                }
+                res = false;
+
+            });
+            return res;
         }
 
         private void InitializeService()
@@ -81,8 +109,8 @@ namespace NEU.IPGateway.UI
                     {
                         GlobalStatusStore.Current.ConnectStatus = Core.Models.ConnectStatus.Checking;
                     });
-                    var (connected, logedin) = await Locator.Current.GetService<IInternetGatewayService>().GetInfo();
-                    if (connected && !logedin)
+                    var result = await Locator.Current.GetService<IInternetGatewayService>().Test();
+                    if (result.connected && !result.logedin && !IsMainWindowTopmost())
                     {
                         Dispatcher.Invoke(() =>
                         {
@@ -102,8 +130,8 @@ namespace NEU.IPGateway.UI
                     }
                     Dispatcher.Invoke(() =>
                     {
-                        if (!connected) GlobalStatusStore.Current.ConnectStatus = Core.Models.ConnectStatus.DisconnectedFromNetwork;
-                        else if (logedin) GlobalStatusStore.Current.ConnectStatus = Core.Models.ConnectStatus.Connected;
+                        if (!result.connected) GlobalStatusStore.Current.ConnectStatus = Core.Models.ConnectStatus.DisconnectedFromNetwork;
+                        else if (result.logedin) GlobalStatusStore.Current.ConnectStatus = Core.Models.ConnectStatus.Connected;
                         else GlobalStatusStore.Current.ConnectStatus = Core.Models.ConnectStatus.Disconnected;
                     });
                     
@@ -131,7 +159,6 @@ namespace NEU.IPGateway.UI
         private void ShowSettingMenuItem_Click(object sender, RoutedEventArgs e)
         {
             new Views.SettingsWindow().Show();
-
         }
 
         private void TaskbarIcon_TrayMouseDoubleClick(object sender, RoutedEventArgs e)

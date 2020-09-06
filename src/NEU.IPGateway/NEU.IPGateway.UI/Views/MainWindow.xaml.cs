@@ -47,6 +47,11 @@ namespace NEU.IPGateway.UI.Views
                     v => v.connectButton.Status)
                     .DisposeWith(d);
 
+                this.OneWayBind(ViewModel,
+                   u => u.ConnectStatus,
+                   v => v.nameText.Visibility,
+                   x => x == Core.Models.ConnectStatus.Connected ? Visibility.Visible : Visibility.Collapsed)
+                   .DisposeWith(d);
 
                 this.OneWayBind(ViewModel,
                     u => u.ConnectStatus,
@@ -89,6 +94,30 @@ namespace NEU.IPGateway.UI.Views
                     })
                     .DisposeWith(d);
 
+                this.OneWayBind(ViewModel,
+                    x => x.AccountInfo.UsedData,
+                    v => v.usedDataText.Content,
+                    x => x + " MB");
+
+                this.OneWayBind(ViewModel,
+                    x => x.AccountInfo.Name,
+                    v => v.nameText.Content);
+
+                this.OneWayBind(ViewModel,
+                    x => x.AccountInfo.Plan,
+                    v => v.planTypeText.Content);
+
+                this.OneWayBind(ViewModel,
+                    x => x.AccountInfo.RemainMoney,
+                    v => v.remainMoneyText.Content,
+                    x => x + " CNY");
+
+
+                this.OneWayBind(ViewModel,
+                    x => x.AccountInfo.UsedTime,
+                    v => v.durationText.Content,
+                    x => (int)x.TotalHours + ":" + (int)x.Minutes + ":" + (int)x.Seconds
+                );
 
                 this.BindCommand(ViewModel,
                     x => x.Toggle,

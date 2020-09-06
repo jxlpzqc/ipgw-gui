@@ -9,10 +9,10 @@ namespace NEU.IPGateway.Core.Models
         public string Name { get; set; }
         public string StudentNo { get; set; }
         public string Plan { get; set; }
+        public double UsedData { get; set; }
         public TimeSpan UsedTime { get; set; }
         public int Times { get; set; }
         public double RemainMoney { get; set; }
         public string Status { get; set; }
-
     }
 }

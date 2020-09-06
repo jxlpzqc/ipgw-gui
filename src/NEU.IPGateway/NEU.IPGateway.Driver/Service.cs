@@ -1,4 +1,5 @@
-﻿using NEU.IPGateway.Core.Services;
+﻿using NEU.IPGateway.Core.Models;
+using NEU.IPGateway.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -119,7 +120,7 @@ namespace NEU.IPGateway.Driver
         }
 
 
-        public async Task<(bool connected, bool logedin)> GetInfo()
+        public async Task<(bool connected, bool logedin)> Test()
         {
             var results = await GetResult("test");
             bool c, l;
@@ -128,6 +129,41 @@ namespace NEU.IPGateway.Driver
             l = results.stdout.Contains("已登陆校园网");
 
             return (c, l);
+        }
+
+        private string GetLabelInfo(string str)
+        {
+            return str.Split('\t',' ').Where(u => !string.IsNullOrEmpty(u)).Last();
+        }
+
+        public async Task<AccountInfo> GetAccountInfo()
+        {
+            var (stdout,_) = await GetResult("list -i");
+            var lines = stdout.Split('\n');
+            var usedDataStr = GetLabelInfo(lines[7]);
+            var usedData = double.Parse(usedDataStr.Substring(0, usedDataStr.Length - 1));
+            var moneyStr = GetLabelInfo(lines[10]);
+            var money = double.Parse(moneyStr.Substring(0, usedDataStr.Length - 2));
+            var timeStr = lines[8];
+            var timelist = timeStr.Split(' ', '\t', '时', '分', '秒').Where(u => !string.IsNullOrEmpty(u)).ToList();
+            var timelistLen = timelist.Count;
+            TimeSpan time = new TimeSpan(
+                int.Parse(timelist[timelistLen - 3]),
+                int.Parse(timelist[timelistLen - 2]),
+                int.Parse(timelist[timelistLen - 1])
+            );
+
+            return new AccountInfo
+            {
+                Name = GetLabelInfo(lines[2]),
+                StudentNo = GetLabelInfo(lines[3]),
+                Plan = GetLabelInfo(lines[6]),
+                UsedData = usedData,
+                Times = int.Parse(GetLabelInfo(lines[9])),
+                RemainMoney = money,
+                UsedTime = time
+            };
+
         }
     }
 }

@@ -49,6 +49,9 @@ namespace NEU.IPGateway.Core
         [ObservableAsProperty]
         public bool AlertRequired { get; }
 
+        [ObservableAsProperty]
+        public AccountInfo AccountInfo { get; }
+
         public ViewModelActivator Activator { get; }
 
         public ReactiveCommand<Unit, Unit> Toggle { get; }
@@ -112,6 +115,21 @@ namespace NEU.IPGateway.Core
 
                 var errorStream = errorSource
                     .Where(u => u is ConnectionException);
+
+
+                this.WhenAnyValue(x => x.ConnectStatus)
+                    .Where(u => u == ConnectStatus.Connected)
+                    .Select(u => Unit.Default)
+                    .Merge(Observable.Interval(TimeSpan.FromMinutes(10)).Select(p => Unit.Default))
+                    .SelectMany(async _ => await Locator.Current.GetService<IInternetGatewayService>().GetAccountInfo())
+                    .Catch(Observable.Return(new AccountInfo
+                    {
+                        Name = "获取失败",
+                        Plan = "N/A",
+                        UsedTime = TimeSpan.FromMinutes(0)
+                    }))
+                    .ObserveOn(RxApp.MainThreadScheduler)
+                    .ToPropertyEx(this, x => x.AccountInfo);
 
                 errorStream
                     .Select(u => ((ConnectionException)u).ErrorType)

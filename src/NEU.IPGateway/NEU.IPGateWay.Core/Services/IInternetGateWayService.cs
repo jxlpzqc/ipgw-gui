@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NEU.IPGateway.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace NEU.IPGateway.Core.Services
         Task<bool> Disconnect();
         Task<bool> ForceDisconnect(string username, string password);
 
-        Task<(bool connected,bool logedin)> GetInfo();
+        Task<(bool connected,bool logedin)> Test();
+        Task<AccountInfo> GetAccountInfo();
     }
 }
