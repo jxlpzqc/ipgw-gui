@@ -28,7 +28,11 @@ namespace NEU.IPGateway.UI
         {
             Locator.CurrentMutable.RegisterViewsForViewModels(Assembly.GetCallingAssembly());
             InitializeService();
+        }
 
+        public void SetLanguage(string language)
+        {
+            this.Resources.MergedDictionaries[0] = LoadComponent(new Uri(@"Languages\" + language + @"\CommonStrings.xaml", UriKind.Relative)) as ResourceDictionary;
         }
                 
         public void ShowMainWindow()

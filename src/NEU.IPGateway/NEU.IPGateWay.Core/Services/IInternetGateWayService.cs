@@ -15,5 +15,6 @@ namespace NEU.IPGateway.Core.Services
 
         Task<(bool connected,bool logedin)> Test();
         Task<AccountInfo> GetAccountInfo();
+        Task<string> GetDriverVersion();
     }
 }

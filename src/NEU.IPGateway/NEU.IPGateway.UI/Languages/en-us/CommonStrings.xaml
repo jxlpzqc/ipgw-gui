@@ -1,13 +1,31 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:s="clr-namespace:System;assembly=mscorlib">
+                    xmlns:s="clr-namespace:System;assembly=System.Runtime">
     <s:String x:Key="connect">Connect</s:String>
     <s:String x:Key="disconnect">Disconnect</s:String>
     <s:String x:Key="login">Login</s:String>
     <s:String x:Key="logout">Logout</s:String>
-    <s:String x:Key="application_name">NEU IPGW Assistant</s:String>
+    <s:String x:Key="application_name">NEU IPGateway Assistant</s:String>
     <s:String x:Key="close">Close</s:String>
-    <s:String x:Key="studentno">Student No.</s:String>
+    <s:String x:Key="studentno">Student ID</s:String>
     <s:String x:Key="password">Password</s:String>
     <s:String x:Key="help">Help</s:String>
+    <s:String x:Key="settings">Settings</s:String>
+    <s:String x:Key="enterpin">Please input pin</s:String>
+    <s:String x:Key="manage_user">Account settings</s:String>
+    <s:String x:Key="change_account">Switch account ></s:String>
+    <s:String x:Key="used_data_hint">The data displayed is those which has been caculated，the data in this connection will not reckoned.</s:String>
+    <s:String x:Key="used_data">Used Data</s:String>
+    <s:String x:Key="plan_type">Plan Type</s:String>
+    <s:String x:Key="remain_money">Remain Money</s:String>
+    <s:String x:Key="connected_duration">Connected Duration</s:String>
+    <s:String x:Key="connected_duration_hint">The duration displayed is those which has been caculated，the duration in this connection will not reckoned.</s:String>
+    <s:String x:Key="manage_account">Manage Account</s:String>
+    <s:String x:Key="force_disconnect">Force Disconncet</s:String>
+    <s:String x:Key="official_service">Official Service</s:String>
+    <s:String x:Key="connection_test">Connection Test</s:String>
+    <s:String x:Key="system_setting">Settings</s:String>
+    <s:String x:Key="pin_need_hint">We need your Pin to continue connecting.</s:String>
+    <s:String x:Key="cancel">Cancel</s:String>
+
 </ResourceDictionary>

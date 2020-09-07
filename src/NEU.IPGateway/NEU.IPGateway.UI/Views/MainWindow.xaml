@@ -33,7 +33,9 @@
                 <StackPanel Margin="10" HorizontalAlignment="Center" Orientation="Horizontal">
 
                     <Label x:Name="selectedUserLabel">20180001</Label>
-                    <Label x:Name="selectUserButton" Foreground="DarkBlue" Margin="10,0,0,0">更换账号></Label>
+                    <Label x:Name="selectUserButton" Foreground="DarkBlue" Margin="10,0,0,0">
+                        <DynamicResource ResourceKey="change_account"></DynamicResource>
+                    </Label>
                     <Label x:Name="nameText" FontWeight="Bold" Margin="10,0,0,0">N/A</Label>
                 </StackPanel>
             </StackPanel>
@@ -44,24 +46,30 @@
                         <Setter Property="FontSize" Value="18"></Setter>
                     </Style>
                 </StackPanel.Resources>
-                <StackPanel ToolTip="联网时长为已结算的已用流量，本次数据流量不计入"  HorizontalAlignment="Left" Orientation="Horizontal">
-                    <Label>已用流量</Label>
+                <StackPanel ToolTip="{DynamicResource used_data_hint}"  HorizontalAlignment="Left" Orientation="Horizontal">
+                    <Label>
+                        <DynamicResource ResourceKey="used_data"></DynamicResource>
+                    </Label>
                     <Label x:Name="usedDataText" Foreground="DarkBlue" Margin="10,0,0,0">198.89 MB</Label>
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                    <Label>套餐类型</Label>
+                    <Label>
+                        <DynamicResource ResourceKey="plan_type"></DynamicResource>
+                    </Label>
                     <Label x:Name="planTypeText" Foreground="DarkBlue" Margin="10,0,0,0">1000G / 120R</Label>
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                    <Label>账户余额</Label>
+                    <Label>
+                        <DynamicResource ResourceKey="remain_money"></DynamicResource>
+                    </Label>
                     <Label x:Name="remainMoneyText" Foreground="DarkBlue" Margin="10,0,0,0">23.50 CNY</Label>
                 </StackPanel>
-                <StackPanel ToolTip="联网时长为已结算的联网时长，本次时长不计入" HorizontalAlignment="Left" Orientation="Horizontal">
-                    <Label>联网时长</Label>
-                    <Label x:Name="durationText" Foreground="DarkBlue" Margin="10,0,0,0">29:32:12</Label>
-                    
-                </StackPanel>
-                
+                <StackPanel ToolTip="{DynamicResource connected_duration_hint}" HorizontalAlignment="Left" Orientation="Horizontal">
+                    <Label>
+                        <DynamicResource ResourceKey="connected_duration"></DynamicResource>
+                    </Label>
+                    <Label x:Name="durationText" Foreground="DarkBlue" Margin="10,0,0,0">29:32:12</Label>                    
+                </StackPanel>               
 
             </StackPanel>
 
@@ -88,7 +96,7 @@
                                             <Setter Property="Background" Value="{DynamicResource ThemeColor2}"></Setter>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
-                                    <StackPanel Orientation="Horizontal" Background="{TemplateBinding Background}">
+                                    <StackPanel Width="150" Orientation="Horizontal" Background="{TemplateBinding Background}">
                                         <ContentPresenter Margin="10"></ContentPresenter>
                                     </StackPanel>
                                     
@@ -105,32 +113,32 @@
                 </UniformGrid.Resources>
 
                 <Button x:Name="manageUserBtn" Click="manageUserBtn_Click">
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                         <fa:FontAwesome Icon="User" Margin="0,2,0,0"></fa:FontAwesome>
-                        <TextBlock Margin="5,0,0,0">账户管理</TextBlock>
+                        <TextBlock Margin="5,0,0,0" Text="{DynamicResource manage_account}"></TextBlock>
                     </StackPanel>
                 </Button>
                 <Button>
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                         <fa:FontAwesome Icon="Unlink"  Margin="0,2,0,0"></fa:FontAwesome>
-                        <TextBlock Margin="5,0,0,0">强制下线</TextBlock>
+                        <TextBlock Margin="5,0,0,0" Text="{DynamicResource force_disconnect}"></TextBlock>
                     </StackPanel></Button>
                 <Button x:Name="officialServiceBtn">
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                         <fa:FontAwesome Icon="Server"  Margin="0,2,0,0"></fa:FontAwesome>
-                        <TextBlock Margin="5,0,0,0">官方服务</TextBlock>
+                        <TextBlock Margin="5,0,0,0" Text="{DynamicResource official_service}"></TextBlock>
                     </StackPanel>
                 </Button>
                 <Button>
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                         <fa:FontAwesome Icon="Check"  Margin="0,2,0,0"></fa:FontAwesome>
-                        <TextBlock Margin="5,0,0,0">连接诊断</TextBlock>
+                        <TextBlock Margin="5,0,0,0" Text="{DynamicResource connection_test}"></TextBlock>
                     </StackPanel>
                 </Button>
                 <Button x:Name="settingNavigationBtn" Click="settingNavigationBtn_Click">
-                    <StackPanel Orientation="Horizontal">
-                        <fa:FontAwesome Icon="Cogs"  Margin="0,2,0,0"></fa:FontAwesome>
-                        <TextBlock Margin="5,0,0,0">系统设置</TextBlock>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                        <fa:FontAwesome Icon="Cogs" Margin="0,2,0,0"></fa:FontAwesome>
+                        <TextBlock Margin="5,0,0,0" Text="{DynamicResource system_setting}" ></TextBlock>
                     </StackPanel>
                 </Button>
             </UniformGrid>
@@ -138,9 +146,11 @@
         <Grid x:Name="pinInputGrid" Visibility="Collapsed">
             
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBlock TextAlignment="Center" FontSize="22" FontWeight="Bold">本次连接需要输入PIN值</TextBlock>
+                <TextBlock TextAlignment="Center" FontSize="22" FontWeight="Bold" Text="{DynamicResource pin_need_hint}"></TextBlock>
                 <controls:PinInput x:Name="pinInput" FinishedInput="PinInput_FinishedInput"></controls:PinInput>
-                <Button x:Name="cancelBtn" Style="{StaticResource PlainButtonStyle}">取消</Button>
+                <Button x:Name="cancelBtn" Style="{StaticResource PlainButtonStyle}">
+                    <DynamicResource ResourceKey="cancel"></DynamicResource>
+                </Button>
             </StackPanel>
             
         </Grid>

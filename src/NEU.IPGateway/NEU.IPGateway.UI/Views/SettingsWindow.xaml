@@ -1,10 +1,13 @@
-﻿<Window x:Class="NEU.IPGateway.UI.Views.SettingsWindow"
+﻿<rui:ReactiveWindow x:Class="NEU.IPGateway.UI.Views.SettingsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:rui="http://reactiveui.net"
+        xmlns:core="clr-namespace:NEU.IPGateway.Core;assembly=NEU.IPGateWay.Core"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NEU.IPGateway.UI.Views" xmlns:controls="clr-namespace:NEU.IPGateway.UI.Controls"
         mc:Ignorable="d"
+        x:TypeArguments="core:SettingsViewModel"
         Title="{DynamicResource settings}" Height="500" Width="650">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -42,61 +45,55 @@
                 <TextBlock Style="{StaticResource SettingTitle}">通用</TextBlock>
                 <StackPanel Margin="5" Orientation="Horizontal">
                     <TextBlock>显示语言</TextBlock>
-                    <ComboBox Margin="10,0" SelectedIndex="0">
+                    <ComboBox x:Name="languageCombo" Margin="10,0" SelectedIndex="0">
                         <ComboBoxItem>简体中文</ComboBoxItem>
                         <ComboBoxItem>English</ComboBoxItem>
                     </ComboBox>
                 </StackPanel>
-                
-                <CheckBox>开机自动运行</CheckBox>
-                <CheckBox>关闭主窗口时托盘运行</CheckBox>
-                <CheckBox>接入校园网提醒连接</CheckBox>
-                <CheckBox>接入校园网自动连接</CheckBox>
-                <CheckBox>连接成功时通知</CheckBox>
-                <CheckBox>从互联网断开时通知</CheckBox>
-                <CheckBox>流量用尽提醒</CheckBox>
-                <CheckBox>长时间上网休息提醒</CheckBox>
 
-                <TextBlock Style="{StaticResource SettingTitle}">隐私与安全</TextBlock>
-                <CheckBox>通过Windows加密算法加密保存的密码</CheckBox>
-                <CheckBox>程序崩溃时上传错误报告</CheckBox>
+                <CheckBox x:Name="launchCb">开机自动运行</CheckBox>
                 
+                <CheckBox x:Name="autoRemindCb">接入校园网提醒连接</CheckBox>
+                <CheckBox x:Name="autoConnectCb">接入校园网自动连接</CheckBox>
+                
+                <!--<CheckBox x:Name="disConnectCb">从互联网断开时通知</CheckBox>-->
+               
+                <TextBlock Style="{StaticResource SettingTitle}">隐私与安全</TextBlock>
+                <CheckBox x:Name="autoUploadCrashCb">程序崩溃时上传错误报告</CheckBox>
+
                 <TextBlock Style="{StaticResource SettingTitle}">自动更新</TextBlock>
 
-                <CheckBox>当有更新程序时更新</CheckBox>
-                <CheckBox>静默进行更新（不提醒）</CheckBox>
+                <CheckBox x:Name="updateCb">当有更新程序时更新</CheckBox>
+                <CheckBox x:Name="silentUpdateCb">静默进行更新（不提醒）</CheckBox>
 
 
                 <TextBlock Style="{StaticResource SettingTitle}">版本信息</TextBlock>
 
-                <TextBlock FontSize="23">东大网关助手 Beta</TextBlock>
+                <TextBlock FontSize="23">东大网关助手 Alpha</TextBlock>
+                
                 <StackPanel Orientation="Horizontal">
-                    <Label>主版本号</Label>
-                    <Label>1.0.0</Label>
-                </StackPanel>
-                <!--<StackPanel Orientation="Horizontal">
                     <Label>界面程序版本号</Label>
-                    <Label>1.0.0</Label>
+                    <Label x:Name="uiVersionText">1.0.0</Label>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label>视图模型程序版本号</Label>
-                    <Label>1.0.0</Label>
-                </StackPanel>-->
-                <StackPanel Orientation="Horizontal">
-                    <Label>IPGW驱动程序版本号</Label>
-                    <Label>1.0.0</Label>
+                    <Label x:Name="coreVersionText">1.0.0</Label>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
+                    <Label>IPGW驱动程序版本号</Label>
+                    <Label x:Name="driverVersionText">1.0.0</Label>
+                </StackPanel>
+                <!--<StackPanel Orientation="Horizontal">
                     <Label>更新时间</Label>
                     <Label>2020/09/20</Label>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label>版本发布时间</Label>
                     <Label>2020/09/18</Label>
-                </StackPanel>
+                </StackPanel>-->
                 <StackPanel Orientation="Horizontal">
                     <Label>运行平台</Label>
-                    <Label>netcore on win10 x64</Label>
+                    <Label x:Name="targetPlatformText">netcore on win10 x64</Label>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label>当前版本更新日志</Label>
@@ -115,4 +112,4 @@
 
 
     </Grid>
-</Window>
+</rui:ReactiveWindow>

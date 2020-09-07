@@ -6,7 +6,7 @@
     <AssemblyTitle>东大网关助手</AssemblyTitle>
     <Product>东大网关助手</Product>
     <Company>程子丘</Company>
-    <Version>0.2.1</Version>
+    <Version>1.0.0</Version>
     <Copyright>Copyright © Cheng Ziqiu 2020</Copyright>
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <UseWPF>true</UseWPF>
@@ -20,6 +20,14 @@
     <PublishTrimmed>true</PublishTrimmed>
   </PropertyGroup>
   
+  <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp3.1'">
+    <DefineConstants>TRACE;core31</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)'=='net461'">
+    <DefineConstants>TRACE;net461</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="ApplicationIcon.ico" />
     <None Remove="Assets\Connected.png" />

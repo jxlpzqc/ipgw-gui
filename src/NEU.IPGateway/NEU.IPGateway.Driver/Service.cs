@@ -43,8 +43,8 @@ namespace NEU.IPGateway.Driver
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
-                StandardOutputEncoding = Encoding.Default,
-                StandardErrorEncoding = Encoding.Default
+                StandardOutputEncoding = Encoding.UTF8,
+                StandardErrorEncoding = Encoding.UTF8
             });
             var isExit = await Task.Run(() => p.WaitForExit(timeout));
             if (isExit)
@@ -165,5 +165,14 @@ namespace NEU.IPGateway.Driver
             };
 
         }
+
+        public async Task<string> GetDriverVersion()
+        {
+            var str = await GetResult("version");
+            var secondLine = str.stdout.Split('\n')[1];
+            var ver = secondLine.Substring(4);
+            return ver;
+        }
     }
+
 }

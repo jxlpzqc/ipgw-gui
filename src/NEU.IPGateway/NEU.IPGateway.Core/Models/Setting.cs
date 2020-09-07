@@ -1,5 +1,7 @@
-﻿using ReactiveUI;
+﻿using NEU.IPGateway.Core.Services;
+using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using Splat;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -36,5 +38,15 @@ namespace NEU.IPGateway.Core.Models
         [Reactive]
         public bool SilentUpdate { get; set; } = true;
 
+        public Setting()
+        {
+            this.PropertyChanged += Setting_PropertyChanged;
+        }
+
+        private async void Setting_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            var settingService = Locator.Current.GetService<ISettingStorageService>();
+            await settingService.SaveSetting(this);            
+        }
     }
 }

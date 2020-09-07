@@ -19,7 +19,7 @@ namespace NEU.IPGateway.UI.Services
 
             return await Task.Run(() =>
             {
-                using (var stream = File.OpenRead(path))
+                using (var stream = File.Open(path,FileMode.Open,FileAccess.Read, FileShare.ReadWrite))
                 {
                     return serializer.Deserialize(stream) as Setting;
                 }
@@ -36,9 +36,10 @@ namespace NEU.IPGateway.UI.Services
 
             await Task.Run(() =>
             {
-                using (var stream = File.OpenWrite(path))
+                using (var stream = File.Open(path, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
                 {
                     serializer.Serialize(stream, setting);
+                    stream.Close();
                 }
             });
         }
