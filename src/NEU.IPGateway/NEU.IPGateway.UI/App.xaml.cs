@@ -83,6 +83,7 @@ namespace NEU.IPGateway.UI
         private void InitializeService()
         {
             Locator.CurrentMutable.Register<IUserStorageService>(() => new UserStorageService());
+            Locator.CurrentMutable.Register<ISettingStorageService>(() => new SettingStorageService());
             Driver.Register.Regist();
         }
 

@@ -20,6 +20,8 @@ namespace NEU.IPGateway.Core
         [Reactive]
         public ConnectStatus ConnectStatus { get; set; }
 
+        [Reactive]
+        public Setting Setting { get; set; }
 
         readonly ObservableAsPropertyHelper<bool> _canConnect;
 
@@ -47,6 +49,16 @@ namespace NEU.IPGateway.Core
             var userService = Locator.Current.GetService<IUserStorageService>();
             CurrentUser = await userService.GetDefaultUser();
 
+            var settingService = Locator.Current.GetService<ISettingStorageService>();
+            try 
+            { 
+                Setting = await settingService.ReadSetting();
+            }
+            catch
+            {
+                Setting = new Setting();
+                await settingService.SaveSetting(Setting);
+            }
         }
 
         private GlobalStatusStore()
