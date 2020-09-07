@@ -27,5 +27,24 @@
     <s:String x:Key="system_setting">系统设置</s:String>
     <s:String x:Key="pin_need_hint">本次连接需要输入PIN值</s:String>
     <s:String x:Key="cancel">取消</s:String>
-    
+    <!-- setting page -->
+    <s:String x:Key="account">账户</s:String>
+    <s:String x:Key="general">通用</s:String>
+    <s:String x:Key="language">显示语言</s:String>
+    <s:String x:Key="ss0">开机自动运行</s:String>
+    <s:String x:Key="ss1">接入校园网提醒连接</s:String>
+    <s:String x:Key="ss2">无需点击自动连接</s:String>
+    <s:String x:Key="secure_and_privacy">隐私与安全</s:String>
+    <s:String x:Key="ss3">程序崩溃时上传错误报告</s:String>
+    <s:String x:Key="ss4">当有更新程序时更新</s:String>
+    <s:String x:Key="ss5">静默进行更新（不提醒）</s:String>
+    <s:String x:Key="auto_update">自动更新</s:String>
+    <s:String x:Key="version_info">版本信息</s:String>
+    <s:String x:Key="ui_version">界面程序版本号</s:String>
+    <s:String x:Key="core_version">视图模型程序版本号</s:String>
+    <s:String x:Key="ipgw_version">驱动程序版本号</s:String>
+    <s:String x:Key="runtime_platform">运行平台</s:String>
+    <s:String x:Key="as1">Powered by An Honest Liar</s:String>
+    <s:String x:Key="as2">东大网关助手的诞生离不开unbyte/ipgw和相关开源软件的支持</s:String>
+    <s:String x:Key="as3">在Github上给我一个星星 (*^_^*)，是我维护该程序的最大动力</s:String>
 </ResourceDictionary>

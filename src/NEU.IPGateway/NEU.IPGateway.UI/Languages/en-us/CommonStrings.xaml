@@ -12,7 +12,7 @@
     <s:String x:Key="help">Help</s:String>
     <s:String x:Key="settings">Settings</s:String>
     <s:String x:Key="enterpin">Please input pin</s:String>
-    <s:String x:Key="manage_user">Account settings</s:String>
+    <s:String x:Key="manage_user">Account Settings</s:String>
     <s:String x:Key="change_account">Switch account ></s:String>
     <s:String x:Key="used_data_hint">The data displayed is those which has been caculated，the data in this connection will not reckoned.</s:String>
     <s:String x:Key="used_data">Used Data</s:String>
@@ -27,5 +27,24 @@
     <s:String x:Key="system_setting">Settings</s:String>
     <s:String x:Key="pin_need_hint">We need your Pin to continue connecting.</s:String>
     <s:String x:Key="cancel">Cancel</s:String>
-
+    <!-- setting page -->
+    <s:String x:Key="account">Account</s:String>
+    <s:String x:Key="general">General</s:String>
+    <s:String x:Key="language">Display Language</s:String>
+    <s:String x:Key="ss0">Auto launch when startup</s:String>
+    <s:String x:Key="ss1">Remind to connect in the NEU network</s:String>
+    <s:String x:Key="ss2">Auto connect without clicking any button</s:String>
+    <s:String x:Key="secure_and_privacy">Privacy and security</s:String>
+    <s:String x:Key="ss3">Auto upload bug report when application crash</s:String>
+    <s:String x:Key="ss4">Update when new version releases</s:String>
+    <s:String x:Key="ss5">Silently update without any notification</s:String>
+    <s:String x:Key="auto_update">Auto Update</s:String>
+    <s:String x:Key="version_info">Version Infomation</s:String>
+    <s:String x:Key="ui_version">UI Version</s:String>
+    <s:String x:Key="core_version">Core Version</s:String>
+    <s:String x:Key="ipgw_version">Driver Version</s:String>
+    <s:String x:Key="runtime_platform">Platform</s:String>
+    <s:String x:Key="as1">Powered by An Honest Liar</s:String>
+    <s:String x:Key="as2">NEU IPGateway Assistant is made possible by the unbyte/ipgw project and other open source software.</s:String>
+    <s:String x:Key="as3">Give me a star on Github.com (*^_^*), which contributes to the most exciting impulse for me to develop, maintain and update the program.</s:String>
 </ResourceDictionary>

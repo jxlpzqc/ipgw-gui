@@ -40,72 +40,68 @@
 
             </ScrollViewer.Resources>
             <StackPanel Margin="10">
-                <TextBlock Style="{StaticResource SettingTitle}">账户</TextBlock>
+                <TextBlock Style="{StaticResource SettingTitle}" Text="{DynamicResource account}"></TextBlock>
                 <controls:UsersManager></controls:UsersManager>
-                <TextBlock Style="{StaticResource SettingTitle}">通用</TextBlock>
+                <TextBlock Style="{StaticResource SettingTitle}" Text="{DynamicResource general}"></TextBlock>
                 <StackPanel Margin="5" Orientation="Horizontal">
-                    <TextBlock>显示语言</TextBlock>
+                    <TextBlock Text="{DynamicResource language}"></TextBlock>
                     <ComboBox x:Name="languageCombo" Margin="10,0" SelectedIndex="0">
                         <ComboBoxItem>简体中文</ComboBoxItem>
                         <ComboBoxItem>English</ComboBoxItem>
                     </ComboBox>
                 </StackPanel>
 
-                <CheckBox x:Name="launchCb">开机自动运行</CheckBox>
-                
-                <CheckBox x:Name="autoRemindCb">接入校园网提醒连接</CheckBox>
-                <CheckBox x:Name="autoConnectCb">接入校园网自动连接</CheckBox>
+                <CheckBox x:Name="launchCb" Content="{DynamicResource ss0}"></CheckBox>
+
+                <CheckBox x:Name="autoRemindCb" Content="{DynamicResource ss1}"></CheckBox>
+                <CheckBox x:Name="autoConnectCb" Content="{DynamicResource ss2}"></CheckBox>
                 
                 <!--<CheckBox x:Name="disConnectCb">从互联网断开时通知</CheckBox>-->
-               
-                <TextBlock Style="{StaticResource SettingTitle}">隐私与安全</TextBlock>
-                <CheckBox x:Name="autoUploadCrashCb">程序崩溃时上传错误报告</CheckBox>
 
-                <TextBlock Style="{StaticResource SettingTitle}">自动更新</TextBlock>
+                <TextBlock Style="{StaticResource SettingTitle}" Text="{DynamicResource secure_and_privacy}"></TextBlock>
+                <CheckBox x:Name="autoUploadCrashCb" Content="{DynamicResource ss3}"></CheckBox>
 
-                <CheckBox x:Name="updateCb">当有更新程序时更新</CheckBox>
-                <CheckBox x:Name="silentUpdateCb">静默进行更新（不提醒）</CheckBox>
+                <TextBlock Style="{StaticResource SettingTitle}" Text="{DynamicResource auto_update}"></TextBlock>
+
+                <CheckBox x:Name="updateCb" Content="{DynamicResource ss4}"></CheckBox>
+                <CheckBox x:Name="silentUpdateCb" Content="{DynamicResource ss5}"></CheckBox>
 
 
-                <TextBlock Style="{StaticResource SettingTitle}">版本信息</TextBlock>
+                <TextBlock Style="{StaticResource SettingTitle}" Text="{DynamicResource version_info}"></TextBlock>
 
-                <TextBlock FontSize="23">东大网关助手 Alpha</TextBlock>
+                <TextBlock FontSize="23" Text="{DynamicResource application_name}"></TextBlock>
                 
                 <StackPanel Orientation="Horizontal">
-                    <Label>界面程序版本号</Label>
-                    <Label x:Name="uiVersionText">1.0.0</Label>
+                    <Label Content="{DynamicResource ui_version}"></Label>
+                    <Label x:Name="uiVersionText">----</Label>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Label>视图模型程序版本号</Label>
-                    <Label x:Name="coreVersionText">1.0.0</Label>
+                    <Label Content="{DynamicResource core_version}"></Label>
+                    <Label x:Name="coreVersionText">----</Label>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Label>IPGW驱动程序版本号</Label>
-                    <Label x:Name="driverVersionText">1.0.0</Label>
+                    <Label Content="{DynamicResource ipgw_version}"></Label>
+                    <Label x:Name="driverVersionText">----</Label>
                 </StackPanel>
-                <!--<StackPanel Orientation="Horizontal">
-                    <Label>更新时间</Label>
-                    <Label>2020/09/20</Label>
-                </StackPanel>
+                
                 <StackPanel Orientation="Horizontal">
-                    <Label>版本发布时间</Label>
-                    <Label>2020/09/18</Label>
-                </StackPanel>-->
-                <StackPanel Orientation="Horizontal">
-                    <Label>运行平台</Label>
-                    <Label x:Name="targetPlatformText">netcore on win10 x64</Label>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <Label>当前版本更新日志</Label>
-                    <Label>点击查看</Label>
+                    <Label Content="{DynamicResource runtime_platform}"></Label>
+                    <Label x:Name="targetPlatformText">***********************</Label>
                 </StackPanel>
 
 
-                <TextBlock>Powered by An Honest Liar</TextBlock>
-                <TextBlock>东大网关助手的诞生离不开unbyte/ipgw和相关开源软件的支持</TextBlock>
-
-                <TextBlock>在Github上给我一个星星 (*^_^*)，是我维护该程序的最大动力</TextBlock>
-
+                <StackPanel Background="{DynamicResource ThemeColor4}">
+                    <StackPanel.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Margin" Value="5,10"></Setter>
+                            <Setter Property="FontWeight" Value="Bold"></Setter>
+                            <Setter Property="TextWrapping" Value="Wrap"></Setter>
+                        </Style>
+                    </StackPanel.Resources>
+                    <TextBlock Text="{DynamicResource as1}"></TextBlock>
+                    <TextBlock Text="{DynamicResource as2}"></TextBlock>
+                    <TextBlock Text="{DynamicResource as3}"></TextBlock>
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
 
