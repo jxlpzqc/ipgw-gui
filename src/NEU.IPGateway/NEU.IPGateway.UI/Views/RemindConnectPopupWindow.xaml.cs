@@ -19,6 +19,7 @@ using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using NEU.IPGateway.UI.Languages;
+using System.ComponentModel;
 
 namespace NEU.IPGateway.UI.Views
 {
@@ -148,7 +149,7 @@ namespace NEU.IPGateway.UI.Views
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            if (ViewModel.ConnectStatus == Core.Models.ConnectStatus.Connecting)
+            if (ViewModel.Status == Core.Models.ConnectStatus.Connecting)
             {
                 e.Cancel = true;
             }
