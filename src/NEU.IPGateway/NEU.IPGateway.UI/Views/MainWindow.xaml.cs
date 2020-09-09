@@ -36,8 +36,6 @@ namespace NEU.IPGateway.UI.Views
             InitializeComponent();
             ViewModel = new MainPageViewModel();
 
-
-            //TODO 关闭取消连接
             this.WhenActivated((d) =>
             {
                 this.OneWayBind(ViewModel,
@@ -313,5 +311,9 @@ namespace NEU.IPGateway.UI.Views
 
         }
 
+        private void officialServiceBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Utils.HyperlinkUtil.Open("https://ipgw.neu.edu.cn/");
+        }
     }
 }

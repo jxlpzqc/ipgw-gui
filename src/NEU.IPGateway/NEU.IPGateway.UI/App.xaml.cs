@@ -156,6 +156,24 @@ namespace NEU.IPGateway.UI
             }
             if (flag)
                 new MainWindow().Show();
+
+            UpdateState();
+        }
+
+        private async void UpdateState()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                GlobalStatusStore.Current.ConnectStatus = Core.Models.ConnectStatus.Checking;
+            });
+            var result = await Locator.Current.GetService<IInternetGatewayService>().Test();
+            
+            Dispatcher.Invoke(() =>
+            {
+                if (!result.connected) GlobalStatusStore.Current.ConnectStatus = Core.Models.ConnectStatus.DisconnectedFromNetwork;
+                else if (result.logedin) GlobalStatusStore.Current.ConnectStatus = Core.Models.ConnectStatus.Connected;
+                else GlobalStatusStore.Current.ConnectStatus = Core.Models.ConnectStatus.Disconnected;
+            });
         }
 
         public void HideMainWindow()
@@ -169,7 +187,7 @@ namespace NEU.IPGateway.UI
             }
         }
 
-        private bool IsMainWindowTopmost()
+        private bool IsMainWindowActive()
         {
             bool res = false;
 
@@ -224,7 +242,7 @@ namespace NEU.IPGateway.UI
                         GlobalStatusStore.Current.ConnectStatus = Core.Models.ConnectStatus.Checking;
                     });
                     var result = await Locator.Current.GetService<IInternetGatewayService>().Test();
-                    if (result.connected && !result.logedin && !IsMainWindowTopmost())
+                    if (result.connected && !result.logedin && !IsMainWindowActive())
                     {
                         Dispatcher.Invoke(() =>
                         {
