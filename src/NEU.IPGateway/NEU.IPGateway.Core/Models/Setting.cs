@@ -21,7 +21,7 @@ namespace NEU.IPGateway.Core.Models
         public bool RemindConnect { get; set; } = true;
 
         [Reactive]
-        public bool AutoConnect { get; set; } = true;
+        public bool AutoConnect { get; set; } = false;
 
         [Reactive]
         public bool RemindDisconnect { get; set; } = true;
