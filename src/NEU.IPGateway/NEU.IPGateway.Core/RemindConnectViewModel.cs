@@ -34,9 +34,9 @@ namespace NEU.IPGateway.Core
 
         [ObservableAsProperty]
         public bool IsFail { get; }
-        
+
         [Reactive]
-        public bool IsNotRemindMeLater { get; set; }
+        public bool IsNotRemindMeLater { get; set; } = false;
 
         public ReactiveCommand<string, Unit> ContinueConnectWithPin { get; }
 
@@ -86,6 +86,12 @@ namespace NEU.IPGateway.Core
                     .ToPropertyEx(this, x => x.NeedClose)
                     .DisposeWith(d);
 
+                this.WhenAnyValue(u => u.IsNotRemindMeLater)
+                    .Subscribe(x =>
+                    {
+                        this.Global.Setting.AutoConnect = x;
+                    })
+                    .DisposeWith(d);
 
 
                 var mayCausedError = Observable.Merge(
@@ -167,7 +173,7 @@ namespace NEU.IPGateway.Core
 
         private IObservable<Unit> CancelConectImpl()
         {
-            return Observable.Start(() =>
+            return Observable.StartAsync(async () =>
             {
                 this.Global.ConnectStatus = ConnectStatus.Disconnected;
             });
@@ -196,8 +202,6 @@ namespace NEU.IPGateway.Core
         {
             return Observable.StartAsync(async () =>
             {
-
-                //TODO Remind me later
                 await this.Global.Connect.Execute();
             });
 

@@ -32,7 +32,7 @@
     <s:String x:Key="general">General</s:String>
     <s:String x:Key="language">Display Language</s:String>
     <s:String x:Key="ss0">Auto launch when startup</s:String>
-    <s:String x:Key="ss1">Remind to connect in the NEU network</s:String>
+    <s:String x:Key="ss1">Remind to connect in the NEU Network</s:String>
     <s:String x:Key="ss2">Auto connect without clicking any button</s:String>
     <s:String x:Key="secure_and_privacy">Privacy And Security</s:String>
     <s:String x:Key="ss3">Auto upload bug report when application crash</s:String>
@@ -61,9 +61,10 @@
     <s:String x:Key="edit_password_hint">Edit the password saved in your computer disk, rather than the password in pass.neu.edu.cn.</s:String>
     <s:String x:Key="edit_pin">Edit PIN</s:String>
     <s:String x:Key="add_pin">Add PIN</s:String>
+    <s:String x:Key="delete_pin">Delete PIN</s:String>
 
-    <s:String x:Key="checked_connected">You have connected to NEU Network.</s:String>
-    <s:String x:Key="do_not_remind">Connect automatically and do not disrupt me.</s:String>
+    <s:String x:Key="checked_connected">Connect to NEU Network</s:String>
+    <s:String x:Key="do_not_remind">Connect automatically without disruption</s:String>
     <s:String x:Key="do_not_remind_hint">You can reset this option in Settings Window.</s:String>
     <s:String x:Key="succeed_connect">You have connected successfully.</s:String>
     <s:String x:Key="after_second_format">Close this popup in {0} seconds.</s:String>
@@ -87,4 +88,6 @@
     <s:String x:Key="tray_setting">Open Settings</s:String>
     <s:String x:Key="tray_exit">Exit</s:String>
 
+    <s:String x:Key="vm_unavailable_change_user">You could not change user when you are connected or system is busy.</s:String>
+    
 </ResourceDictionary>

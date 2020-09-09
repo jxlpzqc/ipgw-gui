@@ -22,6 +22,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Splat;
 using NEU.IPGateway.UI.Languages;
+using System.ComponentModel;
 
 namespace NEU.IPGateway.UI.Views
 {
@@ -34,6 +35,7 @@ namespace NEU.IPGateway.UI.Views
         {
             InitializeComponent();
             ViewModel = new MainPageViewModel();
+
 
             //TODO 关闭取消连接
             this.WhenActivated((d) =>
@@ -141,10 +143,19 @@ namespace NEU.IPGateway.UI.Views
                     })
                     .DisposeWith(d);
 
+
             });
+
 
         }
 
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if (ViewModel.ConnectStatus == Core.Models.ConnectStatus.Connecting)
+            {
+                e.Cancel = true;
+            }
+        }
 
         private bool _inputShowLock = false;
 
@@ -301,5 +312,6 @@ namespace NEU.IPGateway.UI.Views
 
 
         }
+
     }
 }

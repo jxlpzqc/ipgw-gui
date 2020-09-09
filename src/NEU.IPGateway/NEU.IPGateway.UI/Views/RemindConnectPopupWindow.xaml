@@ -37,7 +37,7 @@
         <Grid x:Name="pinInputGrid" Visibility="Collapsed">
 
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBlock TextAlignment="Center" FontSize="22" FontWeight="Bold" Text="{DynamicResource pin_need_hint}"></TextBlock>
+                <TextBlock TextAlignment="Center" TextWrapping="Wrap" FontSize="22" FontWeight="Bold" Text="{DynamicResource pin_need_hint}"></TextBlock>
                 <controls:PinInput x:Name="pinInput" FinishedInput="pinInput_FinishedInput"></controls:PinInput>
                 <Button x:Name="cancelBtn" Foreground="White" Style="{StaticResource PlainButtonStyle}" Content="{DynamicResource cancel}"></Button>
             </StackPanel>
@@ -56,12 +56,12 @@
             <StackPanel Margin="20" VerticalAlignment="Center">
                 <StackPanel x:Name="successP">
                     <Image Width="200" Source="\Assets\Connected.png"></Image>
-                    <TextBlock Margin="0,30" TextAlignment="Center" FontSize="20" Text="{DynamicResource succeed_connect}"></TextBlock>
+                    <TextBlock TextWrapping="Wrap" Margin="0,30" TextAlignment="Center" FontSize="20" Text="{DynamicResource succeed_connect}"></TextBlock>
                 </StackPanel>
 
                 <StackPanel x:Name="failP" Visibility="Collapsed">
                     <Image Width="200" Source="\Assets\ConnectFail.png"></Image>
-                    <TextBlock Margin="0,30" x:Name="errorText" TextAlignment="Center" FontSize="20"></TextBlock>
+                    <TextBlock TextWrapping="Wrap"  Margin="0,30" x:Name="errorText" TextAlignment="Center" FontSize="20"></TextBlock>
                 </StackPanel>
 
 
@@ -69,11 +69,11 @@
                     <Run x:Name="secondText"></Run>
                 </TextBlock>
             </StackPanel>
-            
-            
+
+
         </Grid>
 
-        
-        
+
+
     </Grid>
 </local:BaseWindow>

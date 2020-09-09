@@ -117,7 +117,7 @@ namespace NEU.IPGateway.Core
             SetCurrent = ReactiveCommand.CreateFromTask(async () =>
             {
                 var status = GlobalStatusStore.Current.ConnectStatus;
-                if (status != ConnectStatus.Disconnected) throw new Exception("请先断开连接再切换账户");
+                if (status != ConnectStatus.Disconnected) throw new Exception("vm_unavailable_change_user");
 
                 GlobalStatusStore.Current.CurrentUser = User;
                 await service.SetDefaultUser(User.Username);

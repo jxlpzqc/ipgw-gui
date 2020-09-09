@@ -61,6 +61,7 @@
     <s:String x:Key="edit_password_hint">修改系统保存的账户密码，不修改一网通账户密码</s:String>
     <s:String x:Key="edit_pin">修改PIN</s:String>
     <s:String x:Key="add_pin">添加PIN</s:String>
+    <s:String x:Key="delete_pin">删除PIN</s:String>
     
     <s:String x:Key="checked_connected">检测到您已进入校园网</s:String>
     <s:String x:Key="do_not_remind">自动连接，不再提醒我</s:String>
@@ -87,4 +88,6 @@
     <s:String x:Key="tray_show">显示主窗体</s:String>
     <s:String x:Key="tray_setting">程序设置</s:String>
     <s:String x:Key="tray_exit">退出程序</s:String>
+
+    <s:String x:Key="vm_unavailable_change_user">请先断开连接再切换账户</s:String>
 </ResourceDictionary>

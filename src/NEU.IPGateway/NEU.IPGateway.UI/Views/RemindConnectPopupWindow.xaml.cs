@@ -66,12 +66,10 @@ namespace NEU.IPGateway.UI.Views
                     })
                     .DisposeWith(d);
 
-                this.WhenAnyValue(x => x.ViewModel.Status)
-                    .Where(u => u != IPGateway.Core.Models.ConnectStatus.Disconnected)
-                    .Subscribe(_ =>
-                    {
-                        remindCb.Visibility = Visibility.Hidden;
-                    })
+                this.OneWayBind(ViewModel,
+                    vm => vm.Status,
+                    v => v.remindCb.Visibility,
+                    x => (x == Core.Models.ConnectStatus.Disconnected) ? Visibility.Visible : Visibility.Hidden)
                     .DisposeWith(d);
 
                 this.BindCommand(ViewModel,
@@ -136,10 +134,24 @@ namespace NEU.IPGateway.UI.Views
         }
 
 
-        private void BaseWindow_Loaded(object sender, RoutedEventArgs e)
+        private async void BaseWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            if (GlobalStatusStore.Current.Setting.AutoConnect)
+            {
+                try { 
+                    await ViewModel.Connect.Execute();
+                }
+                catch { }
+            }
+        }
 
 
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if (ViewModel.ConnectStatus == Core.Models.ConnectStatus.Connecting)
+            {
+                e.Cancel = true;
+            }
         }
 
 

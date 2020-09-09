@@ -47,7 +47,22 @@ namespace NEU.IPGateway.UI.Controls
                     x => x ? I18NStringUtil.GetString("hide_password") : I18NStringUtil.GetString("show_password"))
                     .DisposeWith(d);
 
+                this.OneWayBind(ViewModel,
+                    x => x.HasPin,
+                    v => v.editPinMenu.Visibility)
+                    .DisposeWith(d);
 
+
+                this.OneWayBind(ViewModel,
+                    x => x.HasPin,
+                    v => v.addPinMenu.Visibility,
+                    x => x ? Visibility.Collapsed : Visibility.Visible)
+                    .DisposeWith(d);
+
+                this.OneWayBind(ViewModel,
+                   x => x.HasPin,
+                   v => v.deletePinMenu.Visibility)
+                   .DisposeWith(d);
 
                 this.OneWayBind(ViewModel,
                     x => x.User.Password,
@@ -63,8 +78,7 @@ namespace NEU.IPGateway.UI.Controls
                     ViewModel.SetCurrent.ThrownExceptions)
                 .Subscribe((e) =>
                 {
-                    // handle the raised exception.
-                    MessageBox.Show(e.Message);
+                    MessageBox.Show(I18NStringUtil.GetString(e.Message));
                 }).DisposeWith(d);
 
 
@@ -146,9 +160,22 @@ namespace NEU.IPGateway.UI.Controls
             }
         }
 
-        private void addPinMenu_Click(object sender, RoutedEventArgs e)
+        private async void addPinMenu_Click(object sender, RoutedEventArgs e)
         {
+            var dialog = new PinSimpleDialog(I18NStringUtil.GetString("uv_set_new_pin"));
+            if (dialog.ShowDialog() == true)
+            {
+                await ViewModel.ChangePin.Execute(("", dialog.Result));
+            }
+        }
 
+        private async void deletePinMenu_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new PinSimpleDialog(I18NStringUtil.GetString("uv_old_pin"));
+            if (dialog.ShowDialog() == true)
+            {
+                await ViewModel.ChangePin.Execute((dialog.Result, ""));
+            }
         }
     }
 }

@@ -13,6 +13,8 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Diagnostics;
+using Microsoft.Win32;
 
 namespace NEU.IPGateway.UI
 {
@@ -35,7 +37,7 @@ namespace NEU.IPGateway.UI
             this.Resources.MergedDictionaries[0] = LoadComponent(new Uri(@"Languages\" + language + @"\CommonStrings.xaml", UriKind.Relative)) as ResourceDictionary;
         }
 
-        public Task<bool> InitializeLanguageChange()
+        private Task<bool> InitializeLanguageChange()
         {
             TaskCompletionSource<bool> source = new System.Threading.Tasks.TaskCompletionSource<bool>(); 
             GlobalStatusStore.Current.WhenAnyValue(x => x.Setting.Language)
@@ -52,6 +54,92 @@ namespace NEU.IPGateway.UI
                     }
                 });
             return source.Task;
+        }
+
+        private void SetThisApplicationStartup(bool onOff)
+        {
+            string appName = "IPGWApplication";
+            string appPath = $"\"{Process.GetCurrentProcess().MainModule.FileName}\" /s";
+            SetAutoStart(onOff, appName, appPath);
+        }
+
+        private void SetAutoStart(bool onOff, string appName, string appPath)
+        {
+            if (!IsExistKey(appName) && onOff)
+            {
+                SetRegistryStartup(onOff, appName, appPath);
+            }
+            else if (IsExistKey(appName) && !onOff)
+            {
+                SetRegistryStartup(onOff, appName, appPath);
+            }
+        }
+
+        private bool IsExistKey(string keyName)
+        {
+            try
+            {
+                bool isExist = false;
+                RegistryKey currentUser = Registry.CurrentUser;
+                RegistryKey startup = currentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+                if (startup == null)
+                {
+                    return isExist;
+                }
+                string[] startupItems = startup.GetValueNames();
+                foreach (string startupItem in startupItems)
+                {
+                    if (startupItem.ToUpper() == keyName.ToUpper())
+                    {
+                        isExist = true;
+                        return isExist;
+                    }
+                }
+                return isExist;
+
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private void SetRegistryStartup(bool isStart, string appName, string path)
+        {
+
+            RegistryKey currentUser = Registry.CurrentUser;
+            RegistryKey key = currentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+            if (key == null)
+            {
+                currentUser.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run");
+            }
+
+            if (isStart)
+            {
+                key.SetValue(appName, path);
+                key.Close();
+            }
+            else
+            {
+                string[] keyNames = key.GetValueNames();
+                foreach (string keyName in keyNames)
+                {
+                    if (keyName.ToUpper() == appName.ToUpper())
+                    {
+                        key.DeleteValue(appName);
+                        key.Close();
+                    }
+                }
+            }
+        }
+
+        private void InitializeStartupChange()
+        {
+            GlobalStatusStore.Current.WhenAnyValue(x => x.Setting.LaunchWhenStartup)
+                .Subscribe(startup =>
+                {
+                    SetThisApplicationStartup(startup);
+                });
         }
 
         public void ShowMainWindow()
@@ -115,7 +203,7 @@ namespace NEU.IPGateway.UI
             {
                 ShowMainWindow();
             }
-
+            InitializeStartupChange();
             await InitializeLanguageChange();
             UpdateStateAndRemind();
             System.Net.NetworkInformation.NetworkChange.NetworkAddressChanged += NetworkChange_NetworkAddressChanged;
@@ -126,6 +214,7 @@ namespace NEU.IPGateway.UI
 
         private void UpdateStateAndRemind()
         {
+            if (!GlobalStatusStore.Current.Setting.RemindConnect) return;
             Task.Run(async () =>
             {
                 try

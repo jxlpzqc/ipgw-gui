@@ -64,6 +64,7 @@
                                 <MenuItem x:Name="editPasswordMenu" Click="editPasswordMenu_Click" Header="{DynamicResource edit_password}" ToolTip="{DynamicResource edit_password_hint}"></MenuItem>
                                 <MenuItem x:Name="editPinMenu" Click="editPinMenu_Click" Header="{DynamicResource edit_pin}" />
                                 <MenuItem x:Name="addPinMenu" Click="addPinMenu_Click" Header="{DynamicResource add_pin}" />
+                                <MenuItem x:Name="deletePinMenu" Click="deletePinMenu_Click" Header="{DynamicResource delete_pin}" />
 
 
                             </StackPanel>
