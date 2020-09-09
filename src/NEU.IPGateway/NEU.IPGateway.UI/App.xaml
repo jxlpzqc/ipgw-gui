@@ -16,16 +16,16 @@
             </ResourceDictionary.MergedDictionaries>
 
             <ContextMenu x:Shared="false" x:Key="SysTrayMenu">
-                <MenuItem Header="显示主窗体" Click="ShowItemMenuItem_Click" />
-                <MenuItem Header="程序设置" Click="ShowSettingMenuItem_Click" />
+                <MenuItem Header="{DynamicResource tray_show}" Click="ShowItemMenuItem_Click" />
+                <MenuItem Header="{DynamicResource tray_setting}" Click="ShowSettingMenuItem_Click" />
                 <Separator />
-                <MenuItem Header="退出程序" Click="ExitMenuItem_Click" />
+                <MenuItem Header="{DynamicResource tray_exit}" Click="ExitMenuItem_Click" />
             </ContextMenu>
 
 
             <tb:TaskbarIcon x:Key="NotifyIcon"
                     IconSource="/ApplicationIcon.ico"
-                    ToolTipText="东大网关助手 - 双击显示主窗体"
+                    ToolTipText="{DynamicResource tray_message}"
                     TrayMouseDoubleClick="TaskbarIcon_TrayMouseDoubleClick"
                     ContextMenu="{StaticResource SysTrayMenu}">
 

@@ -82,4 +82,9 @@
     <s:String x:Key="um_pin_hint">Malicious programs maybe crack your password stored in your computer, to keep your safety, we recommend you protect your password with PIN, which may disrupt you to spend seconds to enter PIN to connect. Would you like to protect your password with PIN?</s:String>
     <s:String x:Key="lw_empty">Username and password cannot be empty.</s:String>
 
+    <s:String x:Key="tray_message">NEU IPGateway Assistant - Double click to show the main window</s:String>
+    <s:String x:Key="tray_show">Open Main Window</s:String>
+    <s:String x:Key="tray_setting">Open Settings</s:String>
+    <s:String x:Key="tray_exit">Exit</s:String>
+
 </ResourceDictionary>

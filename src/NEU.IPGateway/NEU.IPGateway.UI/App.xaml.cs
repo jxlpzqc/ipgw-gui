@@ -35,12 +35,13 @@ namespace NEU.IPGateway.UI
             this.Resources.MergedDictionaries[0] = LoadComponent(new Uri(@"Languages\" + language + @"\CommonStrings.xaml", UriKind.Relative)) as ResourceDictionary;
         }
 
-        public void InitializeLanguageChange()
+        public Task<bool> InitializeLanguageChange()
         {
+            TaskCompletionSource<bool> source = new System.Threading.Tasks.TaskCompletionSource<bool>(); 
             GlobalStatusStore.Current.WhenAnyValue(x => x.Setting.Language)
                 .Subscribe(lan =>
                 {
-
+                    source?.TrySetResult(true);
                     if (lan == "en-us")
                     {
                         ((App)App.Current).SetLanguage("en-us");
@@ -50,7 +51,7 @@ namespace NEU.IPGateway.UI
                         ((App)App.Current).SetLanguage("zh-cn");
                     }
                 });
-
+            return source.Task;
         }
 
         public void ShowMainWindow()
@@ -108,18 +109,19 @@ namespace NEU.IPGateway.UI
             Driver.Register.Regist();
         }
 
-        private void Application_Startup(object sender, StartupEventArgs e)
+        private async void Application_Startup(object sender, StartupEventArgs e)
         {
             if (!Environment.GetCommandLineArgs().Contains("/s"))
             {
                 ShowMainWindow();
             }
 
-            notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
-
-            InitializeLanguageChange();
+            await InitializeLanguageChange();
             UpdateStateAndRemind();
             System.Net.NetworkInformation.NetworkChange.NetworkAddressChanged += NetworkChange_NetworkAddressChanged;
+
+            notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
+
         }
 
         private void UpdateStateAndRemind()

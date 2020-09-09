@@ -81,5 +81,10 @@
     <s:String x:Key="uv_old_pin">输入旧的PIN</s:String>
     <s:String x:Key="um_pin_hint">不使用PIN可能会导致恶意软件破解您的用户密码，为了您的安全，我们推荐您使用PIN加密您的密码，这可能会导致您每次连接时都需要几秒钟的时间输入PIN，您是否需要使用PIN来保护您的密码？</s:String>
     <s:String x:Key="lw_empty">请输入用户名或密码</s:String>
-    
+
+
+    <s:String x:Key="tray_message">东大网关助手 - 双击显示主窗体</s:String>
+    <s:String x:Key="tray_show">显示主窗体</s:String>
+    <s:String x:Key="tray_setting">程序设置</s:String>
+    <s:String x:Key="tray_exit">退出程序</s:String>
 </ResourceDictionary>
