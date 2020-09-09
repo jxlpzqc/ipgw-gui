@@ -14,14 +14,14 @@
             <Button Name="refreshButton" Margin="0,0,20,0">
                 <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
                     <fa:ImageAwesome Icon="Refresh" Foreground="#888" Height="16"></fa:ImageAwesome>
-                    <TextBlock  FontSize="16" Margin="5,0,5,0">刷新</TextBlock>
+                    <TextBlock  FontSize="16" Margin="5,0,5,0" Text="{DynamicResource refresh}"></TextBlock>
                 </StackPanel>
 
             </Button>
             <Button Name="newUserButton" Click="newUserButton_Click">
                 <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
                     <fa:ImageAwesome Icon="Plus" Foreground="#888" Height="16"></fa:ImageAwesome>
-                    <TextBlock  FontSize="16" Margin="5,0,5,0">添加新用户</TextBlock>
+                    <TextBlock  FontSize="16" Margin="5,0,5,0" Text="{DynamicResource add_user}"></TextBlock>
                 </StackPanel>
                 
             </Button>

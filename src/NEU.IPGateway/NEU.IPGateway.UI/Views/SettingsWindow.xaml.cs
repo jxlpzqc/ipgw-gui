@@ -66,19 +66,7 @@ namespace NEU.IPGateway.UI.Views
                     v => v.silentUpdateCb.IsChecked)
                     .DisposeWith(d);
 
-                this.WhenAnyValue(x => x.ViewModel.Setting.Language)
-                    .Subscribe(lan =>
-                    {
-                        if(lan == "en-us")
-                        {
-                            ((App)App.Current).SetLanguage("en-us");
-                        }
-                        else
-                        {
-                            ((App)App.Current).SetLanguage("zh-cn");
-                        }
-                    })
-                    .DisposeWith(d);
+                
 
 
             });

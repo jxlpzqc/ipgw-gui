@@ -47,4 +47,39 @@
     <s:String x:Key="as1">Powered by An Honest Liar</s:String>
     <s:String x:Key="as2">东大网关助手的诞生离不开unbyte/ipgw和相关开源软件的支持</s:String>
     <s:String x:Key="as3">在Github上给我一个星星 (*^_^*)，是我维护该程序的最大动力</s:String>
+    <s:String x:Key="disconnect_from_network">未连接到校园网</s:String>
+    <s:String x:Key="refresh">刷新</s:String>
+    <s:String x:Key="add_user">添加新用户</s:String>
+
+    <s:String x:Key="current_user_indicator">(当前用户)</s:String>
+    <s:String x:Key="show_password">查看密码</s:String>
+    <s:String x:Key="hide_password">隐藏密码</s:String>
+    <s:String x:Key="set_current">设为当前</s:String>
+    <s:String x:Key="more_option">更多</s:String>
+    <s:String x:Key="delete_user">删除用户</s:String>
+    <s:String x:Key="edit_password">重置密码</s:String>
+    <s:String x:Key="edit_password_hint">修改系统保存的账户密码，不修改一网通账户密码</s:String>
+    <s:String x:Key="edit_pin">修改PIN</s:String>
+    <s:String x:Key="add_pin">添加PIN</s:String>
+    
+    <s:String x:Key="checked_connected">检测到您已进入校园网</s:String>
+    <s:String x:Key="do_not_remind">自动连接，不再提醒我</s:String>
+    <s:String x:Key="do_not_remind_hint">您可以再设置中取消该选项</s:String>
+    <s:String x:Key="succeed_connect">您已成功连接</s:String>
+    <s:String x:Key="after_second_format">{0} 秒后自动关闭弹框</s:String>
+
+    <s:String x:Key="warning">警告</s:String>
+
+    <s:String x:Key="mw_driver_error">发生错误</s:String>
+    <s:String x:Key="mw_reinputpassword_hint">用户名或密码错误，本次键入的密码将会自动保存，但不会使用PIN保护，如果需要密码保护，请前往【用户管理】</s:String>
+    <s:String x:Key="uv_input_pin_for_pwd">输入PIN以显示密码</s:String>
+    <s:String x:Key="uv_delete_user_confirm">您确认要删除该用户吗？</s:String>
+
+    <s:String x:Key="uv_reset_password">请输入用来保存的新密码</s:String>
+    <s:String x:Key="uv_reset_password_pin">是否使用PIN保护您设置的新密码？</s:String>
+    <s:String x:Key="uv_set_new_pin">设置新的PIN值</s:String>
+    <s:String x:Key="uv_old_pin">输入旧的PIN</s:String>
+    <s:String x:Key="um_pin_hint">不使用PIN可能会导致恶意软件破解您的用户密码，为了您的安全，我们推荐您使用PIN加密您的密码，这可能会导致您每次连接时都需要几秒钟的时间输入PIN，您是否需要使用PIN来保护您的密码？</s:String>
+    <s:String x:Key="lw_empty">请输入用户名或密码</s:String>
+    
 </ResourceDictionary>

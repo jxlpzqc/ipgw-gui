@@ -1,4 +1,5 @@
 ﻿using NEU.IPGateway.Core;
+using NEU.IPGateway.UI.Languages;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -49,11 +50,7 @@ namespace NEU.IPGateway.UI.Controls
             {
                 string pin = "";
 
-                // TODO: i18n it
-                var isPinNeeded = MessageBox.Show("不使用PIN可能会导致恶意软件破解您的用户密码，" +
-                    "为了您的安全，我们推荐您使用PIN加密您的密码，" +
-                    "这可能会导致您每次连接时都需要几秒钟的时间输入PIN，" +
-                    "您是否需要使用PIN来保护您的密码？", "安全提示", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                var isPinNeeded = MessageBox.Show(I18NStringUtil.GetString("um_pin_hint"), I18NStringUtil.GetString("warning"), MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (isPinNeeded == MessageBoxResult.Yes)
                 {

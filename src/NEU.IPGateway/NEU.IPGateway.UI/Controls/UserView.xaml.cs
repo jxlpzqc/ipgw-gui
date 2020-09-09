@@ -1,4 +1,5 @@
 ﻿using NEU.IPGateway.Core;
+using NEU.IPGateway.UI.Languages;
 using ReactiveUI;
 using System;
 using System.Reactive.Disposables;
@@ -43,7 +44,7 @@ namespace NEU.IPGateway.UI.Controls
                 this.OneWayBind(ViewModel,
                     x => x.IsPasswordShown,
                     v => v.showPasswordBtn.Content,
-                    x => x ? "隐藏密码" : "显示密码")
+                    x => x ? I18NStringUtil.GetString("hide_password") : I18NStringUtil.GetString("show_password"))
                     .DisposeWith(d);
 
 
@@ -69,7 +70,7 @@ namespace NEU.IPGateway.UI.Controls
 
                 ViewModel.DisposeWith(d);
 
-                
+
 
 
             });
@@ -83,10 +84,10 @@ namespace NEU.IPGateway.UI.Controls
         private async void showPasswordBtn_Click(object sender, RoutedEventArgs e)
         {
             string pin = "";
-            // TODO i18n
+
             if (!ViewModel.IsPasswordShown && ViewModel.HasPin)
             {
-                var dialog = new PinSimpleDialog("输入PIN以显示密码");
+                var dialog = new PinSimpleDialog(I18NStringUtil.GetString("uv_input_pin_for_pwd"));
 
                 if (dialog.ShowDialog() == true)
                 {
@@ -104,8 +105,8 @@ namespace NEU.IPGateway.UI.Controls
 
         private async void deleteUserMenu_Click(object sender, RoutedEventArgs e)
         {
-            var res = MessageBox.Show("您确认要删除该用户吗？",
-                "警告", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var res = MessageBox.Show(I18NStringUtil.GetString("uv_delete_user_confirm"),
+                I18NStringUtil.GetString("warning"), MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
             {
                 await ViewModel.Delete.Execute();
@@ -116,36 +117,36 @@ namespace NEU.IPGateway.UI.Controls
         private async void editPasswordMenu_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new LoginWindow(ViewModel.User.Username, false);
-            dialog.Message = "请输入以修改保存的密码";
+            dialog.Message = I18NStringUtil.GetString("uv_reset_password");
             if (dialog.ShowDialog() == true)
             {
-                var res = MessageBox.Show("是否使用PIN保护您设置的新密码？",
-                    "警告", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                var res = MessageBox.Show(I18NStringUtil.GetString("uv_reset_password_pin"),
+                   I18NStringUtil.GetString("warning"), MessageBoxButton.YesNo, MessageBoxImage.Question);
                 var pin = "";
-                if(res == MessageBoxResult.Yes)
+                if (res == MessageBoxResult.Yes)
                 {
-                    var pinD = new PinSimpleDialog("设置新的PIN值");
+                    var pinD = new PinSimpleDialog(I18NStringUtil.GetString("uv_set_new_pin"));
                     if (pinD.ShowDialog() == true)
                     {
                         pin = pinD.Result;
                     }
                 }
 
-                await ViewModel.ChangePassword.Execute((dialog.Result.Password,pin));
+                await ViewModel.ChangePassword.Execute((dialog.Result.Password, pin));
             }
         }
 
         private async void editPinMenu_Click(object sender, RoutedEventArgs e)
         {
-            var oldPinDialog = new PinSimpleDialog("输入旧的PIN");
-            var newPinDialog = new PinSimpleDialog("输入新的PIN");
+            var oldPinDialog = new PinSimpleDialog(I18NStringUtil.GetString("uv_old_pin"));
+            var newPinDialog = new PinSimpleDialog(I18NStringUtil.GetString("uv_set_new_pin"));
             if (oldPinDialog.ShowDialog() == true && newPinDialog.ShowDialog() == true)
             {
                 await ViewModel.ChangePin.Execute((oldPinDialog.Result, newPinDialog.Result));
             }
         }
 
-        private void verifyPinMenu_Click(object sender, RoutedEventArgs e)
+        private void addPinMenu_Click(object sender, RoutedEventArgs e)
         {
 
         }

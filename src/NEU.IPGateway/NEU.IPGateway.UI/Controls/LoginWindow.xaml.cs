@@ -1,4 +1,5 @@
 ﻿using NEU.IPGateway.Core.Models;
+using NEU.IPGateway.UI.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -81,7 +82,7 @@ namespace NEU.IPGateway.UI.Controls
         {
             if(string.IsNullOrEmpty(usernameBox.Text) || string.IsNullOrEmpty(passwordBox.Password))
             {
-                Message = "请输入用户名或密码";
+                Message = Languages.I18NStringUtil.GetString("lw_empty");
                 return;
             }
 
@@ -95,8 +96,7 @@ namespace NEU.IPGateway.UI.Controls
         private void Hyperlink_Click(object sender, RoutedEventArgs e)
         {
             Hyperlink link = sender as Hyperlink;
-
-            Process.Start("cmd", "/C start " + link.NavigateUri.AbsoluteUri);
+            HyperlinkUtil.Open(link.NavigateUri.AbsoluteUri);
         }
     }
 }

@@ -29,7 +29,7 @@
             </Grid.RowDefinitions>
             <StackPanel Orientation="Horizontal" >
                 <TextBlock x:Name="usernameText" FontWeight="Bold"  VerticalAlignment="Bottom" FontSize="16">20183328</TextBlock>
-                <TextBlock x:Name="isCurrentUserText" Margin="5,0,0,2" VerticalAlignment="Bottom" FontSize="10" Foreground="#666">(当前用户)</TextBlock>
+                <TextBlock x:Name="isCurrentUserText" Margin="5,0,0,2" VerticalAlignment="Bottom" FontSize="10" Foreground="#666" Text="{DynamicResource current_user_indicator}"></TextBlock>
             </StackPanel>
             <StackPanel Grid.Row="1">
                 <TextBlock x:Name="hidePasswordText" FontWeight="Bold" FontSize="8">**********</TextBlock>
@@ -44,26 +44,26 @@
                         <Setter Property="Margin" Value="0,0,5,0"></Setter>
                     </Style>
                 </StackPanel.Resources>
-                <Button x:Name="showPasswordBtn" Click="showPasswordBtn_Click">查看密码</Button>
-                <Button x:Name="setDefaultBtn">设为当前</Button>
+                <Button x:Name="showPasswordBtn" Click="showPasswordBtn_Click" Content="{DynamicResource show_password}"></Button>
+                <Button x:Name="setDefaultBtn" Content="{DynamicResource set_current}"></Button>
                 <Button x:Name="moreBtn" Click="moreBtn_Click">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock>更多</TextBlock>
-                        <fa:FontAwesome Icon="CaretDown"></fa:FontAwesome>
+                        <TextBlock Text="{DynamicResource more_option}"></TextBlock>
+                        <fa:ImageAwesome Height="4" Icon="CaretDown"></fa:ImageAwesome>
                     </StackPanel>
                 </Button>
 
                 <Popup x:Name="menuPop" StaysOpen="False" Margin="0" PlacementTarget="{Binding ElementName=moreBtn}" AllowsTransparency="True">
-                    <Grid Width="150" HorizontalAlignment="Left">
+                    <Grid Width="180" HorizontalAlignment="Left">
                         <Border BorderThickness="0" Background="White" Margin="3">
                             <Border.Effect>
                                 <DropShadowEffect ShadowDepth="0" Color="#FFB6B6B6"/>
                             </Border.Effect>
                             <StackPanel Margin="0">
-                                <MenuItem x:Name="deleteUserMenu" Click="deleteUserMenu_Click" Header="删除用户" />
-                                <MenuItem x:Name="editPasswordMenu" Click="editPasswordMenu_Click" Header="修改密码" ToolTip="修改系统保存的账户密码，不修改一网通账户密码"></MenuItem>
-                                <MenuItem x:Name="editPinMenu" Click="editPinMenu_Click" Header="修改PIN" />
-                                <MenuItem x:Name="verifyPinMenu" Click="verifyPinMenu_Click" Header="验证PIN" />
+                                <MenuItem x:Name="deleteUserMenu" Click="deleteUserMenu_Click" Header="{DynamicResource delete_user}" />
+                                <MenuItem x:Name="editPasswordMenu" Click="editPasswordMenu_Click" Header="{DynamicResource edit_password}" ToolTip="{DynamicResource edit_password_hint}"></MenuItem>
+                                <MenuItem x:Name="editPinMenu" Click="editPinMenu_Click" Header="{DynamicResource edit_pin}" />
+                                <MenuItem x:Name="addPinMenu" Click="addPinMenu_Click" Header="{DynamicResource add_pin}" />
 
 
                             </StackPanel>

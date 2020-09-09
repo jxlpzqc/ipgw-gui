@@ -8,7 +8,9 @@ namespace NEU.IPGateway.UI.Languages
     {
         public static string GetString(string key)
         {
-            return App.Current.Resources[key] as string;
+            var str = App.Current.Resources[key] as string;
+            if (str == null) return "";
+            else return str;
         }
     }
 }

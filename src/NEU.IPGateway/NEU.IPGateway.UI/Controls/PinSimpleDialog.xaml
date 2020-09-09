@@ -10,8 +10,8 @@
         Title="{DynamicResource enterpin}" Height="206" Width="484">
     <StackPanel Margin="25">
         <StackPanel Orientation="Horizontal">
-            
-            <TextBlock TextWrapping="Wrap" x:Name="messageText">为了您的安全，请输入PIN值</TextBlock>
+
+            <TextBlock TextWrapping="Wrap" x:Name="messageText" Text="{StaticResource enterpin}"></TextBlock>
         </StackPanel>
         <local:PinInput x:Name="pinInput" FinishedInput="PinInput_FinishedInput"></local:PinInput>
     </StackPanel>

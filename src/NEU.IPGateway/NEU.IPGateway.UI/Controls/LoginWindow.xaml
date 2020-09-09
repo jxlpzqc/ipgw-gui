@@ -152,8 +152,7 @@
                 </PasswordBox>
             </Grid>
         </Grid>
-        <Button x:Name="loginButton" Click="loginButton_Click" Grid.Row="2" Height="40" Width="225" FontSize="18" Background="{DynamicResource ThemeColor}" Foreground="{DynamicResource ThemeForeground}">
-            <Button.Content>登录</Button.Content>
+        <Button x:Name="loginButton" Click="loginButton_Click" Grid.Row="2" Height="40" Width="225" FontSize="18" Background="{DynamicResource ThemeColor}" Foreground="{DynamicResource ThemeForeground}" Content="{DynamicResource login}">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <Border Background="{TemplateBinding Background}" CornerRadius="6">

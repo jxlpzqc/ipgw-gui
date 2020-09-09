@@ -18,6 +18,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using NEU.IPGateway.UI.Languages;
 
 namespace NEU.IPGateway.UI.Views
 {
@@ -85,7 +86,8 @@ namespace NEU.IPGateway.UI.Views
 
                 this.OneWayBind(ViewModel,
                     vm => vm.RemainCloseSecond,
-                    x => x.secondText.Text)
+                    x => x.secondText.Text,
+                    x => string.Format(I18NStringUtil.GetString("after_second_format"), x))
                     .DisposeWith(d);
 
 

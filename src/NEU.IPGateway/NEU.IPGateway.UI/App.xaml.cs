@@ -34,7 +34,25 @@ namespace NEU.IPGateway.UI
         {
             this.Resources.MergedDictionaries[0] = LoadComponent(new Uri(@"Languages\" + language + @"\CommonStrings.xaml", UriKind.Relative)) as ResourceDictionary;
         }
-                
+
+        public void InitializeLanguageChange()
+        {
+            GlobalStatusStore.Current.WhenAnyValue(x => x.Setting.Language)
+                .Subscribe(lan =>
+                {
+
+                    if (lan == "en-us")
+                    {
+                        ((App)App.Current).SetLanguage("en-us");
+                    }
+                    else
+                    {
+                        ((App)App.Current).SetLanguage("zh-cn");
+                    }
+                });
+
+        }
+
         public void ShowMainWindow()
         {
             bool flag = true;
@@ -43,14 +61,13 @@ namespace NEU.IPGateway.UI
                 if (item is MainWindow win)
                 {
                     win.Show();
-                    win.Focus();                    
+                    win.Focus();
                     flag = false;
                 }
             }
             if (flag)
                 new MainWindow().Show();
         }
-
 
         public void HideMainWindow()
         {
@@ -99,7 +116,8 @@ namespace NEU.IPGateway.UI
             }
 
             notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
-            
+
+            InitializeLanguageChange();
             UpdateStateAndRemind();
             System.Net.NetworkInformation.NetworkChange.NetworkAddressChanged += NetworkChange_NetworkAddressChanged;
         }
@@ -130,7 +148,7 @@ namespace NEU.IPGateway.UI
                                     break;
                                 }
                             }
-                            if(flag) new RemindConnectPopupWindow().Show();
+                            if (flag) new RemindConnectPopupWindow().Show();
                         });
                     }
                     Dispatcher.Invoke(() =>
@@ -139,7 +157,7 @@ namespace NEU.IPGateway.UI
                         else if (result.logedin) GlobalStatusStore.Current.ConnectStatus = Core.Models.ConnectStatus.Connected;
                         else GlobalStatusStore.Current.ConnectStatus = Core.Models.ConnectStatus.Disconnected;
                     });
-                    
+
                 }
                 catch (Exception ex)
                 { }
@@ -148,7 +166,7 @@ namespace NEU.IPGateway.UI
 
         private void NetworkChange_NetworkAddressChanged(object sender, EventArgs e)
         {
-            UpdateStateAndRemind();  
+            UpdateStateAndRemind();
         }
 
         private void ShowItemMenuItem_Click(object sender, RoutedEventArgs e)

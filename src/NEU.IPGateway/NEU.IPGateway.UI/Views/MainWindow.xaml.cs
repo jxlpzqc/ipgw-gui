@@ -21,6 +21,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Splat;
+using NEU.IPGateway.UI.Languages;
 
 namespace NEU.IPGateway.UI.Views
 {
@@ -34,6 +35,7 @@ namespace NEU.IPGateway.UI.Views
             InitializeComponent();
             ViewModel = new MainPageViewModel();
 
+            //TODO 关闭取消连接
             this.WhenActivated((d) =>
             {
                 this.OneWayBind(ViewModel,
@@ -135,7 +137,7 @@ namespace NEU.IPGateway.UI.Views
                     .ObserveOn(RxApp.MainThreadScheduler)
                     .Subscribe(u =>
                     {
-                        MessageBox.Show(ViewModel.AlertMessage, "发生错误");
+                        MessageBox.Show(ViewModel.AlertMessage, I18NStringUtil.GetString("mw_driver_error"));
                     })
                     .DisposeWith(d);
 
@@ -160,7 +162,7 @@ namespace NEU.IPGateway.UI.Views
         {
             var dialog = new LoginWindow(ViewModel.SelectedUser.Username, false)
             {
-                Message = "用户名或密码错误，本次键入的密码将会自动保存，但不会使用PIN保护，如果需要密码保护，请前往【用户管理】"
+                Message = I18NStringUtil.GetString("mw_reinputpassword_hint")
             };
             try
             {

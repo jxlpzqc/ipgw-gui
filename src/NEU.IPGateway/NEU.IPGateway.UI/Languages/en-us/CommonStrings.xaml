@@ -11,7 +11,7 @@
     <s:String x:Key="password">Password</s:String>
     <s:String x:Key="help">Help</s:String>
     <s:String x:Key="settings">Settings</s:String>
-    <s:String x:Key="enterpin">Please input pin</s:String>
+    <s:String x:Key="enterpin">Please input PIN</s:String>
     <s:String x:Key="manage_user">Account Settings</s:String>
     <s:String x:Key="change_account">Switch account ></s:String>
     <s:String x:Key="used_data_hint">The data displayed is those which has been caculated，the data in this connection will not reckoned.</s:String>
@@ -25,7 +25,7 @@
     <s:String x:Key="official_service">Official Service</s:String>
     <s:String x:Key="connection_test">Connection Test</s:String>
     <s:String x:Key="system_setting">Settings</s:String>
-    <s:String x:Key="pin_need_hint">We need your Pin to continue connecting.</s:String>
+    <s:String x:Key="pin_need_hint">We need your Pin to continue connecting</s:String>
     <s:String x:Key="cancel">Cancel</s:String>
     <!-- setting page -->
     <s:String x:Key="account">Account</s:String>
@@ -34,7 +34,7 @@
     <s:String x:Key="ss0">Auto launch when startup</s:String>
     <s:String x:Key="ss1">Remind to connect in the NEU network</s:String>
     <s:String x:Key="ss2">Auto connect without clicking any button</s:String>
-    <s:String x:Key="secure_and_privacy">Privacy and security</s:String>
+    <s:String x:Key="secure_and_privacy">Privacy And Security</s:String>
     <s:String x:Key="ss3">Auto upload bug report when application crash</s:String>
     <s:String x:Key="ss4">Update when new version releases</s:String>
     <s:String x:Key="ss5">Silently update without any notification</s:String>
@@ -47,4 +47,39 @@
     <s:String x:Key="as1">Powered by An Honest Liar</s:String>
     <s:String x:Key="as2">NEU IPGateway Assistant is made possible by the unbyte/ipgw project and other open source software.</s:String>
     <s:String x:Key="as3">Give me a star on Github.com (*^_^*), which contributes to the most exciting impulse for me to develop, maintain and update the program.</s:String>
+    <s:String x:Key="disconnect_from_network">Disconnected From NEU Network</s:String>
+    <s:String x:Key="refresh">Refresh</s:String>
+    <s:String x:Key="add_user">Add User</s:String>
+
+    <s:String x:Key="current_user_indicator">(Current)</s:String>
+    <s:String x:Key="show_password">Show Password</s:String>
+    <s:String x:Key="hide_password">Hide Password</s:String>
+    <s:String x:Key="set_current">Set As Current</s:String>
+    <s:String x:Key="more_option">More</s:String>
+    <s:String x:Key="delete_user">Delete User</s:String>
+    <s:String x:Key="edit_password">Edit Password</s:String>
+    <s:String x:Key="edit_password_hint">Edit the password saved in your computer disk, rather than the password in pass.neu.edu.cn.</s:String>
+    <s:String x:Key="edit_pin">Edit PIN</s:String>
+    <s:String x:Key="add_pin">Add PIN</s:String>
+
+    <s:String x:Key="checked_connected">You have connected to NEU Network.</s:String>
+    <s:String x:Key="do_not_remind">Connect automatically and do not disrupt me.</s:String>
+    <s:String x:Key="do_not_remind_hint">You can reset this option in Settings Window.</s:String>
+    <s:String x:Key="succeed_connect">You have connected successfully.</s:String>
+    <s:String x:Key="after_second_format">Close this popup in {0} seconds.</s:String>
+
+    <s:String x:Key="warning">Warning</s:String>
+
+    <s:String x:Key="mw_driver_error">Error occurs in driver program</s:String>
+    <s:String x:Key="mw_reinputpassword_hint">ERROR: Invalid username or password, reinput your password which will be saved automatically but not protected by PIN. If you want to protect your account credential, please open Users Manager Dialog.</s:String>
+    <s:String x:Key="uv_input_pin_for_pwd">Input PIN to show your password</s:String>
+    <s:String x:Key="uv_delete_user_confirm">Are you sure to delete the user?</s:String>
+
+    <s:String x:Key="uv_reset_password">Please input new password which will be saved.</s:String>
+    <s:String x:Key="uv_reset_password_pin">Do you want to use PIN to protect your account crediential</s:String>
+    <s:String x:Key="uv_set_new_pin">Set your new PIN</s:String>
+    <s:String x:Key="uv_old_pin">Input your old PIN</s:String>
+    <s:String x:Key="um_pin_hint">Malicious programs maybe crack your password stored in your computer, to keep your safety, we recommend you protect your password with PIN, which may disrupt you to spend seconds to enter PIN to connect. Would you like to protect your password with PIN?</s:String>
+    <s:String x:Key="lw_empty">Username and password cannot be empty.</s:String>
+
 </ResourceDictionary>

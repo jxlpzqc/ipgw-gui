@@ -29,20 +29,17 @@
     <Grid>
         <Grid x:Name="grid">
             <StackPanel Margin="10,40">
-                <TextBlock Margin="0,20,0,36" FontWeight="Bold" FontSize="20" TextAlignment="Center" TextWrapping="Wrap">检测到您已进入校园网</TextBlock>
+                <TextBlock Margin="0,20,0,36" FontWeight="Bold" FontSize="20" TextAlignment="Center" TextWrapping="Wrap" Text="{DynamicResource checked_connected}"></TextBlock>
                 <controls:ConnectButton x:Name="connectBtn" Status="Disconnected"></controls:ConnectButton>
-                <CheckBox x:Name="remindCb" HorizontalAlignment="Right" Margin="20,30">
-                    <CheckBox.Content>自动连接，不再提醒我</CheckBox.Content>
-                    <CheckBox.ToolTip>您可以再设置中取消该选项</CheckBox.ToolTip>
-                </CheckBox>
+                <CheckBox x:Name="remindCb" HorizontalAlignment="Right" Margin="20,30" Content="{DynamicResource do_not_remind}" ToolTip="{DynamicResource do_not_remind_hint}"></CheckBox>
             </StackPanel>
         </Grid>
         <Grid x:Name="pinInputGrid" Visibility="Collapsed">
 
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBlock TextAlignment="Center" FontSize="22" FontWeight="Bold">本次连接需要输入PIN值</TextBlock>
+                <TextBlock TextAlignment="Center" FontSize="22" FontWeight="Bold" Text="{DynamicResource pin_need_hint}"></TextBlock>
                 <controls:PinInput x:Name="pinInput" FinishedInput="pinInput_FinishedInput"></controls:PinInput>
-                <Button x:Name="cancelBtn" Foreground="White" Style="{StaticResource PlainButtonStyle}">取消</Button>
+                <Button x:Name="cancelBtn" Foreground="White" Style="{StaticResource PlainButtonStyle}" Content="{DynamicResource cancel}"></Button>
             </StackPanel>
 
         </Grid>
@@ -59,7 +56,7 @@
             <StackPanel Margin="20" VerticalAlignment="Center">
                 <StackPanel x:Name="successP">
                     <Image Width="200" Source="\Assets\Connected.png"></Image>
-                    <TextBlock Margin="0,30" TextAlignment="Center" FontSize="20">您已成功连接</TextBlock>
+                    <TextBlock Margin="0,30" TextAlignment="Center" FontSize="20" Text="{DynamicResource succeed_connect}"></TextBlock>
                 </StackPanel>
 
                 <StackPanel x:Name="failP" Visibility="Collapsed">
@@ -69,8 +66,7 @@
 
 
                 <TextBlock TextAlignment="Center" FontSize="10">
-                    <Run x:Name="secondText">-</Run>
-                    秒后自动关闭弹框
+                    <Run x:Name="secondText"></Run>
                 </TextBlock>
             </StackPanel>
             
