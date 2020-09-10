@@ -22,10 +22,17 @@
                 <MenuItem Header="{DynamicResource tray_exit}" Click="ExitMenuItem_Click" />
             </ContextMenu>
 
+            <ToolTip x:Key="SysTrayToolTip">
+                <StackPanel Orientation="Horizontal">
+                    
+                    <TextBlock Foreground="{DynamicResource ThemeColor}" Text="{DynamicResource tray_message}"></TextBlock>
 
+                </StackPanel>
+            </ToolTip>
+            
             <tb:TaskbarIcon x:Key="NotifyIcon"
                     IconSource="/ApplicationIcon.ico"
-                    ToolTipText="{DynamicResource tray_message}"
+                            TrayToolTip="{DynamicResource SysTrayToolTip}"
                     TrayMouseDoubleClick="TaskbarIcon_TrayMouseDoubleClick"
                     ContextMenu="{StaticResource SysTrayMenu}">
 

@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Diagnostics;
 using Microsoft.Win32;
+using System.Reactive.Linq;
 
 namespace NEU.IPGateway.UI
 {
@@ -39,7 +40,7 @@ namespace NEU.IPGateway.UI
 
         private Task<bool> InitializeLanguageChange()
         {
-            TaskCompletionSource<bool> source = new System.Threading.Tasks.TaskCompletionSource<bool>(); 
+            TaskCompletionSource<bool> source = new System.Threading.Tasks.TaskCompletionSource<bool>();
             GlobalStatusStore.Current.WhenAnyValue(x => x.Setting.Language)
                 .Subscribe(lan =>
                 {
@@ -55,6 +56,8 @@ namespace NEU.IPGateway.UI
                 });
             return source.Task;
         }
+
+        #region AutoLaunch Registry CRUD Part
 
         private void SetThisApplicationStartup(bool onOff)
         {
@@ -133,6 +136,8 @@ namespace NEU.IPGateway.UI
             }
         }
 
+        #endregion
+
         private void InitializeStartupChange()
         {
             GlobalStatusStore.Current.WhenAnyValue(x => x.Setting.LaunchWhenStartup)
@@ -150,6 +155,8 @@ namespace NEU.IPGateway.UI
                 if (item is MainWindow win)
                 {
                     win.Show();
+                    win.Topmost = true;
+                    win.Topmost = false;
                     win.Focus();
                     flag = false;
                 }
@@ -157,23 +164,12 @@ namespace NEU.IPGateway.UI
             if (flag)
                 new MainWindow().Show();
 
-            UpdateState();
+            UpdateStatus();
         }
 
-        private async void UpdateState()
+        private async Task UpdateStatus()
         {
-            Dispatcher.Invoke(() =>
-            {
-                GlobalStatusStore.Current.ConnectStatus = Core.Models.ConnectStatus.Checking;
-            });
-            var result = await Locator.Current.GetService<IInternetGatewayService>().Test();
-            
-            Dispatcher.Invoke(() =>
-            {
-                if (!result.connected) GlobalStatusStore.Current.ConnectStatus = Core.Models.ConnectStatus.DisconnectedFromNetwork;
-                else if (result.logedin) GlobalStatusStore.Current.ConnectStatus = Core.Models.ConnectStatus.Connected;
-                else GlobalStatusStore.Current.ConnectStatus = Core.Models.ConnectStatus.Disconnected;
-            });
+            await GlobalStatusStore.Current.Test.Execute();
         }
 
         public void HideMainWindow()
@@ -217,65 +213,58 @@ namespace NEU.IPGateway.UI
 
         private async void Application_Startup(object sender, StartupEventArgs e)
         {
-            if (!Environment.GetCommandLineArgs().Contains("/s"))
-            {
-                ShowMainWindow();
-            }
+
             InitializeStartupChange();
             await InitializeLanguageChange();
-            UpdateStateAndRemind();
             System.Net.NetworkInformation.NetworkChange.NetworkAddressChanged += NetworkChange_NetworkAddressChanged;
 
             notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
 
+            if (!Environment.GetCommandLineArgs().Contains("/s"))
+            {
+                ShowMainWindow();
+            }
+
+            await UpdateStatus();
         }
 
-        private void UpdateStateAndRemind()
+        private async Task UpdateStatusAndRemind()
         {
+            await UpdateStatus();
             if (!GlobalStatusStore.Current.Setting.RemindConnect) return;
-            Task.Run(async () =>
+
+            try
             {
-                try
+
+                if (GlobalStatusStore.Current.ConnectStatus == Core.Models.ConnectStatus.Disconnected
+                    && !IsMainWindowActive())
                 {
                     Dispatcher.Invoke(() =>
                     {
-                        GlobalStatusStore.Current.ConnectStatus = Core.Models.ConnectStatus.Checking;
-                    });
-                    var result = await Locator.Current.GetService<IInternetGatewayService>().Test();
-                    if (result.connected && !result.logedin && !IsMainWindowActive())
-                    {
-                        Dispatcher.Invoke(() =>
+                        var flag = true;
+                        foreach (var win in Windows)
                         {
-                            var flag = true;
-                            foreach (var win in Windows)
+                            if (win is RemindConnectPopupWindow rwin)
                             {
-                                if (win is RemindConnectPopupWindow rwin)
-                                {
-                                    rwin.Show();
-                                    rwin.Focus();
-                                    flag = false;
-                                    break;
-                                }
+                                rwin.Show();
+                                rwin.Focus();
+                                flag = false;
+                                break;
                             }
-                            if (flag) new RemindConnectPopupWindow().Show();
-                        });
-                    }
-                    Dispatcher.Invoke(() =>
-                    {
-                        if (!result.connected) GlobalStatusStore.Current.ConnectStatus = Core.Models.ConnectStatus.DisconnectedFromNetwork;
-                        else if (result.logedin) GlobalStatusStore.Current.ConnectStatus = Core.Models.ConnectStatus.Connected;
-                        else GlobalStatusStore.Current.ConnectStatus = Core.Models.ConnectStatus.Disconnected;
+                        }
+                        if (flag) new RemindConnectPopupWindow().Show();
                     });
-
                 }
-                catch (Exception ex)
-                { }
-            });
+
+            }
+            catch (Exception ex)
+            { }
+
         }
 
         private void NetworkChange_NetworkAddressChanged(object sender, EventArgs e)
         {
-            UpdateStateAndRemind();
+            UpdateStatusAndRemind();
         }
 
         private void ShowItemMenuItem_Click(object sender, RoutedEventArgs e)

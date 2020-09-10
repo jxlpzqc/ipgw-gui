@@ -197,8 +197,8 @@ namespace NEU.IPGateway.Core
 
         private async Task<Unit> ForceDisconnectImpl(string password)
         {
-            await Locator.Current.GetService<Services.IInternetGatewayService>().ForceDisconnect(SelectedUser.Username, password);
-            Global.ConnectStatus = ConnectStatus.Disconnected;
+            await Locator.Current.GetService<IInternetGatewayService>().ForceDisconnect(SelectedUser.Username, password);
+            await Global.Test.Execute();
             return Unit.Default;
         }
     }

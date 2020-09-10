@@ -41,6 +41,8 @@ namespace NEU.IPGateway.Core
 
         public ReactiveCommand<Unit, Unit> Toggle { get; }
 
+        public ReactiveCommand<Unit, Unit> Test { get; }
+
 
         #region 工厂方法
 
@@ -63,6 +65,9 @@ namespace NEU.IPGateway.Core
 
         private GlobalStatusStore()
         {
+
+            Test = ReactiveCommand.CreateFromTask(TestImpl);
+
             var canOperate = this.WhenAnyValue(x => x.ConnectStatus)
                .Select(p =>
                {
@@ -147,6 +152,23 @@ namespace NEU.IPGateway.Core
             Toggle.ThrownExceptions.Subscribe(_ => { });
 
             InitializeStatus();
+        }
+
+        private async Task TestImpl()
+        {
+            var oldStatus = ConnectStatus;
+            ConnectStatus = ConnectStatus.Checking;
+            try
+            {
+                var result = await Locator.Current.GetService<IInternetGatewayService>().Test();
+                if (!result.connected) ConnectStatus = ConnectStatus.DisconnectedFromNetwork;
+                else if (result.logedin) ConnectStatus = ConnectStatus.Connected;
+                else ConnectStatus = ConnectStatus.Disconnected;
+            }
+            catch
+            {
+                ConnectStatus = oldStatus;
+            }
         }
 
         public static GlobalStatusStore Current { get; } = new GlobalStatusStore();
