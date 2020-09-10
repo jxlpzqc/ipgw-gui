@@ -86,6 +86,11 @@
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
+
+            <StackPanel Margin="40"  Orientation="Horizontal">
+                <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/Assets/ApplicationIconWithStroke.png"></Image>
+                <TextBlock Text="{DynamicResource application_name}" Foreground="White" Width="160" TextWrapping="Wrap" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="23" FontFamily="黑体"></TextBlock>
+            </StackPanel>
             
             <UniformGrid Margin="25" Rows="2" Columns="3" Grid.Column="1">
                 <UniformGrid.Resources>
