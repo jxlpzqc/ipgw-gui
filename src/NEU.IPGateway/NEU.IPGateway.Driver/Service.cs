@@ -108,7 +108,8 @@ namespace NEU.IPGateway.Driver
 
         public async Task<bool> ForceDisconnect(string username, string password)
         {
-            var results = (await GetResult("list -d")).stdout.Split('\n').Skip(6);
+            var output = (await GetResult("list -d")).stdout.Split('\n');
+            var results = output.Skip(6).Where(u => !string.IsNullOrWhiteSpace(u));
             foreach (var result in results)
             {
                 var sid = result.Split(' ').Where(u => !string.IsNullOrEmpty(u)).Last();

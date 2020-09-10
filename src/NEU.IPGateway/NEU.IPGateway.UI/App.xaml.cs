@@ -167,9 +167,15 @@ namespace NEU.IPGateway.UI
             UpdateStatus();
         }
 
-        private async Task UpdateStatus()
+        private Task UpdateStatus()
         {
-            await GlobalStatusStore.Current.Test.Execute();
+            var result = new TaskCompletionSource<bool>();
+            Dispatcher.Invoke(async () =>
+            {
+                await GlobalStatusStore.Current.Test.Execute();
+                result.SetResult(true);
+            });
+            return result.Task;
         }
 
         public void HideMainWindow()
@@ -213,6 +219,13 @@ namespace NEU.IPGateway.UI
 
         private async void Application_Startup(object sender, StartupEventArgs e)
         {
+            // application singleton
+            Process currentProcess = Process.GetCurrentProcess();
+            var processList = Process.GetProcessesByName(currentProcess.ProcessName);
+            if (processList.Length > 1)
+            {
+                this.Shutdown();
+            }
 
             InitializeStartupChange();
             await InitializeLanguageChange();

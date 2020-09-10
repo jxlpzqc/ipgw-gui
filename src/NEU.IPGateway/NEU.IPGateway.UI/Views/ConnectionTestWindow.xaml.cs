@@ -25,6 +25,10 @@ namespace NEU.IPGateway.UI.Views
             InitializeComponent();
 
             ViewModel = new Core.ConnectionTestViewModel();
+
+            var green = new SolidColorBrush(Colors.DarkGreen);
+            var red = new SolidColorBrush(Colors.DarkRed);
+
             this.WhenActivated(d =>
             {
                 this.OneWayBind(ViewModel,
@@ -46,10 +50,23 @@ namespace NEU.IPGateway.UI.Views
                     .DisposeWith(d);
 
                 this.OneWayBind(ViewModel,
+                    x => x.IsConnected,
+                    v => v.connectedText.Foreground,
+                    connected => connected ? green : red)
+                    .DisposeWith(d);
+
+                this.OneWayBind(ViewModel,
                     x => x.IsLogined,
                     v => v.loginedText.Text,
                     connected => connected ? I18NStringUtil.GetString("ct_logined") : I18NStringUtil.GetString("ct_not_logined"))
                     .DisposeWith(d);
+
+                this.OneWayBind(ViewModel,
+                   x => x.IsLogined,
+                   v => v.loginedText.Foreground,
+                   connected => connected ? green : red)
+                   .DisposeWith(d);
+
 
                 this.BindCommand(ViewModel,
                     x => x.Test,

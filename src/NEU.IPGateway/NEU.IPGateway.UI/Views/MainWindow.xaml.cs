@@ -118,7 +118,7 @@ namespace NEU.IPGateway.UI.Views
                 this.OneWayBind(ViewModel,
                     x => x.AccountInfo.UsedTime,
                     v => v.durationText.Content,
-                    x => (int)x.TotalHours + ":" + (int)x.Minutes + ":" + (int)x.Seconds
+                    x => string.Format("{0:D2}:{1:D2}:{2:D2}", (int)x.TotalHours, (int)x.Minutes, (int)x.Seconds)
                 );
 
                 this.BindCommand(ViewModel,

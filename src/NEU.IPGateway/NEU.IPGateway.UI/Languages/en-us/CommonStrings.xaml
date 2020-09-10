@@ -14,12 +14,12 @@
     <s:String x:Key="enterpin">Please input PIN</s:String>
     <s:String x:Key="manage_user">Account Settings</s:String>
     <s:String x:Key="change_account">Switch account ></s:String>
-    <s:String x:Key="used_data_hint">The data displayed is those which has been caculated，the data in this connection will not reckoned.</s:String>
+    <s:String x:Key="used_data_hint">The data displayed is those which has been caculated, the data in this connection will not reckoned.</s:String>
     <s:String x:Key="used_data">Used Data</s:String>
     <s:String x:Key="plan_type">Plan Type</s:String>
     <s:String x:Key="remain_money">Remain Money</s:String>
-    <s:String x:Key="connected_duration">Connected Duration</s:String>
-    <s:String x:Key="connected_duration_hint">The duration displayed is those which has been caculated，the duration in this connection will not reckoned.</s:String>
+    <s:String x:Key="connected_duration">Duration</s:String>
+    <s:String x:Key="connected_duration_hint">The duration displayed is those which has been caculated, the duration in this connection will not reckoned.</s:String>
     <s:String x:Key="manage_account">Manage Account</s:String>
     <s:String x:Key="force_disconnect">Force Disconncet</s:String>
     <s:String x:Key="official_service">Official Service</s:String>
