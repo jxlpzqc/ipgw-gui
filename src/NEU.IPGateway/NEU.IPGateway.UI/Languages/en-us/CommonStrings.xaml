@@ -75,6 +75,8 @@
     <s:String x:Key="warning">Warning</s:String>
 
     <s:String x:Key="testing">Please wait...</s:String>
+    <s:String x:Key="bad_pin">Invalid PIN!</s:String>
+
 
     <s:String x:Key="mw_driver_error">Error occurs in driver program</s:String>
     <s:String x:Key="mw_reinputpassword_hint">ERROR: Invalid username or password, reinput your password which will be saved automatically but not protected by PIN. If you want to protect your account credential, please open Users Manager Dialog.</s:String>

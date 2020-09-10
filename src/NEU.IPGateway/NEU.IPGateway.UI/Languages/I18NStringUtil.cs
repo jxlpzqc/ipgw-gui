@@ -9,7 +9,7 @@ namespace NEU.IPGateway.UI.Languages
         public static string GetString(string key)
         {
             var str = App.Current.Resources[key] as string;
-            if (str == null) return "";
+            if (str == null) return key;
             else return str;
         }
     }

@@ -2,6 +2,7 @@
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
+using System.Reactive.Disposables;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,26 +29,32 @@ namespace NEU.IPGateway.UI.Views
             {
                 this.OneWayBind(ViewModel,
                     x => x.IsRunning,
-                    v => v.runningGrid.Visibility);
+                    v => v.runningGrid.Visibility)
+                    .DisposeWith(d);
 
                 this.OneWayBind(ViewModel,
                     x => x.IsRunning,
                     v => v.resultGrid.Visibility,
-                    x => x ? Visibility.Collapsed : Visibility.Visible);
+                    x => x ? Visibility.Collapsed : Visibility.Visible)
+                    .DisposeWith(d);
+
 
                 this.OneWayBind(ViewModel,
                     x => x.IsConnected,
                     v => v.connectedText.Text,
-                   connected => connected ? I18NStringUtil.GetString("ct_connected") : I18NStringUtil.GetString("ct_not_connected"));
+                    connected => connected ? I18NStringUtil.GetString("ct_connected") : I18NStringUtil.GetString("ct_not_connected"))
+                    .DisposeWith(d);
 
                 this.OneWayBind(ViewModel,
                     x => x.IsLogined,
                     v => v.loginedText.Text,
-                   connected => connected ? I18NStringUtil.GetString("ct_logined") : I18NStringUtil.GetString("ct_not_logined"));
+                    connected => connected ? I18NStringUtil.GetString("ct_logined") : I18NStringUtil.GetString("ct_not_logined"))
+                    .DisposeWith(d);
 
                 this.BindCommand(ViewModel,
                     x => x.Test,
-                    v => v.retestBtn);
+                    v => v.retestBtn)
+                    .DisposeWith(d);
 
             });
 

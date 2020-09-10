@@ -73,6 +73,7 @@
     
     
     <s:String x:Key="testing">正在测试中...</s:String>
+    <s:String x:Key="bad_pin">您输入了错误的PIN值</s:String>
 
 
     <s:String x:Key="recheck">重新检测</s:String>

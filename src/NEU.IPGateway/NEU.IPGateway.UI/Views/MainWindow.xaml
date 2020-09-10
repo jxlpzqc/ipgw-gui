@@ -125,11 +125,12 @@
                         <TextBlock Margin="5,0,0,0" Text="{DynamicResource manage_account}"></TextBlock>
                     </StackPanel>
                 </Button>
-                <Button>
+                <Button x:Name="forceDisconncetBtn" Click="forceDisconncetBtn_Click">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                         <fa:FontAwesome Icon="Unlink"  Margin="0,2,0,0"></fa:FontAwesome>
                         <TextBlock Margin="5,0,0,0" Text="{DynamicResource force_disconnect}"></TextBlock>
-                    </StackPanel></Button>
+                    </StackPanel>
+                </Button>
                 <Button Click="officialServiceBtn_Click" x:Name="officialServiceBtn">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                         <fa:FontAwesome Icon="Server"  Margin="0,2,0,0"></fa:FontAwesome>

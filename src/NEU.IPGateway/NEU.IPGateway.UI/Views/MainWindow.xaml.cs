@@ -141,7 +141,13 @@ namespace NEU.IPGateway.UI.Views
                     })
                     .DisposeWith(d);
 
-
+                this.ViewModel.ForceDisconnect
+                    .ThrownExceptions
+                    .Subscribe(m =>
+                    {
+                        MessageBox.Show(m.Message, I18NStringUtil.GetString("mw_driver_error"));
+                    })
+                    .DisposeWith(d);
             });
 
 
@@ -301,14 +307,8 @@ namespace NEU.IPGateway.UI.Views
                 }
                 catch (Exception ex)
                 {
-
-
                 }
-
             }
-
-
-
         }
 
         private void officialServiceBtn_Click(object sender, RoutedEventArgs e)
@@ -319,6 +319,32 @@ namespace NEU.IPGateway.UI.Views
         private void connectionTestNavigationBtn_Click(object sender, RoutedEventArgs e)
         {
             new ConnectionTestWindow().Show();
+        }
+
+        private async void forceDisconncetBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var pin = "";
+            if (await Locator.Current.GetService<Core.Services.IUserStorageService>()
+                .CheckUserPinExist(ViewModel.SelectedUser.Username))
+            {
+                var dialog = new PinSimpleDialog();
+
+                if (dialog.ShowDialog() != true) return;
+                pin = dialog.Result;
+            }
+
+            try
+            {
+                var pwd = await Locator.Current.GetService<Core.Services.IUserStorageService>()
+                    .DecryptedUserPassword(ViewModel.SelectedUser.Username, pin);
+                await ViewModel.ForceDisconnect.Execute(pwd);
+            }
+            catch
+            {
+                MessageBox.Show(I18NStringUtil.GetString("bad_pin"));
+            }
+
+
         }
     }
 }

@@ -8,6 +8,7 @@ using System.IO;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 
 namespace NEU.IPGateway.Core
 {
@@ -61,11 +62,14 @@ namespace NEU.IPGateway.Core
         public ReactiveCommand<string, Unit> ContinueConnectWithPassword { get; }
 
         public ReactiveCommand<Unit, Unit> CancelConnect { get; }
-
+        
+        public ReactiveCommand<string, Unit> ForceDisconnect { get; }
 
         public MainPageViewModel()
         {
             Activator = new ViewModelActivator();
+
+            this.ForceDisconnect = ReactiveCommand.CreateFromTask<string,Unit>(ForceDisconnectImpl);
 
             this.CancelConnect = ReactiveCommand.Create(() =>
             {
@@ -191,6 +195,11 @@ namespace NEU.IPGateway.Core
 
         }
 
-
+        private async Task<Unit> ForceDisconnectImpl(string password)
+        {
+            await Locator.Current.GetService<Services.IInternetGatewayService>().ForceDisconnect(SelectedUser.Username, password);
+            Global.ConnectStatus = ConnectStatus.Disconnected;
+            return Unit.Default;
+        }
     }
 }
