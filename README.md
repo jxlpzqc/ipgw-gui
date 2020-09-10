@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/jxlpzqc/ipgw-gui/master/Logo.png" alt="(NEU IPGateway Assistant) ipgw-gui" style="width:200px;" />
+<img src="https://raw.githubusercontent.com/jxlpzqc/ipgw-gui/master/Logo.png" alt="(NEU IPGateway Assistant) ipgw-gui" width="200"/>
 
 # 东大网关助手 - NEU Network Assistant
 
