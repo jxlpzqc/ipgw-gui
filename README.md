@@ -1,8 +1,8 @@
-<img src="https://raw.githubusercontent.com/jxlpzqc/ipgw-gui/master/Logo.png" alt="(NEU IPGateway Assistant)" style="zoom:33%;" />
+<img src="https://raw.githubusercontent.com/jxlpzqc/ipgw-gui/master/Logo.png" alt="(NEU IPGateway Assistant) ipgw-gui" style="width:200px;" />
 
-# 东大网关助手
+# 东大网关助手 - NEU Network Assistant
 
-![MIT License](https://img.shields.io/badge/License-MIT-green.svg)![Language](https://img.shields.io/badge/Language-C#-blue.svg)
+![MIT License](https://img.shields.io/badge/License-MIT-green.svg)![Language](https://img.shields.io/badge/Language-CSharp-blue.svg)
 
 **东北大学校园网关Windows图形客户端**，采用[unbyte/ipgw](https://github.com/unbyte/ipgw)的作为连接驱动程序。
 
@@ -10,9 +10,7 @@
 
 
 
-**当前版本为测试版！可能会产生各种功能BUG**
-
-
+**当前版本为测试版！可能会产生各种功能BUG！**  
 
 # 构建和运行
 
