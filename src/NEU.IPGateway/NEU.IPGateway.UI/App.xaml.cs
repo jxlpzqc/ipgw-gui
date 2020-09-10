@@ -238,7 +238,7 @@ namespace NEU.IPGateway.UI
                 ShowMainWindow();
             }
 
-            await UpdateStatus();
+            await UpdateStatusAndRemind();
         }
 
         private async Task UpdateStatusAndRemind()

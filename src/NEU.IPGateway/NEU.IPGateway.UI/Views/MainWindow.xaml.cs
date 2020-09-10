@@ -168,7 +168,7 @@ namespace NEU.IPGateway.UI.Views
             while (true)
             {
                 if (_inputShowLock == false) return;
-                else await Task.Delay(300);
+                else await Task.Delay((int)(pinAnimationTime / 3));
             }
         }
 
@@ -189,12 +189,14 @@ namespace NEU.IPGateway.UI.Views
             catch { }
         }
 
+        private double pinAnimationTime = 420;
+
         private async Task ShowPinInputAnimate()
         {
             await EnsurePinInputAnimationSecurity();
             _inputShowLock = true;
 
-            var time = 1200;
+            var time = pinAnimationTime;
             var timeSpan = TimeSpan.FromMilliseconds(time);
             var effect = new BlurEffect()
             {
@@ -227,7 +229,7 @@ namespace NEU.IPGateway.UI.Views
             await EnsurePinInputAnimationSecurity();
             _inputShowLock = true;
 
-            var timeSpan = TimeSpan.FromMilliseconds(1200);            
+            var timeSpan = TimeSpan.FromMilliseconds(pinAnimationTime);            
 
             var animation = new DoubleAnimation(0, new Duration(timeSpan));
 
