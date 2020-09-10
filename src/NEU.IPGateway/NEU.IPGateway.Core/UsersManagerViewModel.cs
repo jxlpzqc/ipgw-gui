@@ -17,9 +17,8 @@ namespace NEU.IPGateway.Core
     public class UsersManagerViewModel : ReactiveObject
     {
 
-        //[Reactive]
-        //public IEnumerable<UserViewModel> UserViewModels { get; set; }
-        public extern IEnumerable<UserViewModel> UserViewModels { [ObservableAsProperty] get; }
+        [ObservableAsProperty]
+        public IEnumerable<UserViewModel> UserViewModels { get; }
 
         public ReactiveCommand<(User user, string pin), bool> AddUser { get; }
 

@@ -57,7 +57,7 @@ namespace NEU.IPGateway.UI.Views
 
                 this.OneWayBind(ViewModel,
                     u => u.ConnectStatus,
-                    v => v.selectUserButton.Visibility,
+                    v => v.selectUserBtn.Visibility,
                     u => u == Core.Models.ConnectStatus.Disconnected ? Visibility.Visible : Visibility.Collapsed)
                     .DisposeWith(d);
 
@@ -345,6 +345,12 @@ namespace NEU.IPGateway.UI.Views
             }
 
 
+        }
+
+
+        private void selectUserBtn_Click(object sender, RoutedEventArgs e)
+        {
+            new UsersManagerWindow().ShowDialog();
         }
     }
 }

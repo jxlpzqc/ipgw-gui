@@ -35,9 +35,9 @@
                 <StackPanel Margin="10" HorizontalAlignment="Center" Orientation="Horizontal">
 
                     <Label x:Name="selectedUserLabel">20180001</Label>
-                    <Label x:Name="selectUserButton" Foreground="DarkBlue" Margin="10,0,0,0">
+                    <Button Style="{DynamicResource PlainButtonStyle}" Click="selectUserBtn_Click"  FontSize="12" x:Name="selectUserBtn" Foreground="DarkBlue" Margin="10,0,0,0">
                         <DynamicResource ResourceKey="change_account"></DynamicResource>
-                    </Label>
+                    </Button>
                     <Label x:Name="nameText" FontWeight="Bold" Margin="10,0,0,0">N/A</Label>
                 </StackPanel>
             </StackPanel>

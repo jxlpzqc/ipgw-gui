@@ -96,7 +96,7 @@ namespace NEU.IPGateway.Core
                 }
                 else
                 {
-                    await DoConnect.Execute("").Catch(Observable.Return(false));
+                    await DoConnect.Execute("");
                 }
             }, canOperate);
 

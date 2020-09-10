@@ -11,7 +11,7 @@ using System.Reactive.Linq;
 
 namespace NEU.IPGateway.Core
 {
-    public class UserViewModel : ReactiveObject,IDisposable //TODO Change it to IActivable
+    public class UserViewModel : ReactiveObject,IActivatableViewModel
     {
 
         [ObservableAsProperty]
@@ -42,30 +42,21 @@ namespace NEU.IPGateway.Core
 
         public ReactiveCommand<Unit, Unit> SetCurrent { get; }
 
-        private CompositeDisposable disposables = new CompositeDisposable();
+        public ViewModelActivator Activator { get; }
 
+        
         public UserViewModel()
         {
+            Activator = new ViewModelActivator();
+
             IUserStorageService service = Locator.Current.GetService<IUserStorageService>();
 
-            this.WhenAnyValue(x => x.User).SelectMany(x => Observable.FromAsync(async () =>
-            {
-                return await service.CheckUserPinExist(x?.Username);
-            })).ToPropertyEx(this, x => x.HasPin);
-
-            this.WhenAnyValue(x => x.User)
-                .CombineLatest(
-                    GlobalStatusStore.Current.WhenAnyValue(x => x.CurrentUser),
-                    (x, y) => (x?.Username == y?.Username)
-                )
-                .ToPropertyEx(this, x => x.IsCurrent)
-                .DisposeWith(disposables);
-
+            #region Commands
             Refresh = ReactiveCommand.CreateFromObservable(() => Observable.Return(Unit.Default));
 
             Delete = ReactiveCommand.CreateFromTask(async () =>
             {
-                var ret =  await service.DeleteUser(User.Username);
+                var ret = await service.DeleteUser(User.Username);
                 await Refresh.Execute();
                 return ret;
             });
@@ -123,12 +114,32 @@ namespace NEU.IPGateway.Core
                 await service.SetDefaultUser(User.Username);
             });
 
+            #endregion
+
+            this.WhenActivated(d =>
+            {
+
+                this.WhenAnyValue(x => x.User).SelectMany(x => Observable.FromAsync(async () =>
+                {
+                    return await service.CheckUserPinExist(x?.Username);
+                }))
+                    .ObserveOn(RxApp.MainThreadScheduler)
+                    .ToPropertyEx(this, x => x.HasPin)
+                    .DisposeWith(d);
+
+                this.WhenAnyValue(x => x.User)
+                    .CombineLatest(
+                        GlobalStatusStore.Current.WhenAnyValue(x => x.CurrentUser),
+                        (x, y) => (x?.Username == y?.Username)
+                    )
+                    .ObserveOn(RxApp.MainThreadScheduler)
+                    .ToPropertyEx(this, x => x.IsCurrent)
+                    .DisposeWith(d);
+
+            });
+
 
         }
-
-        public void Dispose()
-        {
-            disposables.Dispose();
-        }
+        
     }
 }

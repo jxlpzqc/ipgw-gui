@@ -81,12 +81,6 @@ namespace NEU.IPGateway.UI.Controls
                     MessageBox.Show(I18NStringUtil.GetString(e.Message));
                 }).DisposeWith(d);
 
-
-                ViewModel.DisposeWith(d);
-
-
-
-
             });
         }
 
