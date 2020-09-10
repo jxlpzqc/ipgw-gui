@@ -315,5 +315,10 @@ namespace NEU.IPGateway.UI.Views
         {
             Utils.HyperlinkUtil.Open("https://ipgw.neu.edu.cn/");
         }
+
+        private void connectionTestNavigationBtn_Click(object sender, RoutedEventArgs e)
+        {
+            new ConnectionTestWindow().Show();
+        }
     }
 }

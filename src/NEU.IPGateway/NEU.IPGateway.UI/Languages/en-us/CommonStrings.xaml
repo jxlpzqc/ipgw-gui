@@ -27,6 +27,9 @@
     <s:String x:Key="system_setting">Settings</s:String>
     <s:String x:Key="pin_need_hint">We need your Pin to continue connecting</s:String>
     <s:String x:Key="cancel">Cancel</s:String>
+
+    <s:String x:Key="recheck">Check Again</s:String>
+
     <!-- setting page -->
     <s:String x:Key="account">Account</s:String>
     <s:String x:Key="general">General</s:String>
@@ -71,6 +74,8 @@
 
     <s:String x:Key="warning">Warning</s:String>
 
+    <s:String x:Key="testing">Please wait...</s:String>
+
     <s:String x:Key="mw_driver_error">Error occurs in driver program</s:String>
     <s:String x:Key="mw_reinputpassword_hint">ERROR: Invalid username or password, reinput your password which will be saved automatically but not protected by PIN. If you want to protect your account credential, please open Users Manager Dialog.</s:String>
     <s:String x:Key="uv_input_pin_for_pwd">Input PIN to show your password</s:String>
@@ -87,6 +92,12 @@
     <s:String x:Key="tray_show">Open Main Window</s:String>
     <s:String x:Key="tray_setting">Open Settings</s:String>
     <s:String x:Key="tray_exit">Exit</s:String>
+
+    <s:String x:Key="ct_logined">You have logined and can access to Internet.</s:String>
+    <s:String x:Key="ct_connected">You are in NEU Network.</s:String>
+    <s:String x:Key="ct_not_logined">You have not logined.</s:String>
+    <s:String x:Key="ct_not_connected">You are not in NEU Network.</s:String>
+   
 
     <s:String x:Key="vm_unavailable_change_user">You could not change user when you are connected or system is busy.</s:String>
     

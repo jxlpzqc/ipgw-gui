@@ -136,7 +136,7 @@
                         <TextBlock Margin="5,0,0,0" Text="{DynamicResource official_service}"></TextBlock>
                     </StackPanel>
                 </Button>
-                <Button>
+                <Button x:Name="connectionTestNavigationBtn" Click="connectionTestNavigationBtn_Click">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                         <fa:FontAwesome Icon="Check"  Margin="0,2,0,0"></fa:FontAwesome>
                         <TextBlock Margin="5,0,0,0" Text="{DynamicResource connection_test}"></TextBlock>

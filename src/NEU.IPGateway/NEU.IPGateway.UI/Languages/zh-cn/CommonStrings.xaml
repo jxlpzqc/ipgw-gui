@@ -70,6 +70,12 @@
     <s:String x:Key="after_second_format">{0} 秒后自动关闭弹框</s:String>
 
     <s:String x:Key="warning">警告</s:String>
+    
+    
+    <s:String x:Key="testing">正在测试中...</s:String>
+
+
+    <s:String x:Key="recheck">重新检测</s:String>
 
     <s:String x:Key="mw_driver_error">发生错误</s:String>
     <s:String x:Key="mw_reinputpassword_hint">用户名或密码错误，本次键入的密码将会自动保存，但不会使用PIN保护，如果需要密码保护，请前往【用户管理】</s:String>
@@ -88,6 +94,13 @@
     <s:String x:Key="tray_show">显示主窗体</s:String>
     <s:String x:Key="tray_setting">程序设置</s:String>
     <s:String x:Key="tray_exit">退出程序</s:String>
+
+
+    <s:String x:Key="ct_logined">您已经登录到校园网，可以正常上网</s:String>
+    <s:String x:Key="ct_connected">您已经处于校园网环境</s:String>
+    <s:String x:Key="ct_not_logined">您未登录到校园网，请使用客户端连接。</s:String>
+    <s:String x:Key="ct_not_connected">你未处在校园网环境中</s:String>
+
 
     <s:String x:Key="vm_unavailable_change_user">请先断开连接再切换账户</s:String>
 </ResourceDictionary>
