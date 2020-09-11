@@ -166,7 +166,7 @@ namespace NEU.IPGateway.UI
             if (flag)
                 new MainWindow().Show();
 
-            //UpdateStatus();
+            UpdateStatus();
         }
 
         private Task UpdateStatus()
