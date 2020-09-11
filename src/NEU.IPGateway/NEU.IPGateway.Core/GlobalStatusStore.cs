@@ -44,16 +44,11 @@ namespace NEU.IPGateway.Core
         public ReactiveCommand<Unit, Unit> Test { get; }
 
 
-        #region 工厂方法
-
-        private async Task InitializeStatus()
+        public async Task Initialize()
         {
-            var userService = Locator.Current.GetService<IUserStorageService>();
-            CurrentUser = await userService.GetDefaultUser();
-
             var settingService = Locator.Current.GetService<ISettingStorageService>();
-            try 
-            { 
+            try
+            {
                 Setting = await settingService.ReadSetting();
             }
             catch
@@ -61,7 +56,21 @@ namespace NEU.IPGateway.Core
                 Setting = new Setting();
                 await settingService.SaveSetting(Setting);
             }
+
+            try
+            {
+                var userService = Locator.Current.GetService<IUserStorageService>();
+                CurrentUser = await userService.GetDefaultUser();
+            }
+            catch
+            {
+                throw new Exception("vm_no_user");
+            }
+            
         }
+
+
+        #region 工厂方法
 
         private GlobalStatusStore()
         {
@@ -151,7 +160,6 @@ namespace NEU.IPGateway.Core
 
             Toggle.ThrownExceptions.Subscribe(_ => { });
 
-            InitializeStatus();
         }
 
         private async Task TestImpl()

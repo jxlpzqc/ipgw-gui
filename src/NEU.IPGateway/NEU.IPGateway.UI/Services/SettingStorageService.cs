@@ -32,7 +32,9 @@ namespace NEU.IPGateway.UI.Services
             XmlSerializer serializer = new XmlSerializer(typeof(Setting));
 
             var basePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            var path = Path.Combine(basePath, "ipgw", "settings.xml");
+            var dir = Path.Combine(basePath, "ipgw");
+            var path = Path.Combine(dir, "settings.xml");
+            if (!Directory.Exists(path)) Directory.CreateDirectory(dir);
 
             await Task.Run(() =>
             {

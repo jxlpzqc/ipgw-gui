@@ -78,6 +78,18 @@
 
     <s:String x:Key="recheck">重新检测</s:String>
 
+    <s:String x:Key="ww_welcome">欢迎</s:String>
+    <s:String x:Key="ww_back">&lt; 上一步</s:String>
+    <s:String x:Key="ww_continue">下一步 ></s:String>
+    <s:String x:Key="ww_1">要正常使用客户端，您需要在您的计算机上保存一个东北大学统一身份认证登录凭证</s:String>
+    <s:String x:Key="ww_login">开始登录</s:String>
+    <s:String x:Key="ww_skip_pin">我不想使用PIN值，跳过></s:String>
+    <s:String x:Key="ww_finish">完成</s:String>
+    <s:String x:Key="ww_2">恭喜您，您已经配置完成</s:String>
+    <s:String x:Key="ww_3">网关助手会重新启动以迎接您的初次使用</s:String>
+    
+
+    
     <s:String x:Key="mw_driver_error">发生错误</s:String>
     <s:String x:Key="mw_reinputpassword_hint">用户名或密码错误，本次键入的密码将会自动保存，但不会使用PIN保护，如果需要密码保护，请前往【用户管理】</s:String>
     <s:String x:Key="uv_input_pin_for_pwd">输入PIN以显示密码</s:String>

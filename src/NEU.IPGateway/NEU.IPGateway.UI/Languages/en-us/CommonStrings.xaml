@@ -28,7 +28,6 @@
     <s:String x:Key="pin_need_hint">We need your Pin to continue connecting</s:String>
     <s:String x:Key="cancel">Cancel</s:String>
 
-    <s:String x:Key="recheck">Check Again</s:String>
 
     <!-- setting page -->
     <s:String x:Key="account">Account</s:String>
@@ -77,7 +76,19 @@
     <s:String x:Key="testing">Please wait...</s:String>
     <s:String x:Key="bad_pin">Invalid PIN!</s:String>
 
+    <s:String x:Key="recheck">Check Again</s:String>
 
+
+    <s:String x:Key="ww_welcome">Welcome</s:String>
+    <s:String x:Key="ww_back">&lt; Back</s:String>
+    <s:String x:Key="ww_continue">Next ></s:String>
+    <s:String x:Key="ww_1">In order to start, it's advisable for you to save a credential on pass.neu.edu.cn in your computer.</s:String>
+    <s:String x:Key="ww_login">Start Login</s:String>
+    <s:String x:Key="ww_skip_pin">Skip without pin ></s:String>
+    <s:String x:Key="ww_finish">Finish</s:String>
+    <s:String x:Key="ww_2">Congratulations, all job has done for configurations.</s:String>
+    <s:String x:Key="ww_3">NEU IPGateway Assistance will restart for your first use.</s:String>
+    
     <s:String x:Key="mw_driver_error">Error occurs in driver program</s:String>
     <s:String x:Key="mw_reinputpassword_hint">ERROR: Invalid username or password, reinput your password which will be saved automatically but not protected by PIN. If you want to protect your account credential, please open Users Manager Dialog.</s:String>
     <s:String x:Key="uv_input_pin_for_pwd">Input PIN to show your password</s:String>

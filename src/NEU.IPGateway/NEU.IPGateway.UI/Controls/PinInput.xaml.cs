@@ -114,7 +114,7 @@ namespace NEU.IPGateway.UI.Controls
             Action handleInput = () =>
             {
                 FocusToNext();
-                if (inputs.Last() == control)
+                if (inputs.Last() == control && !pin.Any(u=>u=='\0'))
                 {
                     RaiseEvent(new RoutedEventArgs(FinishedInputEvent, this));
                 }

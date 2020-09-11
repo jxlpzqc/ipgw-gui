@@ -30,11 +30,13 @@
 
   <ItemGroup>
     <None Remove="ApplicationIcon.ico" />
+    <None Remove="Assets\ApplicationIcon.png" />
     <None Remove="Assets\ApplicationIconWithStroke.png" />
     <None Remove="Assets\Connected.png" />
     <None Remove="Assets\ConnectFail.png" />
     <None Remove="Assets\LoginBar.jpg" />
     <None Remove="Assets\PopupBackground.jpg" />
+    <None Remove="Assets\WelcomeLogin.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NEU.IPGateWay.Core\NEU.IPGateway.Core.csproj" />
@@ -56,11 +58,13 @@
   
   <ItemGroup>
     <Resource Include="ApplicationIcon.ico" />
+    <Resource Include="Assets\ApplicationIcon.png" />
     <Resource Include="Assets\ApplicationIconWithStroke.png" />
     <Resource Include="Assets\Connected.png" />
     <Resource Include="Assets\ConnectFail.png" />
     <Resource Include="Assets\LoginBar.jpg" />
     <Resource Include="Assets\PopupBackground.jpg" />
+    <Resource Include="Assets\WelcomeLogin.png" />
   </ItemGroup>
   
 </Project>

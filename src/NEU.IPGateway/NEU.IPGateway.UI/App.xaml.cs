@@ -42,6 +42,7 @@ namespace NEU.IPGateway.UI
         {
             TaskCompletionSource<bool> source = new System.Threading.Tasks.TaskCompletionSource<bool>();
             GlobalStatusStore.Current.WhenAnyValue(x => x.Setting.Language)
+                .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(lan =>
                 {
                     source?.TrySetResult(true);
@@ -141,6 +142,7 @@ namespace NEU.IPGateway.UI
         private void InitializeStartupChange()
         {
             GlobalStatusStore.Current.WhenAnyValue(x => x.Setting.LaunchWhenStartup)
+                .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(startup =>
                 {
                     SetThisApplicationStartup(startup);
@@ -164,7 +166,7 @@ namespace NEU.IPGateway.UI
             if (flag)
                 new MainWindow().Show();
 
-            UpdateStatus();
+            //UpdateStatus();
         }
 
         private Task UpdateStatus()
@@ -222,13 +224,30 @@ namespace NEU.IPGateway.UI
             // application singleton
             Process currentProcess = Process.GetCurrentProcess();
             var processList = Process.GetProcessesByName(currentProcess.ProcessName);
+            bool languageInitialized = false;
             if (processList.Length > 1)
             {
                 this.Shutdown();
             }
-
+            try
+            {
+                await GlobalStatusStore.Current.Initialize();
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "vm_no_user")
+                {
+                    languageInitialized = true;
+                    await InitializeLanguageChange();
+                    if (new WelcomeWindow().ShowDialog() != true)
+                    {
+                        this.Shutdown();
+                    }
+                    await GlobalStatusStore.Current.Initialize();
+                }
+            }
+            if(!languageInitialized) await InitializeLanguageChange();
             InitializeStartupChange();
-            await InitializeLanguageChange();
             System.Net.NetworkInformation.NetworkChange.NetworkAddressChanged += NetworkChange_NetworkAddressChanged;
 
             notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
